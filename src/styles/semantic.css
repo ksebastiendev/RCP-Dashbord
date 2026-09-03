@@ -1,0 +1,55 @@
+/*
+ * Niveau 2 : semantique.
+ * Chaque token nomme un role dans l'interface, jamais une couleur.
+ * Une semantique ne reference que des primitives.
+ */
+:root {
+  /* Marque et navigation */
+  --semantic-nav-surface: var(--primitive-brown-900);
+  --semantic-nav-fg: var(--primitive-neutral-0);
+  --semantic-nav-fg-muted: var(--primitive-brown-200);
+  --semantic-nav-hover: var(--primitive-brown-700);
+  --semantic-nav-active-surface: var(--primitive-orange-500);
+  --semantic-nav-active-fg: var(--primitive-brown-900);
+
+  --semantic-action-primary: var(--primitive-orange-500);
+  --semantic-action-primary-fg: var(--primitive-brown-900);
+  --semantic-focus-ring: var(--primitive-orange-500);
+
+  /* Etats metier. Chaque etat porte un triplet fg / bg / subtle.
+     fg sert au texte et a la bordure, bg au fond de pastille,
+     subtle au bandeau pleine largeur. */
+  --semantic-success-fg: var(--primitive-green-600);
+  --semantic-success-bg: var(--primitive-green-100);
+  --semantic-success-subtle: var(--primitive-green-50);
+
+  --semantic-danger-fg: var(--primitive-red-700);
+  --semantic-danger-bg: var(--primitive-red-100);
+  --semantic-danger-subtle: var(--primitive-red-50);
+
+  --semantic-warning-fg: var(--primitive-gold-600);
+  --semantic-warning-bg: var(--primitive-gold-100);
+  --semantic-warning-subtle: var(--primitive-gold-50);
+
+  /* Etat neutre : ni reussi, ni echoue, ni en attente.
+     Sert aux pastilles d'archive, de brouillon, d'ancien nom. */
+  --semantic-neutral-fg: var(--primitive-neutral-800);
+  --semantic-neutral-bg: var(--primitive-neutral-150);
+  --semantic-neutral-subtle: var(--primitive-neutral-25);
+
+  /* Surfaces */
+  --semantic-surface-page: var(--primitive-neutral-25);
+  --semantic-surface-raised: var(--primitive-neutral-0);
+  --semantic-surface-sunken: var(--primitive-neutral-25);
+  --semantic-surface-overlay: var(--primitive-neutral-0);
+
+  /* Texte */
+  --semantic-fg-primary: var(--primitive-neutral-950);
+  --semantic-fg-secondary: var(--primitive-neutral-600);
+  --semantic-fg-muted: var(--primitive-neutral-500);
+  --semantic-fg-placeholder: var(--primitive-neutral-400);
+
+  /* Traits */
+  --semantic-border-default: var(--primitive-neutral-150);
+  --semantic-border-separator: var(--primitive-neutral-100);
+}

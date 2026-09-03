@@ -1,0 +1,96 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@import "./styles/primitives.css";
+@import "./styles/semantic.css";
+@import "./styles/component.css";
+
+/*
+ * Expose les tokens de composant aux utilitaires Tailwind.
+ * `inline` fait pointer l'utilitaire sur la variable, pas sur sa valeur :
+ * changer un token semantique se propage sans recompiler la config.
+ */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-muted-foreground: var(--sidebar-muted-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --color-table-header-bg: var(--table-header-bg);
+  --color-table-header-fg: var(--table-header-fg);
+  --color-table-row-bg: var(--table-row-bg);
+  --color-table-row-fg: var(--table-row-fg);
+  --color-table-row-separator: var(--table-row-separator);
+
+  --color-topbar-bg: var(--topbar-bg);
+  --color-topbar-border: var(--topbar-border);
+  --color-topbar-fg: var(--topbar-fg);
+
+  /* Etats metier, consommes par la pastille d'etat et les bandeaux */
+  --color-success-fg: var(--semantic-success-fg);
+  --color-success-bg: var(--semantic-success-bg);
+  --color-success-subtle: var(--semantic-success-subtle);
+  --color-danger-fg: var(--semantic-danger-fg);
+  --color-danger-bg: var(--semantic-danger-bg);
+  --color-danger-subtle: var(--semantic-danger-subtle);
+  --color-warning-fg: var(--semantic-warning-fg);
+  --color-warning-bg: var(--semantic-warning-bg);
+  --color-warning-subtle: var(--semantic-warning-subtle);
+  --color-neutral-fg: var(--semantic-neutral-fg);
+  --color-neutral-bg: var(--semantic-neutral-bg);
+  --color-neutral-subtle: var(--semantic-neutral-subtle);
+
+  --color-fg-primary: var(--semantic-fg-primary);
+  --color-fg-secondary: var(--semantic-fg-secondary);
+  --color-fg-muted: var(--semantic-fg-muted);
+  --color-fg-placeholder: var(--semantic-fg-placeholder);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Tout montant s'affiche en chiffres tabulaires. Applique par lib/format
+     via la classe .tabular, jamais laisse au hasard d'un composant. */
+  .tabular {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
+  }
+}

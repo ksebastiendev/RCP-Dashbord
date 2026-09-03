@@ -1,0 +1,42 @@
+/*
+ * Niveau 1 : primitives.
+ * Valeurs brutes de la palette. Une primitive ne decrit aucun usage.
+ * Ce fichier est le seul endroit du projet ou une valeur hexadecimale est ecrite.
+ *
+ * Palette de marque : fournie par le CTO, non modifiable.
+ * Neutres : releves au pixel dans BCP-marquettes-ui/ (aucun serveur MCP Figma
+ * disponible dans la session d'integration). Voir scripts/releve-neutres.py.
+ */
+:root {
+  /* Marque */
+  --primitive-brown-900: #4d2409;
+  --primitive-orange-500: #ffb93d;
+
+  --primitive-green-600: #147538;
+  --primitive-green-100: #cff7de;
+  --primitive-green-50: #e9fbf0;
+
+  --primitive-red-700: #aa0808;
+  --primitive-red-100: #fdd8d8;
+  --primitive-red-50: #feecec;
+
+  --primitive-gold-600: #d6ab00;
+  --primitive-gold-100: #fff9e0;
+  --primitive-gold-50: #fffcf0;
+
+  /* Neutres releves dans les maquettes */
+  --primitive-neutral-0: #ffffff;
+  --primitive-neutral-25: #f9f9f8;
+  --primitive-neutral-100: #efefef;
+  --primitive-neutral-150: #edeff2;
+  --primitive-neutral-400: #9fa3aa;
+  --primitive-neutral-500: #8b9199;
+  --primitive-neutral-600: #656c77;
+  --primitive-neutral-800: #3a3f47;
+  --primitive-neutral-950: #14161a;
+
+  /* Neutres derives de la marque, releves sur la navigation laterale */
+  --primitive-brown-700: #644028;
+  --primitive-brown-400: #a69184;
+  --primitive-brown-200: #d3c8c1;
+}

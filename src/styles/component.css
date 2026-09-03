@@ -1,0 +1,62 @@
+/*
+ * Niveau 3 : tokens de composant.
+ * Le seul niveau que les composants consomment. Il ne reference que des
+ * tokens semantiques. Les variables attendues par shadcn/ui (--background,
+ * --primary, --border ...) sont declarees ici : shadcn devient donc un
+ * consommateur de la couche semantique comme les autres.
+ */
+:root {
+  --radius: 0.75rem;
+
+  /* Contrat shadcn/ui */
+  --background: var(--semantic-surface-page);
+  --foreground: var(--semantic-fg-primary);
+
+  --card: var(--semantic-surface-raised);
+  --card-foreground: var(--semantic-fg-primary);
+
+  --popover: var(--semantic-surface-overlay);
+  --popover-foreground: var(--semantic-fg-primary);
+
+  --primary: var(--semantic-action-primary);
+  --primary-foreground: var(--semantic-action-primary-fg);
+
+  --secondary: var(--semantic-neutral-bg);
+  --secondary-foreground: var(--semantic-neutral-fg);
+
+  --muted: var(--semantic-surface-sunken);
+  --muted-foreground: var(--semantic-fg-secondary);
+
+  --accent: var(--semantic-neutral-bg);
+  --accent-foreground: var(--semantic-neutral-fg);
+
+  --destructive: var(--semantic-danger-fg);
+  --destructive-foreground: var(--primitive-neutral-0);
+
+  --border: var(--semantic-border-default);
+  --input: var(--semantic-border-default);
+  --ring: var(--semantic-focus-ring);
+
+  /* Navigation laterale */
+  --sidebar: var(--semantic-nav-surface);
+  --sidebar-foreground: var(--semantic-nav-fg);
+  --sidebar-muted-foreground: var(--semantic-nav-fg-muted);
+  --sidebar-accent: var(--semantic-nav-hover);
+  --sidebar-accent-foreground: var(--semantic-nav-fg);
+  --sidebar-primary: var(--semantic-nav-active-surface);
+  --sidebar-primary-foreground: var(--semantic-nav-active-fg);
+  --sidebar-border: var(--semantic-nav-hover);
+  --sidebar-ring: var(--semantic-focus-ring);
+
+  /* Tableau */
+  --table-header-bg: var(--semantic-surface-page);
+  --table-header-fg: var(--semantic-fg-primary);
+  --table-row-bg: var(--semantic-surface-raised);
+  --table-row-fg: var(--semantic-fg-secondary);
+  --table-row-separator: var(--semantic-border-separator);
+
+  /* Barre superieure */
+  --topbar-bg: var(--semantic-surface-raised);
+  --topbar-border: var(--semantic-border-default);
+  --topbar-fg: var(--semantic-fg-secondary);
+}
