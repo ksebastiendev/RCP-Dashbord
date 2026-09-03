@@ -41,7 +41,7 @@ export function NavigationLaterale() {
         )}
       >
         <img
-          src="/marque/bcp-marque.png"
+          src="/marque/Logo-bestcashpay.png"
           alt=""
           className="h-8 w-9 shrink-0 object-contain"
         />
