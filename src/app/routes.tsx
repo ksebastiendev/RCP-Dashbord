@@ -5,6 +5,8 @@ import { EcranAVenir } from "./ecran-a-venir";
 import { GalerieComposants } from "./galerie-composants";
 import { EcranAccueil } from "@/features/accueil/components/ecran-accueil";
 import { EcranCouverture } from "@/features/aiguillage/components/ecran-couverture";
+import { EcranCouts } from "@/features/tarification/components/ecran-couts";
+import { EcranGrille } from "@/features/tarification/components/ecran-grille";
 import { EcranRoutage } from "@/features/aiguillage/components/ecran-routage";
 import { EcranApplications } from "@/features/marchands/components/ecran-applications";
 import { EcranDossiers } from "@/features/marchands/components/ecran-dossiers";
@@ -33,6 +35,8 @@ const ECRANS_INTEGRES: Record<string, React.ReactNode> = {
   "/marchand/applications": <EcranApplications />,
   "/aiguillage/couverture": <EcranCouverture />,
   "/aiguillage/routage": <EcranRoutage />,
+  "/tarification/couts": <EcranCouts />,
+  "/tarification/grille": <EcranGrille />,
   "/referentiel/fournisseurs": <EcranFournisseurs />,
   "/referentiel/portefeuilles": <EcranPortefeuilles />,
   "/referentiel/operateurs": <EcranOperateurs />,
