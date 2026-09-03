@@ -14,6 +14,7 @@ import { usePortefeuilles, useRetirerPortefeuille } from "../hooks/use-referenti
 import { useReferentiels } from "../store";
 import type { Portefeuille } from "../types";
 import { GabaritListe } from "./gabarit-liste";
+import { ModaleDeclarerMarque } from "./modales";
 
 /*
  * Portefeuilles. Releve dans BCP/Referentiels/Portefeuil.png.
@@ -106,9 +107,7 @@ export function EcranPortefeuilles() {
         <GroupeActions>
           <ActionLigne
             libelle="Modifier"
-            onClick={() => {}}
-            desactive
-            motif="Le formulaire de modification arrive avec le lot des modales."
+            onClick={() => ouvrirModale({ type: "declarer-marque" })}
           />
           <ActionLigne
             libelle="Retirer"
@@ -133,7 +132,7 @@ export function EcranPortefeuilles() {
       titre="Portefeuilles"
       description="Les marques de portefeuille mobile que la plateforme connaît. Une marque servie nulle part n'est pas une anomalie : le référentiel couvre plus que ce que nous servons."
       action={
-        <Button type="button">
+        <Button type="button" onClick={() => ouvrirModale({ type: "declarer-marque" })}>
           <Plus className="size-4" strokeWidth={TRAIT_ICONE} aria-hidden="true" />
           Déclarer une marque
         </Button>
@@ -179,10 +178,22 @@ export function EcranPortefeuilles() {
               raison="aucune-donnee"
               titre="Aucune marque déclarée"
               description="Le référentiel des portefeuilles est vide. Aucune destination ne peut être décrite tant qu'aucune marque n'est déclarée."
-              action={<Button type="button">Déclarer une marque</Button>}
+              action={
+                <Button
+                  type="button"
+                  onClick={() => ouvrirModale({ type: "declarer-marque" })}
+                >
+                  Déclarer une marque
+                </Button>
+              }
             />
           )
         }
+      />
+
+      <ModaleDeclarerMarque
+        ouverte={modale.type === "declarer-marque"}
+        onFermer={fermerModale}
       />
 
       {modale.type === "retirer-portefeuille" && (

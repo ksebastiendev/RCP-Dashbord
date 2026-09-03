@@ -18,6 +18,7 @@ import { useFournisseurs } from "../hooks/use-referentiels";
 import { useReferentiels } from "../store";
 import type { Fournisseur } from "../types";
 import { GabaritListe } from "./gabarit-liste";
+import { ModaleDeclarerFournisseur } from "./modales";
 
 /*
  * Fournisseurs. Releve dans BCP/Referentiels/Fournisseurs.png.
@@ -34,6 +35,9 @@ export function EcranFournisseurs() {
   const recherche = useReferentiels((e) => e.rechercheFournisseurs);
   const definirRecherche = useReferentiels((e) => e.definirRecherche);
   const filtreType = useReferentiels((e) => e.filtreTypeFournisseur);
+  const modale = useReferentiels((e) => e.modale);
+  const ouvrirModale = useReferentiels((e) => e.ouvrirModale);
+  const fermerModale = useReferentiels((e) => e.fermerModale);
   const definirFiltreType = useReferentiels((e) => e.definirFiltreTypeFournisseur);
 
   /* Le filtrage porte sur la donnee du cache, il ne la copie pas dans le
@@ -132,7 +136,7 @@ export function EcranFournisseurs() {
       titre="Fournisseurs"
       description="Les intermédiaires par lesquels la plateforme joint les portefeuilles. Un agrégateur en sert beaucoup par une intégration unique, un connecteur direct un seul."
       action={
-        <Button type="button">
+        <Button type="button" onClick={() => ouvrirModale({ type: "declarer-fournisseur" })}>
           <Plus className="size-4" strokeWidth={TRAIT_ICONE} aria-hidden="true" />
           Déclarer un fournisseur
         </Button>
@@ -195,10 +199,22 @@ export function EcranFournisseurs() {
               raison="aucune-donnee"
               titre="Aucun fournisseur déclaré"
               description="Sans fournisseur déclaré, aucune route ne peut être ouverte et aucun paiement ne peut aboutir."
-              action={<Button type="button">Déclarer un fournisseur</Button>}
+              action={
+                <Button
+                  type="button"
+                  onClick={() => ouvrirModale({ type: "declarer-fournisseur" })}
+                >
+                  Déclarer un fournisseur
+                </Button>
+              }
             />
           )
         }
+      />
+
+      <ModaleDeclarerFournisseur
+        ouverte={modale.type === "declarer-fournisseur"}
+        onFermer={fermerModale}
       />
     </GabaritListe>
   );

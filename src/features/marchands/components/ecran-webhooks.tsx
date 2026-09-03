@@ -16,6 +16,7 @@ import {
   useTesterWebhook,
 } from "../hooks/use-marchands";
 import { useMarchandsStore } from "../store";
+import { ModaleEnregistrerAdresse } from "./modales";
 import { TableauWebhooks } from "./onglets-fiche";
 
 /*
@@ -30,6 +31,9 @@ export function EcranWebhooks() {
   const marchands = useMarchands();
   const choisi = useMarchandsStore((e) => e.marchandChoisi);
   const definirChoisi = useMarchandsStore((e) => e.definirMarchandChoisi);
+  const modale = useMarchandsStore((e) => e.modale);
+  const ouvrirModale = useMarchandsStore((e) => e.ouvrirModale);
+  const fermerModale = useMarchandsStore((e) => e.fermerModale);
   const recherche = useMarchandsStore((e) => e.rechercheNom);
   const definirRecherche = useMarchandsStore((e) => e.definirRechercheNom);
 
@@ -54,7 +58,10 @@ export function EcranWebhooks() {
         titre="Webhooks"
         description="Notifications envoyées à chaque application, en langage clair. Tester est toujours à un clic."
         action={
-          <Button type="button">
+          <Button
+            type="button"
+            onClick={() => ouvrirModale({ type: "nouvelle-adresse" })}
+          >
             <Plus className="size-4" strokeWidth={TRAIT_ICONE} aria-hidden="true" />
             Nouvelle adresse
           </Button>
@@ -122,7 +129,14 @@ export function EcranWebhooks() {
             titre="Aucun webhook"
             description="Aucune notification n'est configurée pour ce marchand. Il ne sera prévenu d'aucun paiement, d'aucun remboursement, d'aucun litige."
             icone={Send}
-            action={<Button type="button">Nouvelle adresse</Button>}
+            action={
+              <Button
+                type="button"
+                onClick={() => ouvrirModale({ type: "nouvelle-adresse" })}
+              >
+                Nouvelle adresse
+              </Button>
+            }
           />
         </Carte>
       ) : (
@@ -146,6 +160,12 @@ export function EcranWebhooks() {
           ))}
         </div>
       )}
+
+      <ModaleEnregistrerAdresse
+        ouverte={modale.type === "nouvelle-adresse"}
+        onFermer={fermerModale}
+        applications={fiche.data?.applications ?? []}
+      />
     </CorpsEcran>
   );
 }

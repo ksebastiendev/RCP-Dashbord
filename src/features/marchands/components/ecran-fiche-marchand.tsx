@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { ChevronLeft } from "lucide-react";
+import { ModaleNouvelleApplication } from "./modales";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Bandeau } from "@/components/shared/bandeau";
 import { Carte } from "@/components/shared/carte";
+import { Plus } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { GroupeBascule } from "@/components/shared/barre-filtres";
 import { CorpsEcran } from "@/components/shared/coque-application";
 import { EtatErreur } from "@/components/shared/etat-erreur";
@@ -101,7 +104,17 @@ export function EcranFicheMarchand() {
         <>
           {onglet === "dossier" && <OngletDossier fiche={data} />}
           {onglet === "applications" && (
-            <OngletApplications
+            <div className="flex flex-col gap-5">
+              <div className="flex justify-end">
+                <Button
+                  type="button"
+                  onClick={() => ouvrirModale({ type: "nouvelle-application" })}
+                >
+                  <Plus className="size-4" strokeWidth={TRAIT_ICONE} aria-hidden="true" />
+                  Nouvelle application
+                </Button>
+              </div>
+              <OngletApplications
               applications={data.applications}
               onRenouveler={(application) =>
                 ouvrirModale({
@@ -110,7 +123,8 @@ export function EcranFicheMarchand() {
                   nomApplication: application.nom,
                 })
               }
-            />
+              />
+            </div>
           )}
           {onglet === "tarification" && <OngletTarification fiche={data} />}
           {onglet === "webhooks" && (
@@ -130,6 +144,11 @@ export function EcranFicheMarchand() {
           {onglet === "activite" && <OngletActivite />}
         </>
       )}
+
+      <ModaleNouvelleApplication
+        ouverte={modale.type === "nouvelle-application"}
+        onFermer={fermerModale}
+      />
 
       {modale.type === "renouveler-cle" && (
         <ModaleConfirmation

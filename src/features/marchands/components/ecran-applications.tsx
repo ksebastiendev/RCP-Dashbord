@@ -17,6 +17,7 @@ import {
 import { useMarchandsStore } from "../store";
 import type { ModeApplication } from "../types";
 import { EXPLICATION_MODE, LIBELLE_MODE } from "./libelles";
+import { ModaleNouvelleApplication } from "./modales";
 import { CarteApplication } from "./onglets-fiche";
 
 /*
@@ -121,6 +122,11 @@ export function EcranApplications() {
           ))}
         </div>
       )}
+
+      <ModaleNouvelleApplication
+        ouverte={modale.type === "nouvelle-application"}
+        onFermer={fermerModale}
+      />
 
       {modale.type === "renouveler-cle" && (
         <ModaleConfirmation

@@ -1,3 +1,5 @@
+import { Plus } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { Bandeau } from "@/components/shared/bandeau";
 import { CarteIndicateur } from "@/components/shared/carte-indicateur";
 import { CorpsEcran, EnTeteEcran } from "@/components/shared/coque-application";
@@ -7,6 +9,9 @@ import {
   useIndicateursTarification,
   useReglesTarifaires,
 } from "../hooks/use-tarification";
+import { TRAIT_ICONE } from "@/lib/icones";
+import { useTarification } from "../store";
+import { ModaleAjouterRegle } from "./modales";
 import { SimulateurPrelevement } from "./simulateur-prelevement";
 
 /*
@@ -18,6 +23,9 @@ import { SimulateurPrelevement } from "./simulateur-prelevement";
 export function EcranGrille() {
   const indicateurs = useIndicateursTarification();
   const regles = useReglesTarifaires();
+  const modale = useTarification((e) => e.modale);
+  const ouvrirModale = useTarification((e) => e.ouvrirModale);
+  const fermerModale = useTarification((e) => e.fermerModale);
 
   if (indicateurs.error) {
     return (
@@ -30,7 +38,16 @@ export function EcranGrille() {
 
   return (
     <CorpsEcran>
-      <EnTeteEcran titre="Grille générale" description={DESCRIPTION} />
+      <EnTeteEcran
+        titre="Grille générale"
+        description={DESCRIPTION}
+        action={
+          <Button type="button" onClick={() => ouvrirModale("ajouter-regle")}>
+            <Plus className="size-4" strokeWidth={TRAIT_ICONE} aria-hidden="true" />
+            Ajouter une règle
+          </Button>
+        }
+      />
 
       <Bandeau
         genre="attente"
@@ -65,6 +82,11 @@ export function EcranGrille() {
       </div>
 
       <SimulateurPrelevement regles={regles.data} chargement={regles.isPending} />
+
+      <ModaleAjouterRegle
+        ouverte={modale === "ajouter-regle"}
+        onFermer={fermerModale}
+      />
     </CorpsEcran>
   );
 }

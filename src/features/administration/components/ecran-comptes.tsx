@@ -13,6 +13,8 @@ import { TRAIT_ICONE } from "@/lib/icones";
 import { LIBELLE_ROLE } from "@/lib/libelles";
 import type { Role } from "@/stores/session";
 import { useAdministration } from "../hooks/use-administration";
+import { useAdministrationStore } from "../store";
+import { ModaleCreerCompte } from "./modales";
 import type { Compte, DescriptionRole } from "../types";
 
 /*
@@ -46,6 +48,9 @@ export function EcranComptes() {
   const { data, isPending, error, refetch } = useAdministration();
   const [recherche, setRecherche] = useState("");
   const [filtre, setFiltre] = useState<FiltreRole>("tous");
+  const modale = useAdministrationStore((e) => e.modale);
+  const ouvrirModale = useAdministrationStore((e) => e.ouvrirModale);
+  const fermerModale = useAdministrationStore((e) => e.fermerModale);
 
   const lignes = useMemo(() => {
     if (!data) return undefined;
@@ -192,7 +197,7 @@ export function EcranComptes() {
             : "Qui accède à la plateforme, et ce que chacun peut y faire."
         }
         action={
-          <Button type="button">
+          <Button type="button" onClick={() => ouvrirModale("creer-compte")}>
             <ShieldPlus className="size-4" strokeWidth={TRAIT_ICONE} aria-hidden="true" />
             Ajouter un administrateur
           </Button>
@@ -249,6 +254,11 @@ export function EcranComptes() {
             description="Aucun compte ne correspond à la recherche et au filtre actifs. Videz-les pour revoir la liste complète."
           />
         }
+      />
+
+      <ModaleCreerCompte
+        ouverte={modale === "creer-compte"}
+        onFermer={fermerModale}
       />
     </CorpsEcran>
   );

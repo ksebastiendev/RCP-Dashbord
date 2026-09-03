@@ -24,6 +24,7 @@ import {
 import { useReferentiels } from "../store";
 import type { Borne } from "../types";
 import { GabaritListe, RangeeIndicateurs } from "./gabarit-liste";
+import { ModaleExigerChamp, ModaleRenseignerPlafond } from "./modales";
 
 /*
  * Montants autorises. Releve dans BCP/Referentiels/Montants autorisés.png.
@@ -130,9 +131,14 @@ export function EcranMontants() {
         <GroupeActions>
           <ActionLigne
             libelle="Corriger"
-            onClick={() => {}}
-            desactive
-            motif="Le formulaire de correction arrive avec le lot des modales."
+            onClick={() =>
+              ouvrirModale({
+                type: "renseigner-plafond",
+                idBorne: b.id,
+                destination: `${b.destination} · ${LIBELLE_SENS[b.sens]}`,
+                devise: b.devise,
+              })
+            }
           />
           <ActionRetrait
             onClick={() =>
@@ -158,7 +164,19 @@ export function EcranMontants() {
       titre="Montants autorisés et informations demandées"
       description="Appliqués à chaque paiement et publiés aux marchands pour qu'ils construisent leurs formulaires."
       action={
-        <Button type="button">
+        <Button
+          type="button"
+          onClick={() =>
+            onglet === "montants"
+              ? ouvrirModale({
+                  type: "renseigner-plafond",
+                  idBorne: "",
+                  destination: "Nouvelle borne",
+                  devise: "XOF",
+                })
+              : ouvrirModale({ type: "exiger-champ" })
+          }
+        >
           <Plus className="size-4" strokeWidth={TRAIT_ICONE} aria-hidden="true" />
           {onglet === "montants" ? "Poser une borne" : "Exiger un champ"}
         </Button>
@@ -264,7 +282,21 @@ export function EcranMontants() {
                 raison="aucune-donnee"
                 titre="Aucune borne posée"
                 description="Sans borne, chaque destination applique le plafond par défaut de la plateforme et refuse tout paiement au-delà."
-                action={<Button type="button">Poser une borne</Button>}
+                action={
+                  <Button
+                    type="button"
+                    onClick={() =>
+                      ouvrirModale({
+                        type: "renseigner-plafond",
+                        idBorne: "",
+                        destination: "Nouvelle borne",
+                        devise: "XOF",
+                      })
+                    }
+                  >
+                    Poser une borne
+                  </Button>
+                }
               />
             )
           }
@@ -272,6 +304,21 @@ export function EcranMontants() {
       ) : (
         <OngletChampsExiges />
       )}
+
+      {modale.type === "renseigner-plafond" && (
+        <ModaleRenseignerPlafond
+          ouverte
+          onFermer={fermerModale}
+          destination={modale.destination}
+          devise={modale.devise}
+          onMarquerInconnu={fermerModale}
+        />
+      )}
+
+      <ModaleExigerChamp
+        ouverte={modale.type === "exiger-champ"}
+        onFermer={fermerModale}
+      />
 
       {modale.type === "retirer-borne" && borneRetiree && (
         <ModaleConfirmation

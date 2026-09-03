@@ -26,7 +26,12 @@ export type ModaleReferentiel =
   | { type: "renommer-operateur"; idOperateur: string; nomActuel: string }
   | { type: "retirer-borne"; idBorne: string; destination: string }
   | { type: "retirer-portefeuille"; idPortefeuille: string; nom: string }
-  | { type: "renseigner-plafond"; idBorne: string; destination: string };
+  | { type: "renseigner-plafond"; idBorne: string; destination: string; devise: string }
+  | { type: "declarer-fournisseur" }
+  | { type: "declarer-marque" }
+  | { type: "declarer-operateur" }
+  | { type: "ouvrir-presence" }
+  | { type: "exiger-champ" };
 
 type EtatReferentiels = {
   /* Un terme de recherche par ecran : passer des fournisseurs aux

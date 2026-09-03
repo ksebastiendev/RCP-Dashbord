@@ -14,6 +14,7 @@ import { usePresences } from "../hooks/use-referentiels";
 import { useReferentiels } from "../store";
 import type { Presence } from "../types";
 import { GabaritListe } from "./gabarit-liste";
+import { ModaleOuvrirPresence } from "./modales";
 
 /*
  * Presences. Releve dans BCP/Referentiels/Operateur-1.png, dont la
@@ -27,6 +28,9 @@ export function EcranPresences() {
 
   const recherche = useReferentiels((e) => e.recherchePresences);
   const definirRecherche = useReferentiels((e) => e.definirRecherche);
+  const modale = useReferentiels((e) => e.modale);
+  const ouvrirModale = useReferentiels((e) => e.ouvrirModale);
+  const fermerModale = useReferentiels((e) => e.fermerModale);
 
   const lignes = useMemo(() => {
     if (!data) return undefined;
@@ -97,7 +101,7 @@ export function EcranPresences() {
       titre="Présences"
       description="Le couple opérateur et pays tel que le marchand le voit. Fermer une présence ne la supprime pas : elle cesse d'être proposée aux marchands."
       action={
-        <Button type="button">
+        <Button type="button" onClick={() => ouvrirModale({ type: "ouvrir-presence" })}>
           <Plus className="size-4" strokeWidth={TRAIT_ICONE} aria-hidden="true" />
           Ouvrir une présence
         </Button>
@@ -140,10 +144,22 @@ export function EcranPresences() {
               raison="aucune-donnee"
               titre="Aucune présence ouverte"
               description="Aucun marchand ne peut choisir de destination tant qu'aucune présence n'est ouverte."
-              action={<Button type="button">Ouvrir une présence</Button>}
+              action={
+                <Button
+                  type="button"
+                  onClick={() => ouvrirModale({ type: "ouvrir-presence" })}
+                >
+                  Ouvrir une présence
+                </Button>
+              }
             />
           )
         }
+      />
+
+      <ModaleOuvrirPresence
+        ouverte={modale.type === "ouvrir-presence"}
+        onFermer={fermerModale}
       />
     </GabaritListe>
   );

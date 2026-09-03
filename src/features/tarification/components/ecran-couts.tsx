@@ -13,6 +13,8 @@ import {
   useCoutsFournisseurs,
   useIndicateursTarification,
 } from "../hooks/use-tarification";
+import { useTarification } from "../store";
+import { ModaleDeclarerCout } from "./modales";
 
 /*
  * Couts et marge. Releve dans BCP/tarification/Cout et marge.png.
@@ -25,6 +27,9 @@ import {
 export function EcranCouts() {
   const indicateurs = useIndicateursTarification();
   const couts = useCoutsFournisseurs();
+  const modale = useTarification((e) => e.modale);
+  const ouvrirModale = useTarification((e) => e.ouvrirModale);
+  const fermerModale = useTarification((e) => e.fermerModale);
 
   return (
     <CorpsEcran>
@@ -32,7 +37,7 @@ export function EcranCouts() {
         titre="Coûts et marge"
         description="Ce que les fournisseurs nous facturent, face à ce que nous facturons aux marchands. Sans coût déclaré, la marge est inconnue, pas nulle."
         action={
-          <Button type="button">
+          <Button type="button" onClick={() => ouvrirModale("declarer-cout")}>
             <Plus className="size-4" strokeWidth={TRAIT_ICONE} aria-hidden="true" />
             Déclarer un coût
           </Button>
@@ -82,7 +87,11 @@ export function EcranCouts() {
             titre="Aucun coût déclaré"
             description="Tant qu'aucun coût fournisseur n'est déclaré, la marge de la plateforme reste inconnue. Elle ne vaut pas zéro : elle n'est pas calculable."
             icone={Coins}
-            action={<Button type="button">Déclarer un coût</Button>}
+            action={
+              <Button type="button" onClick={() => ouvrirModale("declarer-cout")}>
+                Déclarer un coût
+              </Button>
+            }
           />
         )}
       </Carte>
@@ -99,9 +108,28 @@ export function EcranCouts() {
           />
         )}
       </Carte>
+
+      <ModaleDeclarerCout
+        ouverte={modale === "declarer-cout"}
+        onFermer={fermerModale}
+        fournisseurs={FOURNISSEURS_POUR_COUT}
+      />
     </CorpsEcran>
   );
 }
+
+/*
+ * Les fournisseurs proposes viennent du Referentiel. Les reprendre par un
+ * hook du domaine voisin creerait une dependance entre features : la liste
+ * transitera par la couche service de la Tarification quand le backend
+ * existera, comme le fera le vrai formulaire.
+ */
+const FOURNISSEURS_POUR_COUT = [
+  { id: "f-06", nom: "PawaPay" },
+  { id: "f-04", nom: "Fedapay" },
+  { id: "f-13", nom: "Hub2" },
+  { id: "f-18", nom: "Flutterwave" },
+];
 
 function SqueletteCarteVide() {
   return (

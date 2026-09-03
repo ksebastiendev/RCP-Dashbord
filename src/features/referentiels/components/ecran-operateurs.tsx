@@ -14,6 +14,7 @@ import { useOperateurs } from "../hooks/use-referentiels";
 import { useReferentiels } from "../store";
 import type { Operateur } from "../types";
 import { GabaritListe } from "./gabarit-liste";
+import { ModaleDeclarerOperateur } from "./modales";
 
 /*
  * Operateurs. Releve dans BCP/Referentiels/Operateur.png.
@@ -26,7 +27,9 @@ export function EcranOperateurs() {
 
   const recherche = useReferentiels((e) => e.rechercheOperateurs);
   const definirRecherche = useReferentiels((e) => e.definirRecherche);
+  const modale = useReferentiels((e) => e.modale);
   const ouvrirModale = useReferentiels((e) => e.ouvrirModale);
+  const fermerModale = useReferentiels((e) => e.fermerModale);
 
   const lignes = useMemo(() => {
     if (!data) return undefined;
@@ -98,7 +101,7 @@ export function EcranOperateurs() {
       titre="Opérateurs"
       description="Les entreprises qui exploitent les portefeuilles, à ne pas confondre avec les marques de portefeuille. Yas Togo exploite Mix by Yass."
       action={
-        <Button type="button">
+        <Button type="button" onClick={() => ouvrirModale({ type: "declarer-operateur" })}>
           <Plus className="size-4" strokeWidth={TRAIT_ICONE} aria-hidden="true" />
           Déclarer un opérateur
         </Button>
@@ -141,10 +144,22 @@ export function EcranOperateurs() {
               raison="aucune-donnee"
               titre="Aucun opérateur déclaré"
               description="Tant qu'aucun opérateur n'est déclaré, aucune présence ne peut être ouverte."
-              action={<Button type="button">Déclarer un opérateur</Button>}
+              action={
+                <Button
+                  type="button"
+                  onClick={() => ouvrirModale({ type: "declarer-operateur" })}
+                >
+                  Déclarer un opérateur
+                </Button>
+              }
             />
           )
         }
+      />
+
+      <ModaleDeclarerOperateur
+        ouverte={modale.type === "declarer-operateur"}
+        onFermer={fermerModale}
       />
     </GabaritListe>
   );
