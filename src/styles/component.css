@@ -6,7 +6,10 @@
  * consommateur de la couche semantique comme les autres.
  */
 :root {
-  --radius: 0.75rem;
+  /* Rayons figes, valeurs de reference du projet. */
+  --radius-carte: 8px;
+  --radius-controle: 6px;
+  --radius-pastille: 4px;
 
   /* Contrat shadcn/ui */
   --background: var(--semantic-surface-page);
@@ -23,6 +26,9 @@
 
   --secondary: var(--semantic-neutral-bg);
   --secondary-foreground: var(--semantic-neutral-fg);
+
+  --warning: var(--semantic-warning-fg);
+  --warning-foreground: var(--semantic-warning-text);
 
   --muted: var(--semantic-surface-sunken);
   --muted-foreground: var(--semantic-fg-secondary);
@@ -59,4 +65,16 @@
   --topbar-bg: var(--semantic-surface-raised);
   --topbar-border: var(--semantic-border-default);
   --topbar-fg: var(--semantic-fg-secondary);
+
+  /* Pastille d'etat. Le libelle ecrit est porte par le composant : la
+     couleur ne transporte jamais l'information a elle seule. */
+  --badge-radius: var(--radius-pastille);
+  --badge-success-fg: var(--semantic-success-fg);
+  --badge-success-bg: var(--semantic-success-bg);
+  --badge-danger-fg: var(--semantic-danger-fg);
+  --badge-danger-bg: var(--semantic-danger-bg);
+  --badge-warning-fg: var(--semantic-warning-text);
+  --badge-warning-bg: var(--semantic-warning-bg);
+  --badge-neutral-fg: var(--semantic-neutral-fg);
+  --badge-neutral-bg: var(--semantic-neutral-bg);
 }

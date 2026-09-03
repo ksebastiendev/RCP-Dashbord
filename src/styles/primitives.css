@@ -21,6 +21,10 @@
   --primitive-red-50: #feecec;
 
   --primitive-gold-600: #d6ab00;
+  /* Ambre assombri, ajoute pour le texte d'etat en attente.
+     #d6ab00 plafonne a 2,17:1 sur blanc, sous le seuil AA de 4,5:1.
+     #8a6800 tient 5,17:1 sur blanc et 4,90:1 sur gold-100. */
+  --primitive-gold-800: #8a6800;
   --primitive-gold-100: #fff9e0;
   --primitive-gold-50: #fffcf0;
 
@@ -29,8 +33,12 @@
   --primitive-neutral-25: #f9f9f8;
   --primitive-neutral-100: #efefef;
   --primitive-neutral-150: #edeff2;
-  --primitive-neutral-400: #9fa3aa;
-  --primitive-neutral-500: #8b9199;
+  /* Releves a #9fa3aa (indication de saisie) et #8b9199 (valeur absente).
+     Les deux plafonnent sous le seuil AA sur blanc, a 2,53:1 et 3,18:1.
+     Remplaces par une seule valeur assombrie a 4,93:1, la difference
+     visuelle entre les deux teintes d'origine n'etant pas perceptible
+     une fois le contraste ramene au seuil. */
+  --primitive-neutral-550: #6b7178;
   --primitive-neutral-600: #656c77;
   --primitive-neutral-800: #3a3f47;
   --primitive-neutral-950: #14161a;

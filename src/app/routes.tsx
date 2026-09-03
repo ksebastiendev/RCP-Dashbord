@@ -1,34 +1,36 @@
-import { createBrowserRouter, Navigate } from "react-router-dom";
+import { createBrowserRouter, Navigate, type RouteObject } from "react-router-dom";
+import { CoqueApplication } from "@/components/shared/coque-application";
+import { NAVIGATION } from "./navigation";
+import { EcranAVenir } from "./ecran-a-venir";
 
 /*
- * Table de routes du back-office.
- * Les sections sont declarees ici au fur et a mesure des lots. Le decoupage
- * suit les sections de la navigation laterale des maquettes, pas les fichiers.
+ * Table de routes, derivee de la declaration de navigation : une entree de
+ * menu et sa route ne peuvent pas diverger.
+ * Chaque lot remplace un EcranAVenir par l'ecran reellement integre.
  */
+
+const routesDesSections: RouteObject[] = NAVIGATION.flatMap((section) => {
+  if (section.chemin) {
+    return [
+      {
+        path: section.chemin,
+        element: <EcranAVenir titre={section.libelle} />,
+      },
+    ];
+  }
+  return (section.enfants ?? []).map((enfant) => ({
+    path: enfant.chemin,
+    element: <EcranAVenir titre={enfant.libelle} />,
+  }));
+});
+
 export const router = createBrowserRouter([
   {
-    path: "/",
-    element: <Navigate to="/accueil" replace />,
-  },
-  {
-    path: "/accueil",
-    element: <SocleProvisoire titre="Accueil" />,
-  },
-  {
-    path: "*",
-    element: <SocleProvisoire titre="Ecran introuvable" />,
+    element: <CoqueApplication />,
+    children: [
+      { path: "/", element: <Navigate to="/accueil" replace /> },
+      ...routesDesSections,
+      { path: "*", element: <EcranAVenir titre="Écran introuvable" /> },
+    ],
   },
 ]);
-
-/* Placeholder du lot 1 : la coque applicative arrive au lot 2 et remplacera
-   ce composant. Il n'existe que pour verifier que les tokens sont branches. */
-function SocleProvisoire({ titre }: { titre: string }) {
-  return (
-    <main className="min-h-screen bg-background p-10">
-      <h1 className="text-3xl font-semibold text-fg-primary">{titre}</h1>
-      <p className="mt-2 text-sm text-fg-secondary">
-        Coque applicative en attente du lot 2.
-      </p>
-    </main>
-  );
-}

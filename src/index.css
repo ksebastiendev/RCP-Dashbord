@@ -59,6 +59,7 @@
   --color-danger-bg: var(--semantic-danger-bg);
   --color-danger-subtle: var(--semantic-danger-subtle);
   --color-warning-fg: var(--semantic-warning-fg);
+  --color-warning-text: var(--semantic-warning-text);
   --color-warning-bg: var(--semantic-warning-bg);
   --color-warning-subtle: var(--semantic-warning-subtle);
   --color-neutral-fg: var(--semantic-neutral-fg);
@@ -70,10 +71,13 @@
   --color-fg-muted: var(--semantic-fg-muted);
   --color-fg-placeholder: var(--semantic-fg-placeholder);
 
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+  /* Correspondance avec les utilitaires shadcn : rounded-sm pour les
+     pastilles, rounded-md pour les boutons et les champs, rounded-lg et
+     rounded-xl pour les cartes et les modales. */
+  --radius-sm: var(--radius-pastille);
+  --radius-md: var(--radius-controle);
+  --radius-lg: var(--radius-carte);
+  --radius-xl: var(--radius-carte);
 }
 
 @layer base {

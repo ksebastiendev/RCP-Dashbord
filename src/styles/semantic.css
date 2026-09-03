@@ -10,10 +10,14 @@
   --semantic-nav-fg-muted: var(--primitive-brown-200);
   --semantic-nav-hover: var(--primitive-brown-700);
   --semantic-nav-active-surface: var(--primitive-orange-500);
-  --semantic-nav-active-fg: var(--primitive-brown-900);
+  /* Releve a #3a3f47 sur l'element actif, et non brown-900. 6,19:1. */
+  --semantic-nav-active-fg: var(--primitive-neutral-800);
 
+  /* action-primary ne sert qu'en fond. Aucun texte n'est peint avec cette
+     valeur : elle plafonne a 1,84:1 sur blanc. Le texte pose dessus est
+     --action-primary-fg, a 10,57:1. */
   --semantic-action-primary: var(--primitive-orange-500);
-  --semantic-action-primary-fg: var(--primitive-brown-900);
+  --semantic-action-primary-fg: var(--primitive-neutral-950);
   --semantic-focus-ring: var(--primitive-orange-500);
 
   /* Etats metier. Chaque etat porte un triplet fg / bg / subtle.
@@ -27,7 +31,10 @@
   --semantic-danger-bg: var(--primitive-red-100);
   --semantic-danger-subtle: var(--primitive-red-50);
 
+  /* L'ambre se dedouble : --warning-fg pour la bordure et l'icone, ou le
+     seuil est de 3:1, --warning-text pour tout texte, ou il est de 4,5:1. */
   --semantic-warning-fg: var(--primitive-gold-600);
+  --semantic-warning-text: var(--primitive-gold-800);
   --semantic-warning-bg: var(--primitive-gold-100);
   --semantic-warning-subtle: var(--primitive-gold-50);
 
@@ -46,8 +53,8 @@
   /* Texte */
   --semantic-fg-primary: var(--primitive-neutral-950);
   --semantic-fg-secondary: var(--primitive-neutral-600);
-  --semantic-fg-muted: var(--primitive-neutral-500);
-  --semantic-fg-placeholder: var(--primitive-neutral-400);
+  --semantic-fg-muted: var(--primitive-neutral-550);
+  --semantic-fg-placeholder: var(--primitive-neutral-550);
 
   /* Traits */
   --semantic-border-default: var(--primitive-neutral-150);
