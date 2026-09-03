@@ -66,22 +66,41 @@ export function Montant({
   );
 }
 
-/** Entier de comptage. Aligne a droite comme un montant, mais sans devise. */
+/**
+ * Entier de comptage. Aligne a droite comme un montant, mais sans devise.
+ *
+ * `libelleZero` et `libelleAbsent` permettent de nommer ces deux cas dans
+ * les mots du domaine, comme le font les maquettes avec "Aucune" pour zero
+ * route active et "Non servi" pour une marque connue mais servie par
+ * personne. Les trois cas restent distincts : nommer n'est pas confondre.
+ */
 export function Nombre({
   valeur,
+  libelleZero,
+  libelleAbsent,
   className,
 }: {
   valeur: Incertain<number>;
+  libelleZero?: string;
+  libelleAbsent?: string;
   className?: string;
 }) {
+  const classes = cn("tabular block text-right whitespace-nowrap", className);
+
+  if (valeur === null && libelleAbsent) {
+    return (
+      <span className={cn(classes, "text-fg-muted italic")}>{libelleAbsent}</span>
+    );
+  }
+
+  if (valeur === 0 && libelleZero) {
+    return <span className={classes}>{libelleZero}</span>;
+  }
+
   const rendu = formatEntier(valeur);
   const manquant = rendreManquant(rendu);
 
-  return (
-    <span className={cn("tabular block text-right whitespace-nowrap", className)}>
-      {manquant ?? rendu}
-    </span>
-  );
+  return <span className={classes}>{manquant ?? rendu}</span>;
 }
 
 export function Texte({

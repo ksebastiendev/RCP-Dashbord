@@ -35,6 +35,8 @@ type ProprietesTableau<T> = {
   cleLigne: (ligne: T) => string;
   /** Titre de la carte, par exemple "56 Opérateurs". */
   titre?: string;
+  /** Phrase sous le titre, par exemple "18 réellement servies, 27 seulement connues". */
+  sousTitre?: string;
   chargement?: boolean;
   erreur?: unknown;
   onReessayer?: () => void;
@@ -51,6 +53,7 @@ export function Tableau<T>({
   lignes,
   cleLigne,
   titre,
+  sousTitre,
   chargement = false,
   erreur,
   onReessayer,
@@ -63,13 +66,23 @@ export function Tableau<T>({
   return (
     <Carte avecBordure={false} className="overflow-hidden">
       {titre !== undefined && (
-        <div className="flex h-[42px] items-center px-6">
+        <div className="flex min-h-[42px] flex-col justify-center px-6 py-3">
           {chargement ? (
-            /* Le titre porte un decompte. Tant qu'il n'est pas connu, il ne
-               s'invente pas : un squelette, jamais un zero. */
-            <Skeleton className="h-4 w-32" />
+            <>
+              {/* Le titre porte un decompte. Tant qu'il n'est pas connu, il
+                  ne s'invente pas : un squelette, jamais un zero. */}
+              <Skeleton className="h-5 w-32" />
+              {sousTitre !== undefined && <Skeleton className="mt-1.5 h-3.5 w-72" />}
+            </>
           ) : (
-            <h2 className="text-lg font-semibold text-fg-primary">{titre}</h2>
+            <>
+              <h2 className="text-lg leading-tight font-semibold text-fg-primary">
+                {titre}
+              </h2>
+              {sousTitre && (
+                <p className="mt-0.5 text-[13px] text-fg-secondary">{sousTitre}</p>
+              )}
+            </>
           )}
         </div>
       )}

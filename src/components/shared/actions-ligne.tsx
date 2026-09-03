@@ -14,13 +14,23 @@ export function ActionLigne({
   libelle,
   onClick,
   desactive = false,
+  /**
+   * "action" pour une correction ou un renommage, "danger" pour un retrait.
+   * Les maquettes montrent les deux tons en texte simple, en plus de la
+   * forme en pastille de ActionRetrait.
+   */
+  ton = "action",
   /** Raison affichee a la place de l'action quand elle n'est pas disponible. */
   raisonIndisponible,
+  /** Pourquoi l'action est desactivee, au survol et pour les lecteurs d'ecran. */
+  motif,
 }: {
   libelle: string;
   onClick: () => void;
   desactive?: boolean;
+  ton?: "action" | "danger";
   raisonIndisponible?: string;
+  motif?: string;
 }) {
   if (desactive && raisonIndisponible) {
     return <span className="text-sm text-fg-muted">{raisonIndisponible}</span>;
@@ -31,8 +41,10 @@ export function ActionLigne({
       type="button"
       onClick={onClick}
       disabled={desactive}
+      title={desactive ? motif : undefined}
       className={cn(
-        "rounded-sm text-[15px] font-medium text-warning-text underline-offset-4 transition-colors",
+        "rounded-sm text-[15px] font-medium underline-offset-4 transition-colors",
+        ton === "danger" ? "text-danger-fg" : "text-warning-text",
         "hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none",
         "disabled:cursor-not-allowed disabled:text-fg-muted disabled:hover:no-underline",
       )}
