@@ -5,6 +5,11 @@ import { EcranAVenir } from "./ecran-a-venir";
 import { GalerieComposants } from "./galerie-composants";
 import { EcranAccueil } from "@/features/accueil/components/ecran-accueil";
 import { EcranCouverture } from "@/features/aiguillage/components/ecran-couverture";
+import { EcranFichePaiement } from "@/features/exploitation/components/ecran-fiche-paiement";
+import { EcranNotifications } from "@/features/exploitation/components/ecran-notifications";
+import { EcranPaiements } from "@/features/exploitation/components/ecran-paiements";
+import { EcranRapprochement } from "@/features/exploitation/components/ecran-rapprochement";
+import { EcranSoldes } from "@/features/exploitation/components/ecran-soldes";
 import { EcranCouts } from "@/features/tarification/components/ecran-couts";
 import { EcranGrille } from "@/features/tarification/components/ecran-grille";
 import { EcranRoutage } from "@/features/aiguillage/components/ecran-routage";
@@ -37,6 +42,10 @@ const ECRANS_INTEGRES: Record<string, React.ReactNode> = {
   "/aiguillage/routage": <EcranRoutage />,
   "/tarification/couts": <EcranCouts />,
   "/tarification/grille": <EcranGrille />,
+  "/exploitation/paiement": <EcranPaiements />,
+  "/exploitation/notifications": <EcranNotifications />,
+  "/exploitation/soldes": <EcranSoldes />,
+  "/exploitation/rapprochement": <EcranRapprochement />,
   "/referentiel/fournisseurs": <EcranFournisseurs />,
   "/referentiel/portefeuilles": <EcranPortefeuilles />,
   "/referentiel/operateurs": <EcranOperateurs />,
@@ -80,6 +89,10 @@ export const router = createBrowserRouter([
       {
         path: "/marchand/liste/:id",
         element: <EcranFicheMarchand />,
+      },
+      {
+        path: "/exploitation/paiement/:id",
+        element: <EcranFichePaiement />,
       },
       /* Echafaudage de verification, a retirer avec la derniere section. */
       { path: "/composants", element: <GalerieComposants /> },
