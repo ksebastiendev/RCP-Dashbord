@@ -4,6 +4,8 @@ import { NAVIGATION } from "./navigation";
 import { EcranAVenir } from "./ecran-a-venir";
 import { GalerieComposants } from "./galerie-composants";
 import { EcranAccueil } from "@/features/accueil/components/ecran-accueil";
+import { EcranCouverture } from "@/features/aiguillage/components/ecran-couverture";
+import { EcranRoutage } from "@/features/aiguillage/components/ecran-routage";
 import { EcranApplications } from "@/features/marchands/components/ecran-applications";
 import { EcranDossiers } from "@/features/marchands/components/ecran-dossiers";
 import { EcranFicheMarchand } from "@/features/marchands/components/ecran-fiche-marchand";
@@ -29,6 +31,8 @@ const ECRANS_INTEGRES: Record<string, React.ReactNode> = {
   "/marchand/webhooks": <EcranWebhooks />,
   "/marchand/dossiers": <EcranDossiers />,
   "/marchand/applications": <EcranApplications />,
+  "/aiguillage/couverture": <EcranCouverture />,
+  "/aiguillage/routage": <EcranRoutage />,
   "/referentiel/fournisseurs": <EcranFournisseurs />,
   "/referentiel/portefeuilles": <EcranPortefeuilles />,
   "/referentiel/operateurs": <EcranOperateurs />,
