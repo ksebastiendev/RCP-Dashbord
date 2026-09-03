@@ -134,6 +134,42 @@ export function formatHeure(valeur: Incertain<string | number | Date>): string {
   }).format(d);
 }
 
+/**
+ * Anciennete relative : "il y a 4 minutes", "il y a 3 jours".
+ *
+ * Utilisee la ou l'ecart compte plus que la date exacte, comme une derniere
+ * connexion. La date precise reste disponible en infobulle cote composant :
+ * le relatif est plus lisible, l'absolu reste verifiable.
+ */
+export function formatAnciennete(
+  valeur: Incertain<string | number | Date>,
+): string {
+  const d = versDate(valeur);
+  if (d === undefined) return INCONNU;
+  if (d === null) return ABSENT;
+
+  const secondes = Math.round((d.getTime() - Date.now()) / 1000);
+  const relatif = new Intl.RelativeTimeFormat(LOCALE, { numeric: "auto" });
+
+  const paliers: Array<[Intl.RelativeTimeFormatUnit, number]> = [
+    ["second", 60],
+    ["minute", 60],
+    ["hour", 24],
+    ["day", 30],
+    ["month", 12],
+    ["year", Number.POSITIVE_INFINITY],
+  ];
+
+  let valeurCourante = secondes;
+  for (const [unite, seuil] of paliers) {
+    if (Math.abs(valeurCourante) < seuil) {
+      return relatif.format(Math.round(valeurCourante), unite);
+    }
+    valeurCourante /= seuil;
+  }
+  return relatif.format(Math.round(valeurCourante), "year");
+}
+
 /** Texte libre venant du serveur : distingue vide, absent et inconnu. */
 export function formatTexte(valeur: Incertain<string>): string {
   if (valeur === undefined) return INCONNU;

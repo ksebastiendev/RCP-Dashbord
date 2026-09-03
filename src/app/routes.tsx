@@ -5,6 +5,8 @@ import { EcranAVenir } from "./ecran-a-venir";
 import { GalerieComposants } from "./galerie-composants";
 import { EcranAccueil } from "@/features/accueil/components/ecran-accueil";
 import { EcranCouverture } from "@/features/aiguillage/components/ecran-couverture";
+import { EcranComptes } from "@/features/administration/components/ecran-comptes";
+import { EcranRoles } from "@/features/administration/components/ecran-roles";
 import { EcranFichePaiement } from "@/features/exploitation/components/ecran-fiche-paiement";
 import { EcranNotifications } from "@/features/exploitation/components/ecran-notifications";
 import { EcranPaiements } from "@/features/exploitation/components/ecran-paiements";
@@ -46,6 +48,8 @@ const ECRANS_INTEGRES: Record<string, React.ReactNode> = {
   "/exploitation/notifications": <EcranNotifications />,
   "/exploitation/soldes": <EcranSoldes />,
   "/exploitation/rapprochement": <EcranRapprochement />,
+  "/administration/comptes": <EcranComptes />,
+  "/administration/roles": <EcranRoles />,
   "/referentiel/fournisseurs": <EcranFournisseurs />,
   "/referentiel/portefeuilles": <EcranPortefeuilles />,
   "/referentiel/operateurs": <EcranOperateurs />,

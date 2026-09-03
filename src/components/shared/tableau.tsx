@@ -44,6 +44,13 @@ type ProprietesTableau<T> = {
   etatVide?: ReactNode;
   /** Nombre de lignes de squelette. A calibrer sur la taille de page reelle. */
   lignesSquelette?: number;
+  /**
+   * Hauteur d'une ligne, en classe Tailwind. A relever quand les cellules
+   * portent plusieurs lignes de texte : sans cela le squelette est plus
+   * court que le tableau charge et la mise en page saute a l'arrivee des
+   * donnees, ce que le squelette existe precisement pour eviter.
+   */
+  hauteurLigne?: string;
   /** Rendu sous le tableau, typiquement la pagination. */
   pied?: ReactNode;
 };
@@ -59,6 +66,7 @@ export function Tableau<T>({
   onReessayer,
   etatVide,
   lignesSquelette = 8,
+  hauteurLigne = "h-14",
   pied,
 }: ProprietesTableau<T>) {
   const vide = !chargement && !erreur && (lignes?.length ?? 0) === 0;
@@ -123,7 +131,10 @@ export function Tableau<T>({
                     className="border-b border-table-row-separator last:border-b-0"
                   >
                     {colonnes.map((colonne) => (
-                      <td key={colonne.cle} className="h-14 overflow-hidden px-6">
+                      <td
+                        key={colonne.cle}
+                        className={cn("overflow-hidden px-6", hauteurLigne)}
+                      >
                         <Skeleton
                           className={cn(
                             "h-4",
@@ -149,7 +160,8 @@ export function Tableau<T>({
                           /* table-fixed ne clippe pas seul : sans overflow
                              une cellule longue deborde sur la colonne
                              voisine au lieu d'etre tronquee. */
-                          "h-14 overflow-hidden px-6 text-[15px] text-table-row-fg",
+                          "overflow-hidden px-6 text-[15px] text-table-row-fg",
+                          hauteurLigne,
                           colonne.alignement === "droite" && "text-right",
                         )}
                       >
