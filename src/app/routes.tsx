@@ -3,6 +3,7 @@ import { CoqueApplication } from "@/components/shared/coque-application";
 import { NAVIGATION } from "./navigation";
 import { EcranAVenir } from "./ecran-a-venir";
 import { GalerieComposants } from "./galerie-composants";
+import { EcranAccueil } from "@/features/accueil/components/ecran-accueil";
 import { EcranDevises } from "@/features/referentiels/components/ecran-devises";
 import { EcranFicheFournisseur } from "@/features/referentiels/components/ecran-fiche-fournisseur";
 import { EcranFournisseurs } from "@/features/referentiels/components/ecran-fournisseurs";
@@ -18,6 +19,7 @@ import { EcranPresences } from "@/features/referentiels/components/ecran-presenc
  * declare ici en une ligne.
  */
 const ECRANS_INTEGRES: Record<string, React.ReactNode> = {
+  "/accueil": <EcranAccueil />,
   "/referentiel/fournisseurs": <EcranFournisseurs />,
   "/referentiel/portefeuilles": <EcranPortefeuilles />,
   "/referentiel/operateurs": <EcranOperateurs />,

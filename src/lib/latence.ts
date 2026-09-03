@@ -9,7 +9,12 @@
 
 import { ErreurApi, MESSAGE_PAR_GENRE, type GenreErreur } from "./erreurs";
 
-/** Fenetre de latence simulee, en millisecondes. */
+/*
+ * Fenetre de latence simulee, en millisecondes.
+ * Pilotable par VITE_LATENCE_MS sans rebuild, pour pouvoir observer les
+ * etats de chargement aussi longtemps qu'il le faut pendant une revue.
+ */
+const LATENCE_FIXE = Number(import.meta.env.VITE_LATENCE_MS ?? 0);
 const LATENCE_MIN = 350;
 const LATENCE_MAX = 900;
 
@@ -36,7 +41,10 @@ export async function simulerReponse<T>(
   donnee: T,
   options: { genreEchec?: GenreErreur; tauxEchec?: number } = {},
 ): Promise<T> {
-  const duree = LATENCE_MIN + Math.random() * (LATENCE_MAX - LATENCE_MIN);
+  const duree =
+    LATENCE_FIXE > 0
+      ? LATENCE_FIXE
+      : LATENCE_MIN + Math.random() * (LATENCE_MAX - LATENCE_MIN);
   await attendre(duree);
 
   const taux = options.tauxEchec ?? TAUX_ECHEC;
