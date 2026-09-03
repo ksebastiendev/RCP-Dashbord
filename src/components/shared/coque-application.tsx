@@ -1,4 +1,6 @@
+import { Suspense } from "react";
 import { Outlet } from "react-router-dom";
+import { Skeleton } from "@/components/ui/skeleton";
 import { NavigationLaterale } from "./navigation-laterale";
 import { BarreSuperieure } from "./barre-superieure";
 
@@ -16,11 +18,28 @@ export function CoqueApplication() {
         <BarreSuperieure />
 
         {/* La zone de contenu est le seul element qui defile : la navigation
-            et la barre superieure restent en place. */}
+            et la barre superieure restent en place.
+
+            Les ecrans sont charges a la demande : le temps que le fichier
+            arrive, l'attente prend la forme d'un ecran de liste plutot que
+            celle d'un rotateur, comme partout ailleurs dans le projet. */}
         <main id="contenu" className="flex-1 overflow-y-auto">
-          <Outlet />
+          <Suspense fallback={<AttenteEcran />}>
+            <Outlet />
+          </Suspense>
         </main>
       </div>
+    </div>
+  );
+}
+
+function AttenteEcran() {
+  return (
+    <div className="flex flex-col gap-6 px-8 py-10">
+      <Skeleton className="h-10 w-72" />
+      <Skeleton className="h-4 w-[520px] max-w-full" />
+      <Skeleton className="h-[92px] w-full rounded-lg" />
+      <Skeleton className="h-96 w-full rounded-lg" />
     </div>
   );
 }

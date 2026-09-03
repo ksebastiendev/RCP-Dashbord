@@ -1,40 +1,51 @@
-import { createBrowserRouter, Navigate, type RouteObject } from "react-router-dom";
+import { Suspense, type ReactNode } from "react";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import { CoqueApplication } from "@/components/shared/coque-application";
 import { NAVIGATION } from "./navigation";
 import { EcranAVenir } from "./ecran-a-venir";
-import { GalerieComposants } from "./galerie-composants";
-import { EcranAccueil } from "@/features/accueil/components/ecran-accueil";
-import { EcranCouverture } from "@/features/aiguillage/components/ecran-couverture";
-import { EcranComptes } from "@/features/administration/components/ecran-comptes";
-import { EcranRoles } from "@/features/administration/components/ecran-roles";
-import { EcranFichePaiement } from "@/features/exploitation/components/ecran-fiche-paiement";
-import { EcranNotifications } from "@/features/exploitation/components/ecran-notifications";
-import { EcranPaiements } from "@/features/exploitation/components/ecran-paiements";
-import { EcranRapprochement } from "@/features/exploitation/components/ecran-rapprochement";
-import { EcranSoldes } from "@/features/exploitation/components/ecran-soldes";
-import { EcranCouts } from "@/features/tarification/components/ecran-couts";
-import { EcranGrille } from "@/features/tarification/components/ecran-grille";
-import { EcranRoutage } from "@/features/aiguillage/components/ecran-routage";
-import { EcranApplications } from "@/features/marchands/components/ecran-applications";
-import { EcranDossiers } from "@/features/marchands/components/ecran-dossiers";
-import { EcranFicheMarchand } from "@/features/marchands/components/ecran-fiche-marchand";
-import { EcranListeMarchands } from "@/features/marchands/components/ecran-liste-marchands";
-import { EcranWebhooks } from "@/features/marchands/components/ecran-webhooks";
-import { EcranDevises } from "@/features/referentiels/components/ecran-devises";
-import { EcranFicheFournisseur } from "@/features/referentiels/components/ecran-fiche-fournisseur";
-import { EcranFournisseurs } from "@/features/referentiels/components/ecran-fournisseurs";
-import { EcranMontants } from "@/features/referentiels/components/ecran-montants";
-import { EcranOperateurs } from "@/features/referentiels/components/ecran-operateurs";
-import { EcranPortefeuilles } from "@/features/referentiels/components/ecran-portefeuilles";
-import { EcranPresences } from "@/features/referentiels/components/ecran-presences";
+import { RouteProtegee } from "./route-protegee";
+import {
+  EcranAccueil,
+  EcranApplications,
+  EcranCode,
+  EcranComptes,
+  EcranConnexion,
+  EcranCouts,
+  EcranCouverture,
+  EcranDevises,
+  EcranDossiers,
+  EcranFicheFournisseur,
+  EcranFicheMarchand,
+  EcranFichePaiement,
+  EcranFournisseurs,
+  EcranGrille,
+  EcranListeMarchands,
+  EcranMontants,
+  EcranNotifications,
+  EcranOperateurs,
+  EcranPaiements,
+  EcranPortefeuilles,
+  EcranPresences,
+  EcranRapprochement,
+  EcranRoles,
+  EcranRoutage,
+  EcranSoldes,
+  EcranWebhooks,
+} from "./ecrans-differes";
 
 /*
- * Ecrans reellement integres, par chemin.
- * Un chemin absent de cette table retombe sur EcranAVenir : le menu et les
- * routes restent derives de app/navigation.ts, et un ecran integre se
- * declare ici en une ligne.
+ * Table de routes.
+ *
+ * Les routes sont derivees de app/navigation.ts : un libelle de menu et son
+ * chemin ne peuvent pas diverger. Les ecrans sont charges a la demande,
+ * voir app/ecrans-differes.ts.
  */
-const ECRANS_INTEGRES: Record<string, React.ReactNode> = {
+
+/*
+ * Ecrans reellement integres, par chemin. Un chemin absent de cette table
+ * retombe sur EcranAVenir.
+ */
+const ECRANS_INTEGRES: Record<string, ReactNode> = {
   "/accueil": <EcranAccueil />,
   "/marchand/liste": <EcranListeMarchands />,
   "/marchand/webhooks": <EcranWebhooks />,
@@ -42,6 +53,12 @@ const ECRANS_INTEGRES: Record<string, React.ReactNode> = {
   "/marchand/applications": <EcranApplications />,
   "/aiguillage/couverture": <EcranCouverture />,
   "/aiguillage/routage": <EcranRoutage />,
+  "/referentiel/fournisseurs": <EcranFournisseurs />,
+  "/referentiel/portefeuilles": <EcranPortefeuilles />,
+  "/referentiel/operateurs": <EcranOperateurs />,
+  "/referentiel/presences": <EcranPresences />,
+  "/referentiel/montants": <EcranMontants />,
+  "/referentiel/devises": <EcranDevises />,
   "/tarification/couts": <EcranCouts />,
   "/tarification/grille": <EcranGrille />,
   "/exploitation/paiement": <EcranPaiements />,
@@ -50,21 +67,9 @@ const ECRANS_INTEGRES: Record<string, React.ReactNode> = {
   "/exploitation/rapprochement": <EcranRapprochement />,
   "/administration/comptes": <EcranComptes />,
   "/administration/roles": <EcranRoles />,
-  "/referentiel/fournisseurs": <EcranFournisseurs />,
-  "/referentiel/portefeuilles": <EcranPortefeuilles />,
-  "/referentiel/operateurs": <EcranOperateurs />,
-  "/referentiel/presences": <EcranPresences />,
-  "/referentiel/montants": <EcranMontants />,
-  "/referentiel/devises": <EcranDevises />,
 };
 
-/*
- * Table de routes, derivee de la declaration de navigation : une entree de
- * menu et sa route ne peuvent pas diverger.
- * Chaque lot remplace un EcranAVenir par l'ecran reellement integre.
- */
-
-const routesDesSections: RouteObject[] = NAVIGATION.flatMap((section) => {
+const routesDesSections = NAVIGATION.flatMap((section) => {
   if (section.chemin) {
     return [
       {
@@ -81,26 +86,41 @@ const routesDesSections: RouteObject[] = NAVIGATION.flatMap((section) => {
 });
 
 export const router = createBrowserRouter([
+  /* Les ecrans d'authentification vivent hors de la coque : ils n'ont ni
+     navigation laterale ni barre superieure. */
   {
-    element: <CoqueApplication />,
+    path: "/connexion",
+    element: (
+      <Suspense fallback={null}>
+        <EcranConnexion />
+      </Suspense>
+    ),
+  },
+  {
+    path: "/connexion/code",
+    element: (
+      <Suspense fallback={null}>
+        <EcranCode />
+      </Suspense>
+    ),
+  },
+  {
+    element: <RouteProtegee />,
     children: [
-      { path: "/", element: <Navigate to="/accueil" replace /> },
-      ...routesDesSections,
       {
-        path: "/referentiel/fournisseurs/:id",
-        element: <EcranFicheFournisseur />,
+        element: <CoqueApplication />,
+        children: [
+          { path: "/", element: <Navigate to="/accueil" replace /> },
+          ...routesDesSections,
+          {
+            path: "/referentiel/fournisseurs/:id",
+            element: <EcranFicheFournisseur />,
+          },
+          { path: "/marchand/liste/:id", element: <EcranFicheMarchand /> },
+          { path: "/exploitation/paiement/:id", element: <EcranFichePaiement /> },
+          { path: "*", element: <EcranAVenir titre="Écran introuvable" /> },
+        ],
       },
-      {
-        path: "/marchand/liste/:id",
-        element: <EcranFicheMarchand />,
-      },
-      {
-        path: "/exploitation/paiement/:id",
-        element: <EcranFichePaiement />,
-      },
-      /* Echafaudage de verification, a retirer avec la derniere section. */
-      { path: "/composants", element: <GalerieComposants /> },
-      { path: "*", element: <EcranAVenir titre="Écran introuvable" /> },
     ],
   },
 ]);
