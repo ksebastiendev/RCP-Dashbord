@@ -174,7 +174,7 @@ function LienRetour() {
   return (
     <Link
       to="/marchand/liste"
-      className="-mb-2 flex w-fit items-center gap-2 rounded-sm text-[15px] font-medium text-warning-text hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+      className="-mb-2 flex w-fit items-center gap-2 rounded-sm text-corps font-medium text-warning-text hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
     >
       <ChevronLeft className="size-4" strokeWidth={TRAIT_ICONE} aria-hidden="true" />
       Tous les marchands
@@ -201,13 +201,13 @@ function EnTeteFiche({
   return (
     <div className="flex flex-wrap items-start justify-between gap-6">
       <div className="min-w-0">
-        <h1 className="text-[34px] leading-tight font-semibold text-fg-primary">
+        <h1 className="text-ecran font-semibold text-fg-primary">
           {fiche.nom}
         </h1>
         {/* La consequence du statut est ecrite sous le nom : savoir qu'un
             dossier est "en examen" ne dit pas qu'aucun encaissement n'est
             possible. */}
-        <p className="mt-2 max-w-[640px] text-[15px] leading-relaxed text-fg-secondary">
+        <p className="mt-2 max-w-[640px] text-corps leading-relaxed text-fg-secondary">
           {CONSEQUENCE_STATUT[fiche.statut]}
         </p>
       </div>
@@ -258,7 +258,7 @@ function RangeeStatistiques({
           cle: "frais",
           etiquette: "Frais à la charge de",
           valeur: LIBELLE_FRAIS[fiche.fraisALaChargeDe],
-          ton: "attente" as const,
+          ton: "neutre" as const,
         },
       ]
     : [];
@@ -274,14 +274,13 @@ function RangeeStatistiques({
           ))
         : statistiques.map((statistique) => (
             <Carte key={statistique.cle} className="overflow-hidden px-5 py-5">
-              <p className="text-[11px] font-medium tracking-wide text-fg-muted uppercase">
+              <p className="text-etiquette font-medium tracking-wide text-fg-muted uppercase">
                 {statistique.etiquette}
               </p>
               <p
                 className={cn(
-                  "tabular mt-2 text-[22px] leading-tight font-semibold break-words",
+                  "tabular mt-2 text-titre font-semibold break-words",
                   statistique.ton === "succes" && "text-success-fg",
-                  statistique.ton === "attente" && "text-warning-text",
                   statistique.ton === "neutre" && "text-fg-primary",
                 )}
               >

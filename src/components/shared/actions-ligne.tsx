@@ -33,7 +33,7 @@ export function ActionLigne({
   motif?: string;
 }) {
   if (desactive && raisonIndisponible) {
-    return <span className="text-sm text-fg-muted">{raisonIndisponible}</span>;
+    return <span className="text-mention text-fg-muted">{raisonIndisponible}</span>;
   }
 
   return (
@@ -43,7 +43,7 @@ export function ActionLigne({
       disabled={desactive}
       title={desactive ? motif : undefined}
       className={cn(
-        "rounded-sm text-[15px] font-medium underline-offset-4 transition-colors",
+        "rounded-sm text-corps font-medium underline-offset-4 transition-colors",
         ton === "danger" ? "text-danger-fg" : "text-warning-text",
         "hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none",
         "disabled:cursor-not-allowed disabled:text-fg-muted disabled:hover:no-underline",
@@ -73,7 +73,7 @@ export function ActionRetrait({
       onClick={onClick}
       disabled={desactive}
       className={cn(
-        "h-9 rounded-md bg-danger-subtle px-4 text-[15px] font-medium text-danger-fg transition-colors",
+        "h-9 rounded-md bg-danger-subtle px-4 text-corps font-medium text-danger-fg transition-colors",
         "hover:bg-danger-bg focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none",
         "disabled:cursor-not-allowed disabled:bg-muted disabled:text-fg-muted",
       )}

@@ -156,13 +156,13 @@ function LegendeMode({ mode }: { mode: ModeApplication }) {
   return (
     <p
       className={cn(
-        "flex flex-wrap items-baseline gap-4 rounded-lg px-5 py-3.5 text-sm",
+        "flex flex-wrap items-baseline gap-4 rounded-lg px-5 py-3.5 text-mention",
         mode === "reel" ? "bg-success-subtle" : "bg-warning-subtle",
       )}
     >
       <span
         className={cn(
-          "shrink-0 text-[13px] font-semibold tracking-wide uppercase",
+          "shrink-0 text-mention font-semibold tracking-wide uppercase",
           mode === "reel" ? "text-success-fg" : "text-warning-text",
         )}
       >

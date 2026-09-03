@@ -24,9 +24,29 @@ export function CoqueConnexion({
         className="absolute inset-0 size-full object-cover"
       />
 
+      {/*
+        Voile brun.
+        L'image brute est un orange sature sur toute la surface : la carte
+        blanche s'y detache mal et la couleur de marque perd sa valeur
+        d'accent a force d'occuper l'ecran entier. Le voile la ramene au
+        rang de fond, sans introduire de couleur etrangere puisqu'il est
+        tire de brown-900.
+      */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 bg-sidebar/35"
+        style={{
+          backgroundImage:
+            "radial-gradient(ellipse at center, transparent 0%, rgba(77, 36, 9, 0.3) 100%)",
+        }}
+      />
+
       <main
         className={cn(
           "relative w-full max-w-[520px] rounded-lg bg-card px-10 py-12",
+          /* Seule ombre du projet, et elle a une fonction : detacher la
+             carte du fond photographique. Aucun autre ecran n'en porte. */
+          "shadow-[0_24px_64px_-16px_rgba(77,36,9,0.45)]",
           className,
         )}
       >
@@ -51,10 +71,10 @@ export function EnTeteConnexion({
         aria-hidden="true"
         className="mx-auto h-10 w-12 object-contain"
       />
-      <h1 className="mt-5 text-[28px] leading-tight font-semibold text-fg-primary">
+      <h1 className="mt-5 text-nombre font-semibold text-fg-primary">
         {titre}
       </h1>
-      <p className="mt-2 text-[15px] leading-relaxed text-fg-secondary">
+      <p className="mt-2 text-corps leading-relaxed text-fg-secondary">
         {description}
       </p>
     </div>

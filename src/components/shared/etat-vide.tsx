@@ -45,8 +45,8 @@ export function EtatVide({
       </span>
 
       <div className="max-w-[420px]">
-        <p className="text-lg font-semibold text-fg-primary">{titre}</p>
-        <p className="mt-1 text-sm leading-relaxed text-fg-secondary">
+        <p className="text-section font-semibold text-fg-primary">{titre}</p>
+        <p className="mt-1 text-mention leading-relaxed text-fg-secondary">
           {description}
         </p>
       </div>

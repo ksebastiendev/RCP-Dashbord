@@ -79,12 +79,12 @@ export function Bandeau({
       </span>
 
       <div className="min-w-0 flex-1">
-        <p className="text-[15px] font-semibold text-fg-primary">
+        <p className="text-corps font-semibold text-fg-primary">
           <span className="sr-only">{apparence.lecture} : </span>
           {titre}
         </p>
         {description && (
-          <p className="mt-1 text-sm leading-relaxed text-fg-secondary">
+          <p className="mt-1 text-mention leading-relaxed text-fg-secondary">
             {description}
           </p>
         )}
@@ -125,7 +125,7 @@ export function BandeauCompact({
         strokeWidth={TRAIT_ICONE}
         aria-hidden="true"
       />
-      <p className={cn("text-sm", apparence.texte)}>
+      <p className={cn("text-mention", apparence.texte)}>
         <span className="sr-only">{apparence.lecture} : </span>
         {message}
       </p>

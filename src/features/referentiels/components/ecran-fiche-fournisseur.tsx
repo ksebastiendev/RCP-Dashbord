@@ -140,10 +140,10 @@ export function EcranFicheFournisseur() {
             </>
           ) : (
             <>
-              <h1 className="text-[34px] leading-tight font-semibold text-fg-primary">
+              <h1 className="text-ecran font-semibold text-fg-primary">
                 {data.nom}
               </h1>
-              <p className="mt-2 text-[15px] text-fg-secondary">
+              <p className="mt-2 text-corps text-fg-secondary">
                 {data.type === "agregateur" ? "Agrégateur" : "Connecteur direct"}
                 {" · "}
                 {data.routesActives === 0
@@ -188,7 +188,7 @@ export function EcranFicheFournisseur() {
           />
         }
         pied={
-          <p className="px-6 py-4 text-[13px] text-fg-secondary">
+          <p className="px-6 py-4 text-mention text-fg-secondary">
             « Relevé » et « hypothèse » sont deux niveaux de fiabilité de
             l'information, pas deux états de la destination.
           </p>
@@ -202,7 +202,7 @@ function LienRetour() {
   return (
     <Link
       to="/referentiel/fournisseurs"
-      className="-mb-2 flex w-fit items-center gap-2 rounded-sm text-[15px] font-medium text-warning-text hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+      className="-mb-2 flex w-fit items-center gap-2 rounded-sm text-corps font-medium text-warning-text hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
     >
       <ChevronLeft className="size-4" strokeWidth={TRAIT_ICONE} aria-hidden="true" />
       Tous les fournisseurs

@@ -73,7 +73,7 @@ function CarteRole({ role }: { role: DescriptionRole }) {
           genre={role.role === "administrateur" ? "succes" : "neutre"}
           libelle={LIBELLE_ROLE[role.role]}
         />
-        <span className="flex items-center gap-2 text-sm text-fg-secondary">
+        <span className="flex items-center gap-2 text-mention text-fg-secondary">
           <Users className="size-4" strokeWidth={TRAIT_ICONE} aria-hidden="true" />
           {/* Zero compte se dit, il ne s'affiche pas en chiffre nu : un role
               que personne ne porte est une information, pas un vide. */}
@@ -87,7 +87,7 @@ function CarteRole({ role }: { role: DescriptionRole }) {
         {role.permissions.map((permission) => (
           <li
             key={permission}
-            className="flex gap-2 text-sm leading-relaxed text-fg-secondary"
+            className="flex gap-2 text-mention leading-relaxed text-fg-secondary"
           >
             <span aria-hidden="true" className="text-fg-muted">
               ·
@@ -97,7 +97,7 @@ function CarteRole({ role }: { role: DescriptionRole }) {
         ))}
       </ul>
 
-      <p className="mt-5 border-t border-table-row-separator pt-4 text-sm font-medium text-warning-text">
+      <p className="mt-5 border-t border-table-row-separator pt-4 text-mention font-medium text-warning-text">
         {formatEntier(role.nombreDroits)} droits élémentaires
       </p>
     </Carte>

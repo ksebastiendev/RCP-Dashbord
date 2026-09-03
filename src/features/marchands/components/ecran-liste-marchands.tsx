@@ -113,7 +113,7 @@ export function EcranListeMarchands() {
         <span className="flex justify-end">
           <Link
             to={`/marchand/liste/${m.id}`}
-            className="rounded-sm text-[15px] font-medium text-warning-text hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+            className="rounded-sm text-corps font-medium text-warning-text hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
           >
             Voir la fiche
           </Link>

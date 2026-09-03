@@ -1,6 +1,7 @@
 import { ActionLigne, GroupeActions } from "@/components/shared/actions-ligne";
 import { CarteIndicateur } from "@/components/shared/carte-indicateur";
 import { CellulePays } from "@/components/shared/drapeau";
+import { VignetteDevise } from "@/components/shared/vignette-marque";
 import { EtatVide } from "@/components/shared/etat-vide";
 import { Tableau, type Colonne } from "@/components/shared/tableau";
 import { Nombre } from "@/components/shared/valeur";
@@ -28,21 +29,24 @@ export function EcranDevises() {
     {
       cle: "code",
       entete: "Devise",
-      largeur: "24%",
+      largeur: "28%",
       squelette: "60%",
       /* Le code seul, comme dans la maquette. Le nom en clair tenait sur une
          seconde ligne mais elargissait la colonne au point que les deux
          tableaux ne tenaient plus cote a cote en 1440. */
       cellule: (d) => (
-        <span className="tabular font-medium text-fg-primary" title={d.nom}>
-          {d.code}
+        <span className="flex min-w-0 items-center gap-2.5" title={d.nom}>
+          <VignetteDevise devise={d.code} taille={24} />
+          <span className="tabular truncate font-medium text-fg-primary">
+            {d.code}
+          </span>
         </span>
       ),
     },
     {
       cle: "decimales",
       entete: "Décimales",
-      largeur: "17%",
+      largeur: "22%",
       alignement: "droite",
       squelette: "40%",
       cellule: (d) => <Nombre valeur={d.decimales} />,
@@ -50,7 +54,7 @@ export function EcranDevises() {
     {
       cle: "pays",
       entete: "Pays",
-      largeur: "13%",
+      largeur: "14%",
       alignement: "droite",
       squelette: "40%",
       cellule: (d) => <Nombre valeur={d.nombrePays} libelleZero="Aucun" />,
@@ -58,7 +62,7 @@ export function EcranDevises() {
     {
       cle: "actions",
       entete: "",
-      largeur: "46%",
+      largeur: "36%",
       squelette: "70%",
       cellule: () => (
         <GroupeActions>
@@ -84,28 +88,31 @@ export function EcranDevises() {
     {
       cle: "pays",
       entete: "Pays",
-      largeur: "34%",
+      largeur: "30%",
       squelette: "60%",
       cellule: (p) => <CellulePays code={p.code} nom={p.nom} />,
     },
     {
       cle: "devise",
       entete: "Encaissement",
-      largeur: "24%",
+      largeur: "28%",
       squelette: "50%",
       /* Pas de drapeau ici : une devise n'est pas un pays. XOF couvre huit
          pays, y accoler le drapeau du pays de la ligne laisserait croire a
          une devise nationale. */
       cellule: (p) => (
-        <span className="tabular font-medium text-fg-primary">
-          {p.deviseEncaissement}
+        <span className="flex min-w-0 items-center gap-2.5">
+          <VignetteDevise devise={p.deviseEncaissement} taille={22} />
+          <span className="tabular truncate font-medium text-fg-primary">
+            {p.deviseEncaissement}
+          </span>
         </span>
       ),
     },
     {
       cle: "indicatif",
       entete: "Indicatif",
-      largeur: "18%",
+      largeur: "20%",
       alignement: "droite",
       squelette: "50%",
       cellule: (p) => (
@@ -117,7 +124,7 @@ export function EcranDevises() {
     {
       cle: "actions",
       entete: "",
-      largeur: "24%",
+      largeur: "22%",
       squelette: "70%",
       cellule: () => (
         <GroupeActions>

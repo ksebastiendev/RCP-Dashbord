@@ -108,10 +108,10 @@ export function SimulateurPrelevement({
           aria-hidden="true"
         />
         <div>
-          <h2 className="text-xl font-semibold text-fg-primary">
+          <h2 className="text-titre font-semibold text-fg-primary">
             Simuler un prélèvement
           </h2>
-          <p className="mt-1 text-sm text-fg-secondary">
+          <p className="mt-1 text-mention text-fg-secondary">
             Voyez quelle règle s'applique et combien elle prélève, avant de
             l'appliquer à un vrai paiement.
           </p>
@@ -236,7 +236,7 @@ export function SimulateurPrelevement({
             </Ligne>
           </dl>
 
-          <p className="mt-4 text-[13px] leading-relaxed text-fg-secondary">
+          <p className="mt-4 text-mention leading-relaxed text-fg-secondary">
             Le prélèvement est arrondi au supérieur, à l'unité en circulation
             dans la devise. Arrondir au plus proche ferait perdre une fraction
             à chaque paiement, et l'écart deviendrait visible au rapprochement.
@@ -256,8 +256,8 @@ function Ligne({
 }) {
   return (
     <div className="flex items-center justify-between gap-6 border-b border-table-row-separator pb-2">
-      <dt className="text-sm text-fg-secondary">{etiquette}</dt>
-      <dd className="w-48 text-[15px] font-medium text-fg-primary">{children}</dd>
+      <dt className="text-mention text-fg-secondary">{etiquette}</dt>
+      <dd className="w-48 text-corps font-medium text-fg-primary">{children}</dd>
     </div>
   );
 }

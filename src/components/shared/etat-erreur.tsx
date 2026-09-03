@@ -83,8 +83,8 @@ export function EtatErreur({
       </span>
 
       <div className="max-w-[420px]">
-        <p className="text-lg font-semibold text-fg-primary">{apparence.titre}</p>
-        <p className="mt-1 text-sm leading-relaxed text-fg-secondary">{message}</p>
+        <p className="text-section font-semibold text-fg-primary">{apparence.titre}</p>
+        <p className="mt-1 text-mention leading-relaxed text-fg-secondary">{message}</p>
       </div>
 
       <div className="flex items-center gap-3">

@@ -67,11 +67,11 @@ export function Modale({
         showCloseButton={false}
       >
         <DialogHeader className="px-8 pt-8 pr-16 pb-0 text-left">
-          <DialogTitle className="text-xl font-semibold text-fg-primary">
+          <DialogTitle className="text-titre font-semibold text-fg-primary">
             {titre}
           </DialogTitle>
           {sousTitre ? (
-            <DialogDescription className="mt-1 text-sm text-fg-secondary">
+            <DialogDescription className="mt-1 text-mention text-fg-secondary">
               {sousTitre}
             </DialogDescription>
           ) : (
@@ -105,7 +105,7 @@ export function Modale({
         )}
 
         {messagePied && (
-          <p className="px-8 pb-6 text-right text-sm text-warning-text">
+          <p className="px-8 pb-6 text-right text-mention text-warning-text">
             {messagePied}
           </p>
         )}
@@ -204,7 +204,7 @@ export function ModaleConfirmation({
         </>
       }
     >
-      <p className="text-[15px] leading-relaxed text-fg-secondary">{consequences}</p>
+      <p className="text-corps leading-relaxed text-fg-secondary">{consequences}</p>
 
       {avertissement && (
         <Bandeau

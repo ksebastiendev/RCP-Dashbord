@@ -25,10 +25,10 @@ export function EtatPreparation({
     <Carte avecBordure={false} className="overflow-hidden">
       <div className="flex items-start justify-between gap-4 px-6 py-5">
         <div className="min-w-0">
-          <h2 className="text-xl font-semibold text-fg-primary">
+          <h2 className="text-titre font-semibold text-fg-primary">
             État de préparation
           </h2>
-          <p className="mt-1 text-[13px] text-fg-secondary">
+          <p className="mt-1 text-mention text-fg-secondary">
             Constaté automatiquement à partir de l'état réel de la plateforme.
           </p>
         </div>
@@ -36,7 +36,7 @@ export function EtatPreparation({
         {chargement || !preparation ? (
           <Skeleton className="h-8 w-14 rounded-md" />
         ) : (
-          <span className="tabular rounded-md bg-primary px-3 py-1.5 text-[15px] font-semibold text-primary-foreground">
+          <span className="tabular rounded-md bg-primary px-3 py-1.5 text-corps font-semibold text-primary-foreground">
             <span aria-hidden="true">
               {formatEntier(preparation.validees)}/{formatEntier(preparation.total)}
             </span>
@@ -89,15 +89,15 @@ function Etape({ etape }: { etape: EtapePreparation }) {
       </span>
 
       <div className="min-w-0 flex-1">
-        <p className="text-[15px] font-medium text-fg-primary">{etape.titre}</p>
-        <p className="mt-1 text-sm leading-relaxed text-fg-secondary">
+        <p className="text-corps font-medium text-fg-primary">{etape.titre}</p>
+        <p className="mt-1 text-mention leading-relaxed text-fg-secondary">
           {etape.description}
         </p>
 
         {etape.action && (
           <Link
             to={etape.action.chemin}
-            className="mt-2 inline-flex items-center gap-2 rounded-sm text-[15px] font-medium text-warning-text hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+            className="mt-2 inline-flex items-center gap-2 rounded-sm text-corps font-medium text-warning-text hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
           >
             {etape.action.libelle}
             <ArrowRight className="size-4" strokeWidth={TRAIT_ICONE} aria-hidden="true" />

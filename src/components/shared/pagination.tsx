@@ -41,7 +41,7 @@ export function Pagination({
 
   return (
     <div className="flex flex-wrap items-center justify-between gap-4 px-6 py-4">
-      <p className="text-sm text-fg-secondary">
+      <p className="text-mention text-fg-secondary">
         {total === undefined ? (
           <>
             Lignes {formatEntier(premier)} à {formatEntier(dernier)}, total inconnu
@@ -58,14 +58,14 @@ export function Pagination({
 
       <div className="flex items-center gap-4">
         {onChangementTaille && (
-          <label className="flex items-center gap-2 text-sm text-fg-secondary">
+          <label className="flex items-center gap-2 text-mention text-fg-secondary">
             Lignes par page
             <select
               value={taillePage}
               onChange={(evenement) =>
                 onChangementTaille(Number(evenement.target.value))
               }
-              className="h-9 rounded-md border border-border bg-card px-2 text-sm text-fg-primary focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/40 focus-visible:outline-none"
+              className="h-9 rounded-md border border-border bg-card px-2 text-mention text-fg-primary focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/40 focus-visible:outline-none"
             >
               {TAILLES.map((taille) => (
                 <option key={taille} value={taille}>
@@ -85,7 +85,7 @@ export function Pagination({
             <ChevronLeft className="size-4" strokeWidth={TRAIT_ICONE} aria-hidden="true" />
           </BoutonPage>
 
-          <span className="tabular text-sm text-fg-secondary" aria-live="polite">
+          <span className="tabular text-mention text-fg-secondary" aria-live="polite">
             Page {formatEntier(page)}
             {dernierePage !== undefined && <> sur {formatEntier(dernierePage)}</>}
           </span>

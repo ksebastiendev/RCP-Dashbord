@@ -425,11 +425,11 @@ export function ModaleRenseignerPlafond({
           <button
             type="button"
             onClick={onMarquerInconnu}
-            className="w-fit rounded-sm text-[15px] font-medium text-warning-text underline-offset-4 hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+            className="w-fit rounded-sm text-corps font-medium text-warning-text underline-offset-4 hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
           >
             Marquer le plafond comme inconnu
           </button>
-          <p className="-mt-3 text-sm text-fg-secondary">
+          <p className="-mt-3 text-mention text-fg-secondary">
             Une borne à plafond inconnu refuse silencieusement au-delà du plafond
             par défaut. Le déclarer inconnu la fait apparaître dans le décompte.
           </p>

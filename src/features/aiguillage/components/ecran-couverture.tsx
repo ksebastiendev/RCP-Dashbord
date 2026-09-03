@@ -5,6 +5,7 @@ import { BarreFiltres, ChampRecherche, GroupeBascule } from "@/components/shared
 import { Carte } from "@/components/shared/carte";
 import { CorpsEcran, EnTeteEcran } from "@/components/shared/coque-application";
 import { Drapeau } from "@/components/shared/drapeau";
+import { Vignette } from "@/components/shared/vignette-marque";
 import { EtatVide } from "@/components/shared/etat-vide";
 import { Tableau, type Colonne } from "@/components/shared/tableau";
 import { formatEntier } from "@/lib/format";
@@ -76,11 +77,12 @@ export function EcranCouverture() {
       squelette: "70%",
       cellule: (d) => (
         <span className="flex min-w-0 items-center gap-3">
-          <Drapeau code={d.pays} />
+          <Vignette nom={d.portefeuille} taille={28} />
           <span className="min-w-0">
             <span className="block truncate text-fg-primary">{d.portefeuille}</span>
-            <span className="block truncate text-[13px] text-fg-secondary">
-              {d.precision}
+            <span className="flex items-center gap-1.5 text-mention text-fg-secondary">
+              <Drapeau code={d.pays} className="h-3 w-4" />
+              <span className="truncate">{d.precision}</span>
             </span>
           </span>
         </span>
@@ -212,7 +214,7 @@ function Case({ valeur }: { valeur: CaseCouverture }) {
   return (
     <span
       className={cn(
-        "flex min-w-0 items-center gap-2 rounded-md px-3 py-2 text-sm",
+        "flex min-w-0 items-center gap-2 rounded-md px-3 py-2 text-mention",
         apparence.classe,
       )}
     >
@@ -241,7 +243,7 @@ function IndicateurCouverture({
 
   return (
     <Carte className="flex flex-col gap-3 px-6 py-6">
-      <p className="flex items-center gap-2 text-[15px] text-fg-secondary">
+      <p className="flex items-center gap-2 text-corps text-fg-secondary">
         <span
           aria-hidden="true"
           className={cn("grid size-6 place-items-center rounded-sm", apparence.classe)}
@@ -256,17 +258,18 @@ function IndicateurCouverture({
       ) : (
         <p
           className={cn(
-            "tabular text-[34px] leading-none font-semibold",
-            etat === "ouvrable" && "text-warning-text",
-            etat === "servi" && "text-success-fg",
-            etat === "ferme" && "text-fg-primary",
+            /* Un vide ouvrable est une occasion, pas une alerte : il se lit
+               en noir comme le reste. Seul le servi garde le vert, qui est
+               un constat favorable et non un simple accent. */
+            "tabular text-nombre font-semibold",
+            etat === "servi" ? "text-success-fg" : "text-fg-primary",
           )}
         >
           {formatEntier(valeur)}
         </p>
       )}
 
-      <p className="text-sm leading-relaxed text-fg-secondary">{precision}</p>
+      <p className="text-mention leading-relaxed text-fg-secondary">{precision}</p>
     </Carte>
   );
 }

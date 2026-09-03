@@ -47,7 +47,7 @@ export function GroupeBascule<V extends string>({
             aria-pressed={actif}
             onClick={() => onChangement(option.valeur)}
             className={cn(
-              "h-11 rounded-md px-5 text-[15px] transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none",
+              "h-11 rounded-md px-5 text-corps transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none",
               actif
                 ? "bg-primary font-medium text-primary-foreground"
                 : "border border-border bg-card text-fg-primary hover:bg-muted",
@@ -96,7 +96,7 @@ export function ChampRecherche({
         value={valeur}
         onChange={(evenement) => onChangement(evenement.target.value)}
         placeholder={indication}
-        className="h-11 w-full rounded-md border border-border bg-card pr-4 pl-10 text-[15px] text-fg-primary placeholder:text-fg-placeholder focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/40 focus-visible:outline-none"
+        className="h-11 w-full rounded-md border border-border bg-card pr-4 pl-10 text-corps text-fg-primary placeholder:text-fg-placeholder focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/40 focus-visible:outline-none"
       />
     </div>
   );

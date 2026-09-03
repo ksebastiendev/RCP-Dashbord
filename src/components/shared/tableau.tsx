@@ -3,6 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Carte } from "./carte";
 import { EtatErreur } from "./etat-erreur";
 import { cn } from "@/lib/utils";
+import { Vignette } from "./vignette-marque";
 
 /*
  * Tableau de liste, avec ses trois etats : plein, vide, chargement.
@@ -84,11 +85,11 @@ export function Tableau<T>({
             </>
           ) : (
             <>
-              <h2 className="text-lg leading-tight font-semibold text-fg-primary">
+              <h2 className="text-section font-semibold text-fg-primary">
                 {titre}
               </h2>
               {sousTitre && (
-                <p className="mt-0.5 text-[13px] text-fg-secondary">{sousTitre}</p>
+                <p className="mt-0.5 text-mention text-fg-secondary">{sousTitre}</p>
               )}
             </>
           )}
@@ -113,7 +114,7 @@ export function Tableau<T>({
                     key={colonne.cle}
                     scope="col"
                     className={cn(
-                      "h-[46px] overflow-hidden px-6 text-sm font-medium text-table-header-fg",
+                      "h-[46px] overflow-hidden px-6 text-mention font-medium text-table-header-fg",
                       colonne.alignement === "droite" && "text-right",
                     )}
                   >
@@ -160,7 +161,7 @@ export function Tableau<T>({
                           /* table-fixed ne clippe pas seul : sans overflow
                              une cellule longue deborde sur la colonne
                              voisine au lieu d'etre tronquee. */
-                          "overflow-hidden px-6 text-[15px] text-table-row-fg",
+                          "overflow-hidden px-6 text-corps text-table-row-fg",
                           hauteurLigne,
                           colonne.alignement === "droite" && "text-right",
                         )}
@@ -185,8 +186,10 @@ export function Tableau<T>({
 }
 
 /**
- * Cellule de nom avec sa vignette. Le logo d'un operateur ou d'un marchand
- * est decoratif : le nom ecrit a cote porte l'information.
+ * Cellule de nom avec sa vignette.
+ *
+ * Le logo est resolu par le nom de la marque, faute d'URL fournie par le
+ * serveur. Il reste decoratif : le nom ecrit a cote porte l'information.
  */
 export function CelluleAvecVignette({
   urlVignette,
@@ -201,15 +204,11 @@ export function CelluleAvecVignette({
         <img
           src={urlVignette}
           alt=""
+          aria-hidden="true"
           className="size-7 shrink-0 rounded-full object-contain"
         />
       ) : (
-        <span
-          aria-hidden="true"
-          className="grid size-7 shrink-0 place-items-center rounded-full bg-muted text-[11px] font-medium text-fg-secondary"
-        >
-          {libelle.charAt(0).toUpperCase()}
-        </span>
+        <Vignette nom={libelle} taille={28} />
       )}
       <span className="truncate text-fg-primary">{libelle}</span>
     </span>

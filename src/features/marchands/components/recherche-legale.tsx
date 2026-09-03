@@ -62,10 +62,10 @@ export function RechercheLegale() {
           aria-hidden="true"
         />
         <div className="min-w-0">
-          <h2 className="text-xl font-semibold text-fg-primary">
+          <h2 className="text-titre font-semibold text-fg-primary">
             Retrouver par identifiant légal
           </h2>
-          <p className="mt-1 max-w-[720px] text-sm leading-relaxed text-fg-secondary">
+          <p className="mt-1 max-w-[720px] text-mention leading-relaxed text-fg-secondary">
             Recherche exacte. Les identifiants sont chiffrés au repos : c'est leur
             empreinte à clé qui permet de les retrouver, sans jamais exposer la
             valeur cherchée. Un identifiant incomplet ne renvoie donc rien.
@@ -152,7 +152,7 @@ export function RechercheLegale() {
             /* Une correspondance vide n'autorise aucune conclusion large :
                elle dit que cet identifiant exact n'est pas connu, pas que
                l'entreprise est absente de la plateforme. */
-            <p className="text-sm leading-relaxed text-fg-secondary">
+            <p className="text-mention leading-relaxed text-fg-secondary">
               <span className="font-medium text-fg-primary">
                 Aucun marchand ne porte cet identifiant exact.
               </span>{" "}
@@ -177,11 +177,11 @@ function Resultat({
       <div className="min-w-0 flex-1">
         <Link
           to={`/marchand/liste/${marchand.id}`}
-          className="rounded-sm text-[15px] font-medium text-fg-primary hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+          className="rounded-sm text-corps font-medium text-fg-primary hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
         >
           {marchand.nom}
         </Link>
-        <p className="mt-0.5 text-sm text-fg-secondary">{marchand.nomPays}</p>
+        <p className="mt-0.5 text-mention text-fg-secondary">{marchand.nomPays}</p>
       </div>
       <PastilleEtat
         genre={GENRE_STATUT[marchand.statut]}

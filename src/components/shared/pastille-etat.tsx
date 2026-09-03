@@ -30,7 +30,7 @@ export function PastilleEtat({
   return (
     <span
       className={cn(
-        "inline-flex max-w-full items-center rounded-sm px-2 py-1 text-[13px] leading-none font-medium",
+        "inline-flex max-w-full items-center rounded-sm px-2 py-1 text-mention font-medium",
         CLASSES[genre],
         className,
       )}

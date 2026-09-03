@@ -95,7 +95,7 @@ export function EcranComptes() {
         <span className="flex min-w-0 items-center gap-3">
           <span
             aria-hidden="true"
-            className="grid size-9 shrink-0 place-items-center rounded-full bg-primary text-xs font-medium text-primary-foreground"
+            className="grid size-9 shrink-0 place-items-center rounded-full bg-primary text-mention font-medium text-primary-foreground"
           >
             {c.nom
               .split(/\s+/)
@@ -105,7 +105,7 @@ export function EcranComptes() {
           </span>
           <span className="min-w-0">
             <span className="block truncate text-fg-primary">{c.nom}</span>
-            <span className="block truncate text-[13px] text-fg-secondary">
+            <span className="block truncate text-mention text-fg-secondary">
               {c.courriel}
             </span>
           </span>
@@ -128,7 +128,7 @@ export function EcranComptes() {
                   {description.permissions.map((permission) => (
                     <li
                       key={permission}
-                      className="flex gap-2 text-sm leading-relaxed text-fg-secondary"
+                      className="flex gap-2 text-mention leading-relaxed text-fg-secondary"
                     >
                       <span aria-hidden="true" className="text-fg-muted">
                         ·
@@ -137,7 +137,7 @@ export function EcranComptes() {
                     </li>
                   ))}
                 </ul>
-                <span className="mt-2 inline-flex items-center gap-1 text-sm font-medium text-warning-text">
+                <span className="mt-2 inline-flex items-center gap-1 text-mention font-medium text-warning-text">
                   <ChevronRight className="size-4" strokeWidth={TRAIT_ICONE} aria-hidden="true" />
                   {formatEntier(description.nombreDroits)} droits élémentaires
                 </span>

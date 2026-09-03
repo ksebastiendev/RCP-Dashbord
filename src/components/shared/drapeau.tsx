@@ -49,7 +49,7 @@ export function Drapeau({
       <span
         aria-hidden="true"
         className={cn(
-          "grid h-4 w-[22px] shrink-0 place-items-center rounded-sm bg-neutral-bg text-[9px] font-medium text-neutral-fg",
+          "grid h-4 w-[22px] shrink-0 place-items-center rounded-sm bg-neutral-bg text-etiquette font-medium text-neutral-fg",
           className,
         )}
       >

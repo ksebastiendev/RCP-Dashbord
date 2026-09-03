@@ -163,7 +163,7 @@ export function EcranCode() {
                 maxLength={LONGUEUR}
                 autoFocus={index === 0}
                 className={cn(
-                  "tabular size-14 rounded-md border bg-card text-center text-2xl font-semibold text-fg-primary",
+                  "tabular size-14 rounded-md border bg-card text-center text-titre font-semibold text-fg-primary",
                   "focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/40 focus-visible:outline-none",
                   chiffre ? "border-ring" : "border-border",
                 )}
@@ -181,7 +181,7 @@ export function EcranCode() {
         </Button>
       </form>
 
-      <div className="mt-6 flex flex-col items-center gap-3 text-sm">
+      <div className="mt-6 flex flex-col items-center gap-3 text-mention">
         {secondesAvantRenvoi > 0 ? (
           /* Le delai est annonce plutot que le bouton simplement grise :
              sans le compte a rebours, l'attente ressemble a une panne. */

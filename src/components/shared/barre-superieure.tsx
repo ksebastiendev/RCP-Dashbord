@@ -30,10 +30,10 @@ export function BarreSuperieure() {
         {utilisateur && (
           <div className="flex items-center gap-3">
             <div className="text-right">
-              <div className="text-sm font-medium text-fg-primary">
+              <div className="text-mention font-medium text-fg-primary">
                 {utilisateur.nom}
               </div>
-              <div className="text-xs text-fg-secondary">
+              <div className="text-mention text-fg-secondary">
                 {LIBELLE_ROLE[utilisateur.role]}
               </div>
             </div>
@@ -73,7 +73,7 @@ function RechercheGlobale() {
           value={terme}
           onChange={(evenement) => setTerme(evenement.target.value)}
           placeholder="Rechercher"
-          className="h-10 w-full rounded-md border border-border bg-card pr-3 pl-9 text-sm text-fg-primary placeholder:text-fg-placeholder focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/40 focus-visible:outline-none"
+          className="h-10 w-full rounded-md border border-border bg-card pr-3 pl-9 text-mention text-fg-primary placeholder:text-fg-placeholder focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/40 focus-visible:outline-none"
         />
       </div>
     </form>
@@ -100,7 +100,7 @@ function Actualisation() {
   const enCours = nombreEnCours > 0;
 
   return (
-    <div className="flex items-center gap-2 text-sm text-topbar-fg">
+    <div className="flex items-center gap-2 text-mention text-topbar-fg">
       <button
         type="button"
         onClick={() => queryClient.invalidateQueries()}

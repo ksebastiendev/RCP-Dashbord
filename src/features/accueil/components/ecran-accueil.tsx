@@ -89,8 +89,8 @@ function ChiffresDuMatin({
 }) {
   return (
     <Carte avecBordure={false} className="px-5 py-5">
-      <h2 className="text-lg font-semibold text-fg-primary">Les chiffres du matin</h2>
-      <p className="mt-0.5 text-[13px] leading-snug text-fg-secondary">
+      <h2 className="text-section font-semibold text-fg-primary">Les chiffres du matin</h2>
+      <p className="mt-0.5 text-mention text-fg-secondary">
         Ce qu'on regarde en premier, sans ouvrir d'écran.
       </p>
 
@@ -110,13 +110,13 @@ function ChiffresDuMatin({
                 key={chiffre.cle}
                 className="flex items-center justify-between gap-4 py-2"
               >
-                <dt className="truncate text-[13px] text-fg-secondary">
+                <dt className="truncate text-mention text-fg-secondary">
                   {chiffre.libelle}
                 </dt>
                 <dd
                   className={cn(
-                    "tabular shrink-0 text-[13px] font-medium",
-                    chiffre.alerte ? "text-warning-text" : "text-fg-primary",
+                    "tabular shrink-0 text-mention font-medium",
+                    chiffre.alerte ? "text-danger-fg" : "text-fg-primary",
                   )}
                 >
                   {chiffre.total === null ? (
@@ -158,8 +158,8 @@ function CarteRappel({
         </>
       ) : (
         <>
-          <h2 className="text-lg font-semibold text-fg-primary">{rappel.titre}</h2>
-          <p className="mt-2 text-[13px] leading-relaxed text-fg-secondary">
+          <h2 className="text-section font-semibold text-fg-primary">{rappel.titre}</h2>
+          <p className="mt-2 text-mention leading-relaxed text-fg-secondary">
             {rappel.texte}
           </p>
         </>

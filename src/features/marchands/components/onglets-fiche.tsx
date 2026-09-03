@@ -38,7 +38,7 @@ export function OngletDossier({ fiche }: { fiche: FicheMarchand }) {
     <div className="grid items-start gap-6 xl:grid-cols-[minmax(0,1fr)_360px]">
       <div className="flex flex-col gap-6">
         <Carte avecBordure={false} className="overflow-hidden">
-          <h2 className="px-6 py-5 text-lg font-semibold text-fg-primary">
+          <h2 className="px-6 py-5 text-section font-semibold text-fg-primary">
             Pièces justificatives
           </h2>
           <ul>
@@ -47,7 +47,7 @@ export function OngletDossier({ fiche }: { fiche: FicheMarchand }) {
                 key={piece.id}
                 className="flex items-center justify-between gap-4 border-t border-table-row-separator px-6 py-4"
               >
-                <span className="min-w-0 truncate text-[15px] text-fg-primary">
+                <span className="min-w-0 truncate text-corps text-fg-primary">
                   {piece.libelle}
                 </span>
                 <PastilleEtat
@@ -60,7 +60,7 @@ export function OngletDossier({ fiche }: { fiche: FicheMarchand }) {
         </Carte>
 
         <Carte avecBordure={false} className="overflow-hidden">
-          <h2 className="px-6 py-5 text-lg font-semibold text-fg-primary">
+          <h2 className="px-6 py-5 text-section font-semibold text-fg-primary">
             Historique de conformité
           </h2>
           <ul>
@@ -71,12 +71,12 @@ export function OngletDossier({ fiche }: { fiche: FicheMarchand }) {
               >
                 <DateValeur
                   valeur={evenement.date}
-                  className="w-32 shrink-0 text-sm text-fg-secondary"
+                  className="w-32 shrink-0 text-mention text-fg-secondary"
                 />
-                <span className="min-w-0 flex-1 truncate text-[15px] text-fg-primary">
+                <span className="min-w-0 flex-1 truncate text-corps text-fg-primary">
                   {evenement.evenement}
                 </span>
-                <span className="shrink-0 text-sm text-fg-muted">
+                <span className="shrink-0 text-mention text-fg-muted">
                   {evenement.auteur}
                 </span>
               </li>
@@ -86,28 +86,28 @@ export function OngletDossier({ fiche }: { fiche: FicheMarchand }) {
       </div>
 
       <Carte avecBordure={false} className="px-6 py-6">
-        <h2 className="text-lg font-semibold text-fg-primary">Dirigeants</h2>
+        <h2 className="text-section font-semibold text-fg-primary">Dirigeants</h2>
         <ul className="mt-4 flex flex-col gap-4">
           {fiche.dirigeants.map((dirigeant) => (
             <li key={dirigeant.id}>
-              <p className="text-[15px] font-medium text-fg-primary">
+              <p className="text-corps font-medium text-fg-primary">
                 {dirigeant.nom}
               </p>
-              <p className="text-sm text-fg-secondary">{dirigeant.fonction}</p>
+              <p className="text-mention text-fg-secondary">{dirigeant.fonction}</p>
             </li>
           ))}
         </ul>
 
         <dl className="mt-6 flex flex-col gap-4 border-t border-table-row-separator pt-5">
           <div>
-            <dt className="text-sm text-fg-secondary">Raison sociale</dt>
-            <dd className="mt-0.5 text-[15px] text-fg-primary">
+            <dt className="text-mention text-fg-secondary">Raison sociale</dt>
+            <dd className="mt-0.5 text-corps text-fg-primary">
               <Texte valeur={fiche.raisonSociale} />
             </dd>
           </div>
           <div>
-            <dt className="text-sm text-fg-secondary">Inscription</dt>
-            <dd className="mt-0.5 text-[15px] text-fg-primary">
+            <dt className="text-mention text-fg-secondary">Inscription</dt>
+            <dd className="mt-0.5 text-corps text-fg-primary">
               <DateValeur valeur={fiche.inscription} />
             </dd>
           </div>
@@ -164,7 +164,7 @@ export function CarteApplication({
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div className="min-w-0">
           <div className="flex flex-wrap items-center gap-3">
-            <h3 className="text-lg font-semibold text-fg-primary">
+            <h3 className="text-section font-semibold text-fg-primary">
               {application.nom}
             </h3>
             {/* Le mode est porte en permanence : confondre une application de
@@ -176,7 +176,7 @@ export function CarteApplication({
             />
           </div>
 
-          <p className="mt-1 text-sm text-fg-secondary">
+          <p className="mt-1 text-mention text-fg-secondary">
             {application.derniereActivite === null ? (
               "Aucune activité à ce jour"
             ) : (
@@ -214,16 +214,16 @@ export function CarteApplication({
 function ClePublique({ valeur }: { valeur: string }) {
   return (
     <div className="mt-4 flex items-center gap-4 rounded-md bg-muted px-4 py-3">
-      <span className="shrink-0 text-[11px] font-medium tracking-wide text-fg-muted uppercase">
+      <span className="shrink-0 text-etiquette font-medium tracking-wide text-fg-muted uppercase">
         Clé publique
       </span>
-      <code className="min-w-0 flex-1 truncate font-mono text-sm text-fg-primary">
+      <code className="min-w-0 flex-1 truncate font-mono text-mention text-fg-primary">
         {valeur}
       </code>
       <button
         type="button"
         onClick={() => navigator.clipboard?.writeText(valeur)}
-        className="flex shrink-0 items-center gap-2 rounded-sm text-sm font-medium text-warning-text hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+        className="flex shrink-0 items-center gap-2 rounded-sm text-mention font-medium text-warning-text hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
       >
         <Copy className="size-4" strokeWidth={TRAIT_ICONE} aria-hidden="true" />
         Copier
@@ -242,8 +242,8 @@ export function OngletTarification({ fiche }: { fiche: FicheMarchand }) {
     <div className="grid items-start gap-6 xl:grid-cols-[minmax(0,1fr)_360px]">
       <Carte avecBordure={false} className="px-6 py-6">
         <div className="flex flex-wrap items-baseline justify-between gap-4">
-          <h2 className="text-lg font-semibold text-fg-primary">Tarif effectif</h2>
-          <p className="text-sm text-fg-secondary">
+          <h2 className="text-section font-semibold text-fg-primary">Tarif effectif</h2>
+          <p className="text-mention text-fg-secondary">
             {echelonApplique
               ? ORIGINE_TARIF[echelonApplique.niveau].replace(/^h/, "H")
               : "Aucun tarif applicable"}
@@ -251,16 +251,16 @@ export function OngletTarification({ fiche }: { fiche: FicheMarchand }) {
         </div>
 
         <p className="mt-3 flex flex-wrap items-baseline gap-3">
-          <span className="tabular text-[34px] leading-none font-semibold text-fg-primary">
+          <span className="tabular text-ecran font-semibold text-fg-primary">
             {formatPourcentage(fiche.tauxEffectif, 2)}
           </span>
-          <span className="text-[15px] text-fg-secondary">
+          <span className="text-corps text-fg-secondary">
             par transaction · frais à la charge{" "}
             {fiche.fraisALaChargeDe === "client-final" ? "du client final" : "du marchand"}
           </span>
         </p>
 
-        <h3 className="mt-6 text-[11px] font-medium tracking-wide text-fg-muted uppercase">
+        <h3 className="mt-6 text-etiquette font-medium tracking-wide text-fg-muted uppercase">
           Cascade d'héritage
         </h3>
         <ul className="mt-3 flex flex-col gap-2">
@@ -283,12 +283,12 @@ function EchelonCascade({ echelon }: { echelon: EchelonTarif }) {
         echelon.applique ? "border-border bg-card" : "border-transparent bg-muted",
       )}
     >
-      <span className="w-24 shrink-0 text-[11px] font-medium tracking-wide text-fg-muted uppercase">
+      <span className="w-24 shrink-0 text-etiquette font-medium tracking-wide text-fg-muted uppercase">
         {LIBELLE_NIVEAU_TARIF[echelon.niveau]}
       </span>
       <span
         className={cn(
-          "min-w-0 flex-1 truncate text-[15px]",
+          "min-w-0 flex-1 truncate text-corps",
           echelon.applique ? "text-fg-primary" : "text-fg-muted",
         )}
       >
@@ -296,7 +296,7 @@ function EchelonCascade({ echelon }: { echelon: EchelonTarif }) {
       </span>
       <span
         className={cn(
-          "tabular shrink-0 text-[15px] font-medium",
+          "tabular shrink-0 text-corps font-medium",
           echelon.applique ? "text-fg-primary" : "text-fg-muted",
         )}
       >
@@ -304,7 +304,7 @@ function EchelonCascade({ echelon }: { echelon: EchelonTarif }) {
       </span>
       {/* L'echelon applique est signale par un mot, pas seulement par un
           fond plus clair. */}
-      <span className="w-20 shrink-0 text-right text-sm">
+      <span className="w-20 shrink-0 text-right text-mention">
         {echelon.applique ? (
           <span className="font-medium text-success-fg">appliqué</span>
         ) : (
@@ -334,8 +334,8 @@ function SimulateurPrix({
   if (taux === undefined || taux === null) {
     return (
       <Carte avecBordure={false} className="px-6 py-6">
-        <h2 className="text-lg font-semibold text-fg-primary">Simuler un prix</h2>
-        <p className="mt-2 text-sm leading-relaxed text-fg-secondary">
+        <h2 className="text-section font-semibold text-fg-primary">Simuler un prix</h2>
+        <p className="mt-2 text-mention leading-relaxed text-fg-secondary">
           Aucun tarif n'est applicable à ce marchand. La simulation reprendra
           quand une règle sera renseignée.
         </p>
@@ -347,7 +347,7 @@ function SimulateurPrix({
 
   return (
     <Carte avecBordure={false} className="px-6 py-6">
-      <h2 className="text-lg font-semibold text-fg-primary">Simuler un prix</h2>
+      <h2 className="text-section font-semibold text-fg-primary">Simuler un prix</h2>
 
       <div className="mt-4">
         <ChampFormulaire etiquette={`Montant de la transaction (${devise})`}>
@@ -376,7 +376,7 @@ function SimulateurPrix({
         </LigneSimulation>
       </dl>
 
-      <p className="mt-4 text-[13px] leading-relaxed text-fg-secondary">
+      <p className="mt-4 text-mention leading-relaxed text-fg-secondary">
         Simulation indicative, calculée sur le tarif effectif affiché. Elle ne
         tient pas compte des plafonds de la destination.
       </p>
@@ -393,8 +393,8 @@ function LigneSimulation({
 }) {
   return (
     <div className="flex items-center justify-between gap-4">
-      <dt className="text-sm text-fg-secondary">{etiquette}</dt>
-      <dd className="text-[15px] font-medium text-fg-primary">{children}</dd>
+      <dt className="text-mention text-fg-secondary">{etiquette}</dt>
+      <dd className="text-corps font-medium text-fg-primary">{children}</dd>
     </div>
   );
 }
@@ -466,7 +466,7 @@ export function TableauWebhooks({
       largeur: "28%",
       squelette: "90%",
       cellule: (w) => (
-        <code className="block truncate font-mono text-sm" title={w.adresse}>
+        <code className="block truncate font-mono text-mention" title={w.adresse}>
           {w.adresse}
         </code>
       ),

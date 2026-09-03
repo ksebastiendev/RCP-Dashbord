@@ -30,7 +30,15 @@
 
   /* Neutres releves dans les maquettes */
   --primitive-neutral-0: #ffffff;
-  --primitive-neutral-25: #f9f9f8;
+  /*
+   * Fond de page. Releve a #f9f9f8 dans les maquettes, une teinte
+   * legerement chaude qui ternissait l'orange pose dessus : deux jaunes
+   * voisins se salissent l'un l'autre. Cette valeur est neutre et tire
+   * imperceptiblement vers le froid, ce qui rend l'orange plus net et
+   * detache mieux les cartes blanches. Le texte secondaire y tient
+   * toujours 4,94:1.
+   */
+  --primitive-neutral-25: #f6f7f9;
   --primitive-neutral-100: #efefef;
   --primitive-neutral-150: #edeff2;
   /* Releves a #9fa3aa (indication de saisie) et #8b9199 (valeur absente).

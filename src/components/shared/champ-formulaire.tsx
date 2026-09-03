@@ -54,7 +54,7 @@ export function ChampFormulaire({
     <div className={cn("flex flex-col gap-2", className)}>
       <label
         htmlFor={idControle}
-        className="text-sm font-medium text-fg-primary"
+        className="text-mention font-medium text-fg-primary"
       >
         {etiquette}
         {requis && (
@@ -75,13 +75,13 @@ export function ChampFormulaire({
       })}
 
       {erreur && (
-        <p id={idErreur} className="text-sm text-danger-fg">
+        <p id={idErreur} className="text-mention text-danger-fg">
           {erreur}
         </p>
       )}
 
       {aide && (
-        <p id={idAide} className="text-sm text-fg-secondary">
+        <p id={idAide} className="text-mention text-fg-secondary">
           {aide}
         </p>
       )}
@@ -122,7 +122,7 @@ export function CartesRadio<V extends string>({
 
   return (
     <fieldset className="flex flex-col gap-2">
-      <legend className="mb-2 text-sm font-medium text-fg-primary">
+      <legend className="mb-2 text-mention font-medium text-fg-primary">
         {libelleGroupe}
       </legend>
 
@@ -150,7 +150,7 @@ export function CartesRadio<V extends string>({
                 className="sr-only"
               />
               <span className="flex items-start justify-between gap-3">
-                <span className="text-[15px] font-medium text-fg-primary">
+                <span className="text-corps font-medium text-fg-primary">
                   {option.titre}
                 </span>
                 {/* Marque de selection ajoutee aux maquettes, qui ne
@@ -167,7 +167,7 @@ export function CartesRadio<V extends string>({
                   {choisi && <span className="size-2 rounded-full bg-primary" />}
                 </span>
               </span>
-              <span className="text-sm leading-relaxed text-fg-secondary">
+              <span className="text-mention leading-relaxed text-fg-secondary">
                 {option.description}
               </span>
             </label>
@@ -176,7 +176,7 @@ export function CartesRadio<V extends string>({
       </div>
 
       {erreur && (
-        <p id={idErreur} className="text-sm text-danger-fg">
+        <p id={idErreur} className="text-mention text-danger-fg">
           {erreur}
         </p>
       )}

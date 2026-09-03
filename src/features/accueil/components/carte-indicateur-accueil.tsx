@@ -59,7 +59,7 @@ export function CarteIndicateurAccueil({ indicateur }: { indicateur: Indicateur 
   const contenu = (
     <Carte avecBordure={false} className="flex h-full min-w-0 flex-col overflow-hidden px-5 py-5">
       <div className="flex items-start justify-between gap-3">
-        <p className="text-[13px] leading-snug text-fg-secondary">
+        <p className="text-mention text-fg-secondary">
           {indicateur.libelle}
         </p>
         <span
@@ -84,8 +84,8 @@ export function CarteIndicateurAccueil({ indicateur }: { indicateur: Indicateur 
         className={cn(
           "tabular mt-3 font-semibold break-words text-fg-primary",
           indicateur.genre === "montant"
-            ? "text-[20px] leading-tight"
-            : "text-[26px] leading-none",
+            ? "text-titre"
+            : "text-nombre",
         )}
       >
         {valeur}
@@ -123,7 +123,7 @@ function Variation({ indicateur }: { indicateur: Indicateur }) {
 
   if (!tendance) {
     return (
-      <p className="text-[13px] text-fg-muted">
+      <p className="text-mention text-fg-muted">
         Aucune comparaison disponible
       </p>
     );
@@ -138,7 +138,7 @@ function Variation({ indicateur }: { indicateur: Indicateur }) {
         : "text-fg-secondary";
 
   return (
-    <p className="flex flex-wrap items-center gap-x-1.5 text-[13px] text-fg-secondary">
+    <p className="flex flex-wrap items-center gap-x-1.5 text-mention text-fg-secondary">
       <span className="flex items-center gap-1.5">
         <Fleche
           className={cn("size-4 shrink-0", couleur)}

@@ -61,11 +61,11 @@ export function EnTeteEcran({
   return (
     <div className="flex items-start justify-between gap-8">
       <div className="min-w-0">
-        <h1 className="text-[34px] leading-tight font-semibold text-fg-primary">
+        <h1 className="text-ecran font-semibold text-fg-primary">
           {titre}
         </h1>
         {description && (
-          <p className="mt-2 max-w-[640px] text-[15px] leading-relaxed text-fg-secondary">
+          <p className="mt-2 max-w-[640px] text-corps leading-relaxed text-fg-secondary">
             {description}
           </p>
         )}

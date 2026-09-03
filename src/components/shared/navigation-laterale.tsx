@@ -47,10 +47,10 @@ export function NavigationLaterale() {
         />
         {!repliee && (
           <div className="min-w-0 flex-1">
-            <div className="truncate text-[17px] leading-tight font-semibold">
+            <div className="truncate text-section font-semibold">
               BestCash Pay
             </div>
-            <div className="truncate text-xs text-sidebar-muted-foreground">
+            <div className="truncate text-mention text-sidebar-muted-foreground">
               back-office
             </div>
           </div>
@@ -187,7 +187,7 @@ function Section({ section }: { section: SectionNavigation }) {
                 to={enfant.chemin}
                 className={({ isActive }) =>
                   cn(
-                    "mx-4 flex h-10 items-center rounded-md pr-3 pl-11 text-sm text-sidebar-muted-foreground transition-colors hover:bg-sidebar-accent hover:text-sidebar-foreground focus-visible:ring-2 focus-visible:ring-sidebar-ring focus-visible:outline-none",
+                    "mx-4 flex h-10 items-center rounded-md pr-3 pl-11 text-mention text-sidebar-muted-foreground transition-colors hover:bg-sidebar-accent hover:text-sidebar-foreground focus-visible:ring-2 focus-visible:ring-sidebar-ring focus-visible:outline-none",
                     isActive && classesActif,
                   )
                 }
@@ -203,7 +203,7 @@ function Section({ section }: { section: SectionNavigation }) {
 }
 
 const classesSection =
-  "mx-4 flex h-10 items-center gap-3 rounded-md px-3 text-[15px] text-sidebar-foreground transition-colors hover:bg-sidebar-accent focus-visible:ring-2 focus-visible:ring-sidebar-ring focus-visible:outline-none";
+  "mx-4 flex h-10 items-center gap-3 rounded-md px-3 text-corps text-sidebar-foreground transition-colors hover:bg-sidebar-accent focus-visible:ring-2 focus-visible:ring-sidebar-ring focus-visible:outline-none";
 
 const classesActif =
   "bg-sidebar-primary text-sidebar-primary-foreground font-medium hover:bg-sidebar-primary";
@@ -226,8 +226,8 @@ function BlocUtilisateur() {
       {!repliee && (
         <>
           <div className="min-w-0 flex-1">
-            <div className="truncate text-sm font-medium">{utilisateur.nom}</div>
-            <div className="truncate text-xs text-sidebar-muted-foreground">
+            <div className="truncate text-mention font-medium">{utilisateur.nom}</div>
+            <div className="truncate text-mention text-sidebar-muted-foreground">
               {LIBELLE_ROLE[utilisateur.role]}
             </div>
           </div>
@@ -247,7 +247,7 @@ export function Avatar({
   utilisateur: { nom: string; urlAvatar: string | null };
   taille?: "sm" | "md";
 }) {
-  const classes = taille === "sm" ? "size-8 text-xs" : "size-9 text-xs";
+  const classes = taille === "sm" ? "size-8 text-mention" : "size-9 text-mention";
 
   if (utilisateur.urlAvatar) {
     return (

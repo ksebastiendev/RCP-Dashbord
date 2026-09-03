@@ -131,7 +131,7 @@ export function EcranConnexion() {
           <div className="mt-2 flex justify-end">
             <button
               type="button"
-              className="rounded-sm text-sm font-medium text-warning-text underline-offset-4 hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+              className="rounded-sm text-mention font-medium text-warning-text underline-offset-4 hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
             >
               Mot de passe oublié ?
             </button>
@@ -150,7 +150,7 @@ export function EcranConnexion() {
         exactement ce qu'on ne veut pas rendre facile. A remettre si la
         politique de securite le prevoit explicitement.
       */}
-      <p className="mt-8 text-center text-[13px] leading-relaxed text-fg-secondary">
+      <p className="mt-8 text-center text-mention leading-relaxed text-fg-secondary">
         Un code à six chiffres vous sera demandé après cette étape. Il est
         envoyé à l'adresse du compte, pas affiché sur cette page.
       </p>

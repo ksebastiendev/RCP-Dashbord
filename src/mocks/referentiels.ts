@@ -151,11 +151,6 @@ export const PORTEFEUILLES: Portefeuille[] = MARQUES_PORTEFEUILLE.map(
 
 /* --- Operateurs et presences --- */
 
-const MARQUES_OPERATEUR = [
-  "MTN", "Moov Africa", "Orange", "Airtel", "Vodafone", "Telecel",
-  "Wave", "Yas", "Free", "Glo",
-];
-
 const ANCIENS_NOMS: Record<string, string> = {
   "Moov Africa Bénin": "Areeba",
   "Moov Africa Togo": "Togocel",
@@ -164,10 +159,35 @@ const ANCIENS_NOMS: Record<string, string> = {
   "Airtel Tchad": "Tigo",
 };
 
+/*
+ * Les operateurs sont construits pays par pays, chacun avec les marques qui
+ * y exploitent reellement un portefeuille. Une construction marque par
+ * marque produisait seize lignes MTN d'affilee, ce qui ne ressemble a aucune
+ * liste reelle et empechait de voir si la colonne de logos fonctionne.
+ */
+const MARQUES_PAR_PAYS: Record<string, string[]> = {
+  BJ: ["MTN", "Moov Africa", "Celtiis"],
+  TG: ["Yas", "Moov Africa"],
+  SN: ["Orange", "Free", "Expresso", "Wave"],
+  ML: ["Orange", "Moov Africa"],
+  CI: ["Orange", "MTN", "Moov Africa", "Wave"],
+  BF: ["Orange", "Moov Africa", "Telecel"],
+  NE: ["Airtel", "Moov Africa", "Zamani"],
+  GW: ["MTN", "Orange"],
+  GH: ["MTN", "Telecel", "AirtelTigo"],
+  NG: ["MTN", "Airtel", "Glo", "9mobile"],
+  GN: ["MTN", "Orange", "Cellcom"],
+  LR: ["Orange", "MTN"],
+  SL: ["Orange", "Africell"],
+  CM: ["MTN", "Orange", "Camtel"],
+  CG: ["MTN", "Airtel"],
+  TD: ["Airtel", "Moov Africa"],
+};
+
 function construireOperateurs(): Operateur[] {
   const liste: Operateur[] = [];
-  for (const marque of MARQUES_OPERATEUR) {
-    for (const pays of PAYS_AFRIQUE_OUEST) {
+  for (const pays of PAYS_AFRIQUE_OUEST) {
+    for (const marque of MARQUES_PAR_PAYS[pays.code] ?? []) {
       const nom = `${marque} ${pays.nom}`;
       liste.push({
         id: `o-${liste.length + 1}`,
