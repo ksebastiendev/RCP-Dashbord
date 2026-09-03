@@ -1,3 +1,16 @@
+/*
+ * Police du projet : Plus Jakarta Sans, servie depuis le paquet et non
+ * depuis un CDN. Aucune requete vers un tiers, et l'interface reste lisible
+ * hors ligne. La fonte est variable : un seul fichier couvre les graisses
+ * 200 a 800, et les sous-ensembles non latins ne sont jamais telecharges,
+ * leur unicode-range ne correspondant a rien de ce que l'interface affiche.
+ */
+@import "@fontsource-variable/plus-jakarta-sans";
+/* L'italique n'est utilise qu'a un endroit, la mention "Non servi" des
+   portefeuilles, mais un italique synthetise par le navigateur est une
+   simple inclinaison de la fonte droite : la vraie coupe est importee. */
+@import "@fontsource-variable/plus-jakarta-sans/wght-italic.css";
+
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -74,6 +87,10 @@
   /* Correspondance avec les utilitaires shadcn : rounded-sm pour les
      pastilles, rounded-md pour les boutons et les champs, rounded-lg et
      rounded-xl pour les cartes et les modales. */
+  --font-sans:
+    "Plus Jakarta Sans Variable", ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
   --radius-sm: var(--radius-pastille);
   --radius-md: var(--radius-controle);
   --radius-lg: var(--radius-carte);
@@ -87,6 +104,9 @@
 
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-sans);
+    /* La fonte variable couvre toutes les graisses : rien a synthetiser,
+       et une graisse synthetisee serait plus lourde que la vraie. */
     font-synthesis-weight: none;
     text-rendering: optimizeLegibility;
   }
