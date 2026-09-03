@@ -7,10 +7,13 @@ import { definirGestionExpiration, definirJeton } from "@/lib/jeton";
  * exclusivement par TanStack Query.
  */
 
+/* Les quatre roles releves dans Container-12.png. La maquette
+   compte et role.png en annonce bien "4 roles". */
 export type Role =
   | "administrateur"
   | "exploitant"
-  | "lecteur";
+  | "support"
+  | "lecture-seule";
 
 export type Utilisateur = {
   id: string;

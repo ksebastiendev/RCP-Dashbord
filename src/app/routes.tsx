@@ -2,6 +2,7 @@ import { createBrowserRouter, Navigate, type RouteObject } from "react-router-do
 import { CoqueApplication } from "@/components/shared/coque-application";
 import { NAVIGATION } from "./navigation";
 import { EcranAVenir } from "./ecran-a-venir";
+import { GalerieComposants } from "./galerie-composants";
 
 /*
  * Table de routes, derivee de la declaration de navigation : une entree de
@@ -30,6 +31,8 @@ export const router = createBrowserRouter([
     children: [
       { path: "/", element: <Navigate to="/accueil" replace /> },
       ...routesDesSections,
+      /* Echafaudage de verification, a retirer avec la derniere section. */
+      { path: "/composants", element: <GalerieComposants /> },
       { path: "*", element: <EcranAVenir titre="Écran introuvable" /> },
     ],
   },
