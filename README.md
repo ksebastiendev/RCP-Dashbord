@@ -90,7 +90,19 @@ neutres ont été relevés au pixel dans les maquettes, voir
 chaque pastille porte son libellé écrit, chaque état son mot.
 
 **États de liste.** Plein, vide, chargement, erreur. Le chargement rend un
-squelette aux dimensions réelles et ne déplace pas la mise en page.
+squelette aux dimensions réelles et ne déplace pas la mise en page. Le vide
+se décline en trois natures : rien n'a encore été créé, le filtre ne renvoie
+rien, ou des données étaient attendues et sont absentes. La troisième se
+signale comme une anomalie.
+
+**Thème.** Clair, sombre, ou le réglage du système, choisi dans la barre
+supérieure. Le thème vit entièrement dans les fichiers de tokens : un bloc
+`.dark` par niveau, aucune classe `dark:` écrite dans un composant. Un script
+en ligne dans `index.html` pose la classe avant le premier rendu.
+
+**Onglets.** Un onglet est une adresse, jamais un état local : il se partage,
+se recharge et se quitte au bouton de retour. Voir
+`components/shared/groupe-onglets.tsx`.
 
 **Actions irréversibles.** Modale de confirmation décrivant les conséquences
 réelles, jamais les objets techniques, et un bouton qui nomme l'acte.
