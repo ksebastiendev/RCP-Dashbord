@@ -1,7 +1,12 @@
 import { useMemo } from "react";
+import { useParams } from "react-router-dom";
 import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { ActionLigne, ActionRetrait, GroupeActions } from "@/components/shared/actions-ligne";
+import {
+  ActionLigne,
+  ActionRetrait,
+  GroupeActions,
+} from "@/components/shared/actions-ligne";
 import { Bandeau } from "@/components/shared/bandeau";
 import {
   BarreFiltres,
@@ -9,10 +14,15 @@ import {
   GroupeBascule,
 } from "@/components/shared/barre-filtres";
 import { CarteIndicateur } from "@/components/shared/carte-indicateur";
+import { GroupeOnglets } from "@/components/shared/groupe-onglets";
 import { EtatVide } from "@/components/shared/etat-vide";
 import { ModaleConfirmation } from "@/components/shared/modale";
 import { PastilleEtat } from "@/components/shared/pastille-etat";
-import { CelluleAvecVignette, Tableau, type Colonne } from "@/components/shared/tableau";
+import {
+  CelluleAvecVignette,
+  Tableau,
+  type Colonne,
+} from "@/components/shared/tableau";
 import { Montant, Texte } from "@/components/shared/valeur";
 import { formatEntier, formatMontant } from "@/lib/format";
 import { TRAIT_ICONE } from "@/lib/icones";
@@ -21,7 +31,7 @@ import {
   useIndicateursBornes,
   useRetirerBorne,
 } from "../hooks/use-referentiels";
-import { useReferentiels } from "../store";
+import { useReferentiels, type OngletMontants } from "../store";
 import type { Borne } from "../types";
 import { GabaritListe, RangeeIndicateurs } from "./gabarit-liste";
 import { ModaleExigerChamp, ModaleRenseignerPlafond } from "./modales";
@@ -48,8 +58,11 @@ export function EcranMontants() {
   const definirRecherche = useReferentiels((e) => e.definirRecherche);
   const filtre = useReferentiels((e) => e.filtreBornes);
   const definirFiltre = useReferentiels((e) => e.definirFiltreBornes);
-  const onglet = useReferentiels((e) => e.ongletMontants);
-  const definirOnglet = useReferentiels((e) => e.definirOngletMontants);
+  /* Les deux vues de l'ecran sont deux adresses. Un lien vers les champs
+     exiges ouvre les champs exiges, et le bouton de retour ramene aux
+     montants plutot que de quitter l'ecran. */
+  const { onglet: segment } = useParams();
+  const onglet: OngletMontants = segment === "champs" ? "champs" : "montants";
   const modale = useReferentiels((e) => e.modale);
   const ouvrirModale = useReferentiels((e) => e.ouvrirModale);
   const fermerModale = useReferentiels((e) => e.fermerModale);
@@ -177,18 +190,27 @@ export function EcranMontants() {
               : ouvrirModale({ type: "exiger-champ" })
           }
         >
-          <Plus className="size-4" strokeWidth={TRAIT_ICONE} aria-hidden="true" />
+          <Plus
+            className="size-4"
+            strokeWidth={TRAIT_ICONE}
+            aria-hidden="true"
+          />
           {onglet === "montants" ? "Poser une borne" : "Exiger un champ"}
         </Button>
       }
       onglets={
-        <GroupeBascule
-          libelleGroupe="Choisir la vue de l'écran"
-          valeur={onglet}
-          onChangement={definirOnglet}
-          options={[
-            { valeur: "montants", libelle: "Montants autorisés" },
-            { valeur: "champs", libelle: "Champs exigés" },
+        <GroupeOnglets
+          libelleGroupe="Vues des montants autorisés"
+          onglets={[
+            {
+              chemin: "/referentiel/montants",
+              libelle: "Montants autorisés",
+              exact: true,
+            },
+            {
+              chemin: "/referentiel/montants/champs",
+              libelle: "Champs exigés",
+            },
           ]}
         />
       }
@@ -236,7 +258,9 @@ export function EcranMontants() {
                   libelle="Rechercher une borne"
                   indication="Opérateur, pays, anciens noms"
                   valeur={recherche}
-                  onChangement={(terme) => definirRecherche("rechercheBornes", terme)}
+                  onChangement={(terme) =>
+                    definirRecherche("rechercheBornes", terme)
+                  }
                 />
               }
               bascule={

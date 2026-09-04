@@ -3,17 +3,13 @@ import type { StatutDossier, TypeIdentifiantLegal } from "./types";
 
 /*
  * Etat client de la section Marchand.
- * Filtres, onglet courant, modale ouverte. Aucune donnee serveur.
+ * Filtres et modale ouverte. Aucune donnee serveur.
+ *
+ * L'onglet de la fiche n'est plus ici : il est porte par l'adresse, pour
+ * qu'un lien vers la tarification d'un marchand ouvre la tarification.
  */
 
 export type FiltreStatut = "tous" | StatutDossier;
-
-export type OngletFiche =
-  | "dossier"
-  | "applications"
-  | "tarification"
-  | "webhooks"
-  | "activite";
 
 export type ModaleMarchand =
   | { type: "aucune" }
@@ -32,7 +28,6 @@ type EtatMarchands = {
   /** Valeur reellement soumise, celle sur laquelle la requete est armee. */
   identifiantSoumis: string;
 
-  ongletFiche: OngletFiche;
   /** Marchand choisi dans le selecteur d'Applications et clés. */
   marchandChoisi: string | null;
   modale: ModaleMarchand;
@@ -43,7 +38,6 @@ type EtatMarchands = {
   definirSaisieIdentifiant: (valeur: string) => void;
   soumettreIdentifiant: () => void;
   effacerRechercheLegale: () => void;
-  definirOngletFiche: (onglet: OngletFiche) => void;
   definirMarchandChoisi: (id: string | null) => void;
   ouvrirModale: (modale: ModaleMarchand) => void;
   fermerModale: () => void;
@@ -57,7 +51,6 @@ export const useMarchandsStore = create<EtatMarchands>((set, get) => ({
   saisieIdentifiant: "",
   identifiantSoumis: "",
 
-  ongletFiche: "dossier",
   marchandChoisi: null,
   modale: { type: "aucune" },
 
@@ -70,7 +63,6 @@ export const useMarchandsStore = create<EtatMarchands>((set, get) => ({
   definirSaisieIdentifiant: (valeur) => set({ saisieIdentifiant: valeur }),
   soumettreIdentifiant: () => set({ identifiantSoumis: get().saisieIdentifiant }),
   effacerRechercheLegale: () => set({ saisieIdentifiant: "", identifiantSoumis: "" }),
-  definirOngletFiche: (onglet) => set({ ongletFiche: onglet }),
   definirMarchandChoisi: (id) => set({ marchandChoisi: id }),
   ouvrirModale: (modale) => set({ modale }),
   fermerModale: () => set({ modale: { type: "aucune" } }),

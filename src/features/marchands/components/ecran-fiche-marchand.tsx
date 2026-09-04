@@ -7,7 +7,7 @@ import { Bandeau } from "@/components/shared/bandeau";
 import { Carte } from "@/components/shared/carte";
 import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { GroupeBascule } from "@/components/shared/barre-filtres";
+import { GroupeOnglets } from "@/components/shared/groupe-onglets";
 import { CorpsEcran } from "@/components/shared/coque-application";
 import { EtatErreur } from "@/components/shared/etat-erreur";
 import { ModaleConfirmation } from "@/components/shared/modale";
@@ -15,8 +15,12 @@ import { PastilleEtat } from "@/components/shared/pastille-etat";
 import { formatMontant, formatPourcentage } from "@/lib/format";
 import { TRAIT_ICONE } from "@/lib/icones";
 import { cn } from "@/lib/utils";
-import { useFicheMarchand, useRenouvelerCle, useTesterWebhook } from "../hooks/use-marchands";
-import { useMarchandsStore, type OngletFiche } from "../store";
+import {
+  useFicheMarchand,
+  useRenouvelerCle,
+  useTesterWebhook,
+} from "../hooks/use-marchands";
+import { useMarchandsStore } from "../store";
 import type { FicheMarchand } from "../types";
 import {
   CONSEQUENCE_STATUT,
@@ -37,6 +41,11 @@ import {
  * Cinq onglets, dont Activite qui n'a pas de maquette.
  */
 
+type OngletFiche =
+  "dossier" | "applications" | "tarification" | "webhooks" | "activite";
+
+/* L'onglet Dossier est servi par le chemin de la fiche elle-meme : une
+   adresse sans segment, plutot qu'un /dossier redondant. */
 const ONGLETS: Array<{ valeur: OngletFiche; libelle: string }> = [
   { valeur: "dossier", libelle: "Dossier" },
   { valeur: "applications", libelle: "Applications" },
@@ -46,11 +55,13 @@ const ONGLETS: Array<{ valeur: OngletFiche; libelle: string }> = [
 ];
 
 export function EcranFicheMarchand() {
-  const { id = "" } = useParams();
+  const { id = "", onglet: segment } = useParams();
   const { data, isPending, error, refetch } = useFicheMarchand(id);
 
-  const onglet = useMarchandsStore((e) => e.ongletFiche);
-  const definirOnglet = useMarchandsStore((e) => e.definirOngletFiche);
+  /* Un segment inconnu, tape ou vieilli, ramene au Dossier plutot que de
+     rendre une fiche sans contenu. */
+  const onglet: OngletFiche =
+    ONGLETS.find((o) => o.valeur === segment)?.valeur ?? "dossier";
   const modale = useMarchandsStore((e) => e.modale);
   const ouvrirModale = useMarchandsStore((e) => e.ouvrirModale);
   const fermerModale = useMarchandsStore((e) => e.fermerModale);
@@ -87,15 +98,24 @@ export function EcranFicheMarchand() {
         />
       )}
 
-      <GroupeBascule
-        libelleGroupe="Choisir la vue de la fiche marchand"
-        valeur={onglet}
-        onChangement={definirOnglet}
-        options={ONGLETS}
+      <GroupeOnglets
+        libelleGroupe="Vues de la fiche marchand"
+        onglets={ONGLETS.map(({ valeur, libelle }) => ({
+          chemin:
+            valeur === "dossier"
+              ? `/marchand/liste/${id}`
+              : `/marchand/liste/${id}/${valeur}`,
+          libelle,
+          exact: valeur === "dossier",
+        }))}
       />
 
       {resultatTest && (
-        <Bandeau genre="succes" titre="Test envoyé" description={resultatTest} />
+        <Bandeau
+          genre="succes"
+          titre="Test envoyé"
+          description={resultatTest}
+        />
       )}
 
       {isPending || !data ? (
@@ -110,19 +130,23 @@ export function EcranFicheMarchand() {
                   type="button"
                   onClick={() => ouvrirModale({ type: "nouvelle-application" })}
                 >
-                  <Plus className="size-4" strokeWidth={TRAIT_ICONE} aria-hidden="true" />
+                  <Plus
+                    className="size-4"
+                    strokeWidth={TRAIT_ICONE}
+                    aria-hidden="true"
+                  />
                   Nouvelle application
                 </Button>
               </div>
               <OngletApplications
-              applications={data.applications}
-              onRenouveler={(application) =>
-                ouvrirModale({
-                  type: "renouveler-cle",
-                  idApplication: application.id,
-                  nomApplication: application.nom,
-                })
-              }
+                applications={data.applications}
+                onRenouveler={(application) =>
+                  ouvrirModale({
+                    type: "renouveler-cle",
+                    idApplication: application.id,
+                    nomApplication: application.nom,
+                  })
+                }
               />
             </div>
           )}
@@ -176,7 +200,11 @@ function LienRetour() {
       to="/marchand/liste"
       className="-mb-2 flex w-fit items-center gap-2 rounded-sm text-corps font-medium text-warning-text hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
     >
-      <ChevronLeft className="size-4" strokeWidth={TRAIT_ICONE} aria-hidden="true" />
+      <ChevronLeft
+        className="size-4"
+        strokeWidth={TRAIT_ICONE}
+        aria-hidden="true"
+      />
       Tous les marchands
     </Link>
   );

@@ -74,14 +74,17 @@ const routesDesSections = NAVIGATION.flatMap((section) => {
     return [
       {
         path: section.chemin,
-        element:
-          ECRANS_INTEGRES[section.chemin] ?? <EcranAVenir titre={section.libelle} />,
+        element: ECRANS_INTEGRES[section.chemin] ?? (
+          <EcranAVenir titre={section.libelle} />
+        ),
       },
     ];
   }
   return (section.enfants ?? []).map((enfant) => ({
     path: enfant.chemin,
-    element: ECRANS_INTEGRES[enfant.chemin] ?? <EcranAVenir titre={enfant.libelle} />,
+    element: ECRANS_INTEGRES[enfant.chemin] ?? (
+      <EcranAVenir titre={enfant.libelle} />
+    ),
   }));
 });
 
@@ -116,8 +119,24 @@ export const router = createBrowserRouter([
             path: "/referentiel/fournisseurs/:id",
             element: <EcranFicheFournisseur />,
           },
+          /* Second onglet des montants autorises. Meme regle que la fiche
+             marchand : le chemin sans segment sert le premier onglet. */
+          {
+            path: "/referentiel/montants/:onglet",
+            element: ECRANS_INTEGRES["/referentiel/montants"],
+          },
           { path: "/marchand/liste/:id", element: <EcranFicheMarchand /> },
-          { path: "/exploitation/paiement/:id", element: <EcranFichePaiement /> },
+          /* Chaque onglet de la fiche est une adresse a part entiere : elle
+             se partage, se recharge et se quitte au bouton de retour. Le
+             chemin sans segment sert l'onglet Dossier. */
+          {
+            path: "/marchand/liste/:id/:onglet",
+            element: <EcranFicheMarchand />,
+          },
+          {
+            path: "/exploitation/paiement/:id",
+            element: <EcranFichePaiement />,
+          },
           { path: "*", element: <EcranAVenir titre="Écran introuvable" /> },
         ],
       },

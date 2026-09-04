@@ -2,7 +2,7 @@ import { create } from "zustand";
 import type { TypeFournisseur } from "./types";
 
 /*
- * Etat client du Referentiel : filtres actifs, onglet courant, modale
+ * Etat client du Referentiel : filtres actifs, modale
  * ouverte. Rien d'autre.
  *
  * Aucune liste, aucune fiche, aucun decompte ici. Ces donnees viennent du
@@ -18,6 +18,8 @@ import type { TypeFournisseur } from "./types";
    donc sur le type, qui est la seule dimension que la liste possede. */
 export type FiltreTypeFournisseur = "tous" | TypeFournisseur;
 export type FiltreBornes = "tout" | "plafond-inconnu";
+/* L'onglet vit dans l'adresse, pas dans ce magasin. Le type reste ici,
+   la ou vivent les types de la section. */
 export type OngletMontants = "montants" | "champs";
 
 /** Identifie la modale ouverte et la ligne qu'elle concerne. */
@@ -44,7 +46,6 @@ type EtatReferentiels = {
 
   filtreTypeFournisseur: FiltreTypeFournisseur;
   filtreBornes: FiltreBornes;
-  ongletMontants: OngletMontants;
 
   modale: ModaleReferentiel;
 
@@ -59,7 +60,6 @@ type EtatReferentiels = {
   ) => void;
   definirFiltreTypeFournisseur: (filtre: FiltreTypeFournisseur) => void;
   definirFiltreBornes: (filtre: FiltreBornes) => void;
-  definirOngletMontants: (onglet: OngletMontants) => void;
   ouvrirModale: (modale: ModaleReferentiel) => void;
   fermerModale: () => void;
 };
@@ -73,14 +73,12 @@ export const useReferentiels = create<EtatReferentiels>((set) => ({
 
   filtreTypeFournisseur: "tous",
   filtreBornes: "tout",
-  ongletMontants: "montants",
 
   modale: { type: "aucune" },
 
   definirRecherche: (ecran, terme) => set({ [ecran]: terme } as never),
   definirFiltreTypeFournisseur: (filtre) => set({ filtreTypeFournisseur: filtre }),
   definirFiltreBornes: (filtre) => set({ filtreBornes: filtre }),
-  definirOngletMontants: (onglet) => set({ ongletMontants: onglet }),
   ouvrirModale: (modale) => set({ modale }),
   fermerModale: () => set({ modale: { type: "aucune" } }),
 }));
