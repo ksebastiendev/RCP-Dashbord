@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useIsFetching, useQueryClient } from "@tanstack/react-query";
 import { Bell, RefreshCw, Search } from "lucide-react";
 import { Avatar } from "./navigation-laterale";
+import { ChoixTheme } from "./choix-theme";
 import { LIBELLE_ROLE } from "@/lib/libelles";
 import { useSession } from "@/stores/session";
 import { formatDate, formatHeure } from "@/lib/format";
@@ -25,6 +26,7 @@ export function BarreSuperieure() {
 
       <div className="ml-auto flex items-center gap-5">
         <Actualisation />
+        <ChoixTheme />
         <LienNotifications />
         <div className="h-8 w-px bg-topbar-border" aria-hidden="true" />
         {utilisateur && (

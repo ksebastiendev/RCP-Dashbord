@@ -78,3 +78,15 @@
   --badge-neutral-fg: var(--semantic-neutral-fg);
   --badge-neutral-bg: var(--semantic-neutral-bg);
 }
+
+/*
+ * Reste du theme sombre, cote composant.
+ *
+ * Un seul token ne suit pas mecaniquement la couche semantique. Le texte
+ * pose sur un fond destructif est blanc en clair, ou --destructive vaut un
+ * rouge fonce. En sombre --destructive devient un rouge clair : le blanc y
+ * tomberait a 1,90:1. Le texte s'inverse avec le fond.
+ */
+.dark {
+  --destructive-foreground: var(--primitive-neutral-950);
+}

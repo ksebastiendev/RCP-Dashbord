@@ -22,6 +22,32 @@
     />
     <!-- Un back-office ne s'indexe pas. -->
     <meta name="robots" content="noindex, nofollow" />
+
+    <!--
+      Pose la classe de theme avant le premier rendu. Sans cela, la page
+      s'affiche en clair le temps que React demarre, puis bascule : un
+      eclair blanc en pleine nuit.
+
+      Le script lit la meme cle de stockage que le magasin de preferences,
+      "bcp-preferences", et se rabat sur le reglage du systeme quand aucun
+      choix n'a ete fait ou que le stockage est indisponible.
+    -->
+    <script>
+      (function () {
+        try {
+          var brut = localStorage.getItem("bcp-preferences");
+          var mode = brut ? JSON.parse(brut).state.theme : "systeme";
+          var sombre =
+            mode === "sombre" ||
+            (mode !== "clair" &&
+              matchMedia("(prefers-color-scheme: dark)").matches);
+          if (sombre) document.documentElement.classList.add("dark");
+        } catch (e) {
+          /* Stockage refuse ou contenu illisible : le theme clair sert de
+             repli, et le magasin corrigera au premier rendu. */
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

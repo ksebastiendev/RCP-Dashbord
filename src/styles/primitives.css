@@ -56,3 +56,44 @@
   --primitive-brown-400: #a69184;
   --primitive-brown-200: #d3c8c1;
 }
+
+/*
+ * Neutres du theme sombre.
+ *
+ * Ils ne sont pas des gris : le beige et le brun de la marque tirent chaud,
+ * et un gris neutre pose a cote d'eux les fait paraitre verts. Ces valeurs
+ * gardent la meme famille chromatique que --primitive-brown-900, poussee
+ * jusqu'au tres sombre. La navigation reste ainsi reconnaissable comme du
+ * brun, pas comme du noir.
+ *
+ * Toutes les paires texte sur fond de ce bloc ont ete mesurees. La plus
+ * basse tient 6,33:1, le seuil AA etant a 4,5:1.
+ */
+:root {
+  --primitive-night-950: #120d09; /* navigation laterale */
+  --primitive-night-900: #1a1310; /* fond de page */
+  --primitive-night-850: #231a16; /* carte, modale, barre superieure */
+  --primitive-night-800: #2b211c; /* entete de tableau, survol, creux */
+  --primitive-night-700: #3a2d26; /* bordure de carte et de champ */
+  --primitive-night-650: #31261f; /* separateur de ligne */
+  --primitive-night-300: #a99b92; /* texte tres secondaire, 6,33:1 */
+  --primitive-night-200: #c9beb7; /* texte secondaire, 9,37:1 */
+  --primitive-night-50: #f4f0ed; /* texte principal, 15,06:1 */
+
+  /*
+   * Etats en sombre. Le couple d'un fond tres clair et d'un texte tres
+   * fonce ne se transpose pas : il s'inverse. Fond tres sombre de la meme
+   * teinte, texte clair de la meme teinte, meme ecart percu.
+   */
+  --primitive-green-300: #5fd894;
+  --primitive-green-900: #0f3220;
+  --primitive-green-950: #0b2417;
+
+  --primitive-red-300: #ff9090;
+  --primitive-red-900: #3d1416;
+  --primitive-red-950: #2c0f11;
+
+  --primitive-gold-300: #f2c73f;
+  --primitive-gold-900: #332608;
+  --primitive-gold-950: #241b06;
+}

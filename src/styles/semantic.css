@@ -60,3 +60,69 @@
   --semantic-border-default: var(--primitive-neutral-150);
   --semantic-border-separator: var(--primitive-neutral-100);
 }
+
+/*
+ * Theme sombre.
+ *
+ * Le theme entier tient dans ce bloc et dans les quelques lignes de
+ * component.css qui suivent. Aucun composant n'est ouvert, aucune classe
+ * `dark:` n'est ecrite nulle part dans le projet : c'est ce que
+ * l'architecture a trois niveaux achete.
+ *
+ * Trois pieges connus, traites ici :
+ *   - le bouton principal qui disparait. L'orange de marque est clair, il
+ *     tient 10,71:1 sur le fond sombre et reste donc un fond valable, avec
+ *     le meme texte quasi noir qu'en clair.
+ *   - l'anneau de focus invisible. Il reste l'orange, pour la meme raison.
+ *   - les pastilles et l'element de navigation actif qui se confondent avec
+ *     la carte. Chacun garde un token de fond distinct de --surface-raised.
+ */
+.dark {
+  color-scheme: dark;
+
+  --semantic-nav-surface: var(--primitive-night-950);
+  --semantic-nav-fg: var(--primitive-night-50);
+  --semantic-nav-fg-muted: var(--primitive-night-200);
+  --semantic-nav-hover: var(--primitive-night-800);
+  /* L'orange et son texte quasi noir traversent les deux themes tels
+     quels : c'est la paire la plus contrastee du projet. */
+  --semantic-nav-active-surface: var(--primitive-orange-500);
+  --semantic-nav-active-fg: var(--primitive-neutral-950);
+
+  --semantic-action-primary: var(--primitive-orange-500);
+  --semantic-action-primary-fg: var(--primitive-neutral-950);
+  --semantic-focus-ring: var(--primitive-orange-500);
+
+  --semantic-success-fg: var(--primitive-green-300);
+  --semantic-success-bg: var(--primitive-green-900);
+  --semantic-success-subtle: var(--primitive-green-950);
+
+  --semantic-danger-fg: var(--primitive-red-300);
+  --semantic-danger-bg: var(--primitive-red-900);
+  --semantic-danger-subtle: var(--primitive-red-950);
+
+  /* En clair, l'ambre se dedouble parce que la teinte vive echoue en
+     texte sur blanc. Sur fond sombre elle tient 10,58:1 : le dedoublement
+     n'a plus lieu d'etre et les deux tokens pointent la meme valeur. */
+  --semantic-warning-fg: var(--primitive-gold-300);
+  --semantic-warning-text: var(--primitive-gold-300);
+  --semantic-warning-bg: var(--primitive-gold-900);
+  --semantic-warning-subtle: var(--primitive-gold-950);
+
+  --semantic-neutral-fg: var(--primitive-night-200);
+  --semantic-neutral-bg: var(--primitive-night-800);
+  --semantic-neutral-subtle: var(--primitive-night-900);
+
+  --semantic-surface-page: var(--primitive-night-900);
+  --semantic-surface-raised: var(--primitive-night-850);
+  --semantic-surface-sunken: var(--primitive-night-800);
+  --semantic-surface-overlay: var(--primitive-night-850);
+
+  --semantic-fg-primary: var(--primitive-night-50);
+  --semantic-fg-secondary: var(--primitive-night-200);
+  --semantic-fg-muted: var(--primitive-night-300);
+  --semantic-fg-placeholder: var(--primitive-night-300);
+
+  --semantic-border-default: var(--primitive-night-700);
+  --semantic-border-separator: var(--primitive-night-650);
+}
