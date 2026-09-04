@@ -226,38 +226,36 @@ export function EcranMontants() {
           />
         </RangeeIndicateurs>
       }
-      filtres={
-        onglet === "montants" ? (
-          <BarreFiltres
-            recherche={
-              <ChampRecherche
-                libelle="Rechercher une borne"
-                indication="Opérateur, pays, anciens noms"
-                valeur={recherche}
-                onChangement={(terme) => definirRecherche("rechercheBornes", terme)}
-              />
-            }
-            bascule={
-              <GroupeBascule
-                libelleGroupe="Filtrer les bornes"
-                valeur={filtre}
-                onChangement={definirFiltre}
-                options={[
-                  { valeur: "tout", libelle: "Tout" },
-                  {
-                    valeur: "plafond-inconnu",
-                    libelle: "Plafond inconnu",
-                    nombre: indicateurs.data?.plafondsInconnus,
-                  },
-                ]}
-              />
-            }
-          />
-        ) : undefined
-      }
     >
       {onglet === "montants" ? (
         <Tableau
+          outils={
+            <BarreFiltres
+              recherche={
+                <ChampRecherche
+                  libelle="Rechercher une borne"
+                  indication="Opérateur, pays, anciens noms"
+                  valeur={recherche}
+                  onChangement={(terme) => definirRecherche("rechercheBornes", terme)}
+                />
+              }
+              bascule={
+                <GroupeBascule
+                  libelleGroupe="Filtrer les bornes"
+                  valeur={filtre}
+                  onChangement={definirFiltre}
+                  options={[
+                    { valeur: "tout", libelle: "Tout" },
+                    {
+                      valeur: "plafond-inconnu",
+                      libelle: "Plafond inconnu",
+                      nombre: indicateurs.data?.plafondsInconnus,
+                    },
+                  ]}
+                />
+              }
+            />
+          }
           titre={
             lignes === undefined
               ? undefined

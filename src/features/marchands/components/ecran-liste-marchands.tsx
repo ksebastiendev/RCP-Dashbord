@@ -131,26 +131,27 @@ export function EcranListeMarchands() {
 
       <RechercheLegale />
 
-      <BarreFiltres
-        recherche={
-          <ChampRecherche
-            libelle="Rechercher un marchand par nom"
-            indication="Nom de l'entreprise"
-            valeur={recherche}
-            onChangement={definirRecherche}
-          />
-        }
-        bascule={
-          <GroupeBascule
-            libelleGroupe="Filtrer par statut de dossier"
-            valeur={filtre}
-            onChangement={definirFiltre}
-            options={decomptes ?? FILTRES}
-          />
-        }
-      />
-
       <Tableau
+        outils={
+          <BarreFiltres
+            recherche={
+              <ChampRecherche
+                libelle="Rechercher un marchand par nom"
+                indication="Nom de l'entreprise"
+                valeur={recherche}
+                onChangement={definirRecherche}
+              />
+            }
+            bascule={
+              <GroupeBascule
+                libelleGroupe="Filtrer par statut de dossier"
+                valeur={filtre}
+                onChangement={definirFiltre}
+                options={decomptes ?? FILTRES}
+              />
+            }
+          />
+        }
         titre={
           lignes === undefined
             ? undefined

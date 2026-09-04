@@ -47,7 +47,7 @@ export function GroupeBascule<V extends string>({
             aria-pressed={actif}
             onClick={() => onChangement(option.valeur)}
             className={cn(
-              "h-11 rounded-md px-5 text-corps transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none",
+              "h-11 rounded-md px-4 text-corps transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none",
               actif
                 ? "bg-primary font-medium text-primary-foreground"
                 : "border border-border bg-card text-fg-primary hover:bg-muted",
@@ -113,7 +113,11 @@ export function BarreFiltres({
 }) {
   return (
     <div className="flex flex-wrap items-center gap-4">
-      {recherche && <div className="w-[368px] max-w-full">{recherche}</div>}
+      {/* La barre vit maintenant dans la carte du tableau, ou la largeur
+          utile est plus courte de la double marge. Le champ est retreci en
+          consequence : au dela, la recherche et les filtres passent a la
+          ligne et la barre d'outils double de hauteur. */}
+      {recherche && <div className="w-[300px] max-w-full">{recherche}</div>}
       {bascule}
       {action && <div className="ml-auto">{action}</div>}
     </div>

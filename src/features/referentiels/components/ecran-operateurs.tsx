@@ -106,20 +106,20 @@ export function EcranOperateurs() {
           Déclarer un opérateur
         </Button>
       }
-      filtres={
-        <BarreFiltres
-          recherche={
-            <ChampRecherche
-              libelle="Rechercher un opérateur"
-              indication="Opérateur, pays, anciens noms"
-              valeur={recherche}
-              onChangement={(terme) => definirRecherche("rechercheOperateurs", terme)}
-            />
-          }
-        />
-      }
     >
       <Tableau
+        outils={
+          <BarreFiltres
+            recherche={
+              <ChampRecherche
+                libelle="Rechercher un opérateur"
+                indication="Opérateur, pays, anciens noms"
+                valeur={recherche}
+                onChangement={(terme) => definirRecherche("rechercheOperateurs", terme)}
+              />
+            }
+          />
+        }
         titre={
           lignes === undefined
             ? undefined

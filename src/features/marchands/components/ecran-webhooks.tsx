@@ -68,43 +68,50 @@ export function EcranWebhooks() {
         }
       />
 
-      <BarreFiltres
-        recherche={
-          <ChampRecherche
-            libelle="Rechercher un marchand"
-            indication="Nom de l'entreprise"
-            valeur={recherche}
-            onChangement={definirRecherche}
-          />
-        }
-        bascule={
-          marchands.isPending ? (
-            <Skeleton className="h-12 w-[280px] rounded-md" />
-          ) : (
-            <div className="w-[280px]">
-              <label htmlFor="marchand-webhooks" className="sr-only">
-                Choisir le marchand dont on regarde les notifications
-              </label>
-              <select
-                id="marchand-webhooks"
-                value={choisi ?? ""}
-                onChange={(evenement) => definirChoisi(evenement.target.value)}
-                className={CLASSES_CONTROLE}
-              >
-                {selectionnables
-                  ?.filter((m) =>
-                    m.nom.toLowerCase().includes(recherche.trim().toLowerCase()),
-                  )
-                  .map((marchand) => (
-                    <option key={marchand.id} value={marchand.id}>
-                      {marchand.nom}
-                    </option>
-                  ))}
-              </select>
-            </div>
-          )
-        }
-      />
+      {/* Le selecteur ne gouverne pas un tableau mais l'ecran entier :
+          il porte le marchand dont on regarde les notifications, et
+          plusieurs tableaux en decoulent. Il reste donc au dessus, dans
+          sa propre carte, plutot que dans la barre d'outils de l'un
+          d'eux. */}
+      <Carte avecBordure={false} className="px-6 py-4">
+        <BarreFiltres
+          recherche={
+            <ChampRecherche
+              libelle="Rechercher un marchand"
+              indication="Nom de l'entreprise"
+              valeur={recherche}
+              onChangement={definirRecherche}
+            />
+          }
+          bascule={
+            marchands.isPending ? (
+              <Skeleton className="h-12 w-[280px] rounded-md" />
+            ) : (
+              <div className="w-[280px]">
+                <label htmlFor="marchand-webhooks" className="sr-only">
+                  Choisir le marchand dont on regarde les notifications
+                </label>
+                <select
+                  id="marchand-webhooks"
+                  value={choisi ?? ""}
+                  onChange={(evenement) => definirChoisi(evenement.target.value)}
+                  className={CLASSES_CONTROLE}
+                >
+                  {selectionnables
+                    ?.filter((m) =>
+                      m.nom.toLowerCase().includes(recherche.trim().toLowerCase()),
+                    )
+                    .map((marchand) => (
+                      <option key={marchand.id} value={marchand.id}>
+                        {marchand.nom}
+                      </option>
+                    ))}
+                </select>
+              </div>
+            )
+          }
+        />
+      </Carte>
 
       {resultatTest && (
         <Bandeau genre="succes" titre="Test envoyé" description={resultatTest} />

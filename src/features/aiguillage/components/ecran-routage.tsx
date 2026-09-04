@@ -122,30 +122,31 @@ export function EcranRoutage() {
         }
       />
 
-      <BarreFiltres
-        recherche={
-          <ChampRecherche
-            libelle="Rechercher une route"
-            indication="Destination, fournisseur"
-            valeur={recherche}
-            onChangement={definirRecherche}
-          />
-        }
-        bascule={
-          <GroupeBascule
-            libelleGroupe="Filtrer les routes par sens"
-            valeur={filtre}
-            onChangement={definirFiltre}
-            options={[
-              { valeur: "tous", libelle: "Tous les sens" },
-              { valeur: "encaissement", libelle: "Encaissement" },
-              { valeur: "decaissement", libelle: "Décaissement" },
-            ]}
-          />
-        }
-      />
-
       <Tableau
+        outils={
+          <BarreFiltres
+            recherche={
+              <ChampRecherche
+                libelle="Rechercher une route"
+                indication="Destination, fournisseur"
+                valeur={recherche}
+                onChangement={definirRecherche}
+              />
+            }
+            bascule={
+              <GroupeBascule
+                libelleGroupe="Filtrer les routes par sens"
+                valeur={filtre}
+                onChangement={definirFiltre}
+                options={[
+                  { valeur: "tous", libelle: "Tous les sens" },
+                  { valeur: "encaissement", libelle: "Encaissement" },
+                  { valeur: "decaissement", libelle: "Décaissement" },
+                ]}
+              />
+            }
+          />
+        }
         titre={
           lignes === undefined
             ? undefined

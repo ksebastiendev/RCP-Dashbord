@@ -137,22 +137,22 @@ export function EcranPortefeuilles() {
           Déclarer une marque
         </Button>
       }
-      filtres={
-        <BarreFiltres
-          recherche={
-            <ChampRecherche
-              libelle="Rechercher une marque de portefeuille"
-              indication="Nom de la marque"
-              valeur={recherche}
-              onChangement={(terme) =>
-                definirRecherche("recherchePortefeuilles", terme)
-              }
-            />
-          }
-        />
-      }
     >
       <Tableau
+        outils={
+          <BarreFiltres
+            recherche={
+              <ChampRecherche
+                libelle="Rechercher une marque de portefeuille"
+                indication="Nom de la marque"
+                valeur={recherche}
+                onChangement={(terme) =>
+                  definirRecherche("recherchePortefeuilles", terme)
+                }
+              />
+            }
+          />
+        }
         titre={
           lignes === undefined
             ? undefined

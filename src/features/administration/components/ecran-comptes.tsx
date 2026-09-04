@@ -212,26 +212,27 @@ export function EcranComptes() {
         />
       )}
 
-      <BarreFiltres
-        recherche={
-          <ChampRecherche
-            libelle="Rechercher un compte"
-            indication="Nom, adresse électronique"
-            valeur={recherche}
-            onChangement={setRecherche}
-          />
-        }
-        bascule={
-          <GroupeBascule
-            libelleGroupe="Filtrer les comptes par rôle"
-            valeur={filtre}
-            onChangement={setFiltre}
-            options={options}
-          />
-        }
-      />
-
       <Tableau
+        outils={
+          <BarreFiltres
+            recherche={
+              <ChampRecherche
+                libelle="Rechercher un compte"
+                indication="Nom, adresse électronique"
+                valeur={recherche}
+                onChangement={setRecherche}
+              />
+            }
+            bascule={
+              <GroupeBascule
+                libelleGroupe="Filtrer les comptes par rôle"
+                valeur={filtre}
+                onChangement={setFiltre}
+                options={options}
+              />
+            }
+          />
+        }
         titre={
           lignes === undefined
             ? undefined

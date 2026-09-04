@@ -148,32 +148,32 @@ export function EcranFournisseurs() {
           description="Elles sont posées à partir de ce que les connecteurs savent faire. Personne n'a vérifié quels opérateurs sont réellement conventionnés, ni à quelles conditions. Revoyez-les avant toute mise en service."
         />
       }
-      filtres={
-        <BarreFiltres
-          recherche={
-            <ChampRecherche
-              libelle="Rechercher un fournisseur"
-              indication="Nom du fournisseur, raccordement"
-              valeur={recherche}
-              onChangement={(terme) => definirRecherche("rechercheFournisseurs", terme)}
-            />
-          }
-          bascule={
-            <GroupeBascule
-              libelleGroupe="Filtrer par type de fournisseur"
-              valeur={filtreType}
-              onChangement={definirFiltreType}
-              options={[
-                { valeur: "tous", libelle: "Tous" },
-                { valeur: "direct", libelle: "Direct" },
-                { valeur: "agregateur", libelle: "Agrégateur" },
-              ]}
-            />
-          }
-        />
-      }
     >
       <Tableau
+        outils={
+          <BarreFiltres
+            recherche={
+              <ChampRecherche
+                libelle="Rechercher un fournisseur"
+                indication="Nom du fournisseur, raccordement"
+                valeur={recherche}
+                onChangement={(terme) => definirRecherche("rechercheFournisseurs", terme)}
+              />
+            }
+            bascule={
+              <GroupeBascule
+                libelleGroupe="Filtrer par type de fournisseur"
+                valeur={filtreType}
+                onChangement={definirFiltreType}
+                options={[
+                  { valeur: "tous", libelle: "Tous" },
+                  { valeur: "direct", libelle: "Direct" },
+                  { valeur: "agregateur", libelle: "Agrégateur" },
+                ]}
+              />
+            }
+          />
+        }
         titre={
           lignes === undefined
             ? undefined

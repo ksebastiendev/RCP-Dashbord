@@ -106,20 +106,20 @@ export function EcranPresences() {
           Ouvrir une présence
         </Button>
       }
-      filtres={
-        <BarreFiltres
-          recherche={
-            <ChampRecherche
-              libelle="Rechercher une présence"
-              indication="Opérateur, pays, anciens noms"
-              valeur={recherche}
-              onChangement={(terme) => definirRecherche("recherchePresences", terme)}
-            />
-          }
-        />
-      }
     >
       <Tableau
+        outils={
+          <BarreFiltres
+            recherche={
+              <ChampRecherche
+                libelle="Rechercher une présence"
+                indication="Opérateur, pays, anciens noms"
+                valeur={recherche}
+                onChangement={(terme) => definirRecherche("recherchePresences", terme)}
+              />
+            }
+          />
+        }
         titre={
           lignes === undefined
             ? undefined

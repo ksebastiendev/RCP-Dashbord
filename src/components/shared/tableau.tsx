@@ -52,6 +52,13 @@ type ProprietesTableau<T> = {
    * donnees, ce que le squelette existe precisement pour eviter.
    */
   hauteurLigne?: string;
+  /**
+   * Barre d'outils, rendue dans la carte au dessus du tableau : recherche,
+   * filtres, action de droite. Elle vit ici et non a cote de la carte,
+   * pour que la recherche, le tableau et la pagination forment un seul
+   * bloc borde plutot que trois blocs empiles.
+   */
+  outils?: ReactNode;
   /** Rendu sous le tableau, typiquement la pagination. */
   pied?: ReactNode;
 };
@@ -68,12 +75,19 @@ export function Tableau<T>({
   etatVide,
   lignesSquelette = 8,
   hauteurLigne = "h-14",
+  outils,
   pied,
 }: ProprietesTableau<T>) {
   const vide = !chargement && !erreur && (lignes?.length ?? 0) === 0;
 
   return (
     <Carte avecBordure={false} className="overflow-hidden">
+      {outils && (
+        <div className="border-b border-table-row-separator px-6 py-4">
+          {outils}
+        </div>
+      )}
+
       {titre !== undefined && (
         <div className="flex min-h-[42px] flex-col justify-center px-6 py-3">
           {chargement ? (

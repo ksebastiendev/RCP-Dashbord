@@ -135,31 +135,32 @@ export function EcranCouverture() {
         />
       </div>
 
-      <BarreFiltres
-        recherche={
-          <ChampRecherche
-            libelle="Rechercher une destination"
-            indication="Portefeuille, pays, opérateur"
-            valeur={recherche}
-            onChangement={definirRecherche}
-          />
-        }
-        bascule={
-          <GroupeBascule
-            libelleGroupe="Filtrer les destinations par couverture"
-            valeur={filtre}
-            onChangement={definirFiltre}
-            options={[
-              { valeur: "tous", libelle: "Tous" },
-              { valeur: "servi", libelle: "Servi" },
-              { valeur: "ouvrable", libelle: "Ouvrable" },
-              { valeur: "ferme", libelle: "Fermé" },
-            ]}
-          />
-        }
-      />
-
       <Tableau
+        outils={
+          <BarreFiltres
+            recherche={
+              <ChampRecherche
+                libelle="Rechercher une destination"
+                indication="Portefeuille, pays, opérateur"
+                valeur={recherche}
+                onChangement={definirRecherche}
+              />
+            }
+            bascule={
+              <GroupeBascule
+                libelleGroupe="Filtrer les destinations par couverture"
+                valeur={filtre}
+                onChangement={definirFiltre}
+                options={[
+                  { valeur: "tous", libelle: "Tous" },
+                  { valeur: "servi", libelle: "Servi" },
+                  { valeur: "ouvrable", libelle: "Ouvrable" },
+                  { valeur: "ferme", libelle: "Fermé" },
+                ]}
+              />
+            }
+          />
+        }
         titre={
           lignes === undefined
             ? undefined
