@@ -1,4 +1,11 @@
-import { Copy, KeyRound, RefreshCw, Send } from "lucide-react";
+import {
+  Copy,
+  FileText,
+  History,
+  KeyRound,
+  RefreshCw,
+  Send,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Carte } from "@/components/shared/carte";
 import { EtatVide } from "@/components/shared/etat-vide";
@@ -41,59 +48,100 @@ export function OngletDossier({ fiche }: { fiche: FicheMarchand }) {
           <h2 className="px-6 py-5 text-section font-semibold text-fg-primary">
             Pièces justificatives
           </h2>
-          <ul>
-            {fiche.pieces.map((piece) => (
-              <li
-                key={piece.id}
-                className="flex items-center justify-between gap-4 border-t border-table-row-separator px-6 py-4"
-              >
-                <span className="min-w-0 truncate text-corps text-fg-primary">
-                  {piece.libelle}
-                </span>
-                <PastilleEtat
-                  genre={GENRE_PIECE[piece.statut]}
-                  libelle={LIBELLE_PIECE[piece.statut]}
-                />
-              </li>
-            ))}
-          </ul>
+          {/* Une liste vide se dit, elle ne se laisse pas deviner a la
+              carte qui s'arrete apres son titre. Un dossier approuve sans
+              aucune piece n'est pas un dossier neuf : c'est une approbation
+              sans justificatif, et l'ecran le nomme comme une anomalie. */}
+          {fiche.pieces.length === 0 ? (
+            <EtatVide
+              raison={
+                fiche.statut === "approuve" ? "attendu-absent" : "aucune-donnee"
+              }
+              titre="Aucune pièce justificative"
+              description={
+                fiche.statut === "approuve"
+                  ? "Ce dossier est approuvé alors qu'aucune pièce n'y est rattachée. L'approbation ne repose sur aucun justificatif consultable."
+                  : "Aucune pièce n'a encore été déposée. Le dossier ne peut pas être approuvé en l'état."
+              }
+              icone={FileText}
+            />
+          ) : (
+            <ul>
+              {fiche.pieces.map((piece) => (
+                <li
+                  key={piece.id}
+                  className="flex items-center justify-between gap-4 border-t border-table-row-separator px-6 py-4"
+                >
+                  <span className="min-w-0 truncate text-corps text-fg-primary">
+                    {piece.libelle}
+                  </span>
+                  <PastilleEtat
+                    genre={GENRE_PIECE[piece.statut]}
+                    libelle={LIBELLE_PIECE[piece.statut]}
+                  />
+                </li>
+              ))}
+            </ul>
+          )}
         </Carte>
 
         <Carte avecBordure={false} className="overflow-hidden">
           <h2 className="px-6 py-5 text-section font-semibold text-fg-primary">
             Historique de conformité
           </h2>
-          <ul>
-            {fiche.historique.map((evenement) => (
-              <li
-                key={evenement.id}
-                className="flex items-center gap-6 border-t border-table-row-separator px-6 py-3"
-              >
-                <DateValeur
-                  valeur={evenement.date}
-                  className="w-32 shrink-0 text-mention text-fg-secondary"
-                />
-                <span className="min-w-0 flex-1 truncate text-corps text-fg-primary">
-                  {evenement.evenement}
-                </span>
-                <span className="shrink-0 text-mention text-fg-muted">
-                  {evenement.auteur}
-                </span>
-              </li>
-            ))}
-          </ul>
+          {/* Un dossier porte toujours un statut, et un statut vient
+              toujours d'une decision : un historique vide veut dire que la
+              trace de cette decision est perdue. */}
+          {fiche.historique.length === 0 ? (
+            <EtatVide
+              raison="attendu-absent"
+              titre="Aucun événement enregistré"
+              description="Le dossier porte un statut, mais aucune décision n'est tracée. On ne sait ni qui l'a mis dans cet état, ni quand."
+              icone={History}
+            />
+          ) : (
+            <ul>
+              {fiche.historique.map((evenement) => (
+                <li
+                  key={evenement.id}
+                  className="flex items-center gap-6 border-t border-table-row-separator px-6 py-3"
+                >
+                  <DateValeur
+                    valeur={evenement.date}
+                    className="w-32 shrink-0 text-mention text-fg-secondary"
+                  />
+                  <span className="min-w-0 flex-1 truncate text-corps text-fg-primary">
+                    {evenement.evenement}
+                  </span>
+                  <span className="shrink-0 text-mention text-fg-muted">
+                    {evenement.auteur}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          )}
         </Carte>
       </div>
 
       <Carte avecBordure={false} className="px-6 py-6">
-        <h2 className="text-section font-semibold text-fg-primary">Dirigeants</h2>
+        <h2 className="text-section font-semibold text-fg-primary">
+          Dirigeants
+        </h2>
+        {fiche.dirigeants.length === 0 && (
+          <p className="mt-3 text-mention leading-relaxed text-fg-secondary">
+            Aucun dirigeant déclaré. La vérification d'identité ne peut pas être
+            menée tant que personne n'est nommé.
+          </p>
+        )}
         <ul className="mt-4 flex flex-col gap-4">
           {fiche.dirigeants.map((dirigeant) => (
             <li key={dirigeant.id}>
               <p className="text-corps font-medium text-fg-primary">
                 {dirigeant.nom}
               </p>
-              <p className="text-mention text-fg-secondary">{dirigeant.fonction}</p>
+              <p className="text-mention text-fg-secondary">
+                {dirigeant.fonction}
+              </p>
             </li>
           ))}
         </ul>
@@ -180,7 +228,10 @@ export function CarteApplication({
             {application.derniereActivite === null ? (
               "Aucune activité à ce jour"
             ) : (
-              <>Dernière activité le {formatDateHeure(application.derniereActivite)}</>
+              <>
+                Dernière activité le{" "}
+                {formatDateHeure(application.derniereActivite)}
+              </>
             )}
             {" · "}
             {application.taux === undefined ? (
@@ -195,7 +246,11 @@ export function CarteApplication({
         </div>
 
         <Button type="button" variant="outline" onClick={onRenouveler}>
-          <RefreshCw className="size-4" strokeWidth={TRAIT_ICONE} aria-hidden="true" />
+          <RefreshCw
+            className="size-4"
+            strokeWidth={TRAIT_ICONE}
+            aria-hidden="true"
+          />
           Renouveler la clé
         </Button>
       </div>
@@ -242,7 +297,9 @@ export function OngletTarification({ fiche }: { fiche: FicheMarchand }) {
     <div className="grid items-start gap-6 xl:grid-cols-[minmax(0,1fr)_360px]">
       <Carte avecBordure={false} className="px-6 py-6">
         <div className="flex flex-wrap items-baseline justify-between gap-4">
-          <h2 className="text-section font-semibold text-fg-primary">Tarif effectif</h2>
+          <h2 className="text-section font-semibold text-fg-primary">
+            Tarif effectif
+          </h2>
           <p className="text-mention text-fg-secondary">
             {echelonApplique
               ? ORIGINE_TARIF[echelonApplique.niveau].replace(/^h/, "H")
@@ -256,7 +313,9 @@ export function OngletTarification({ fiche }: { fiche: FicheMarchand }) {
           </span>
           <span className="text-corps text-fg-secondary">
             par transaction · frais à la charge{" "}
-            {fiche.fraisALaChargeDe === "client-final" ? "du client final" : "du marchand"}
+            {fiche.fraisALaChargeDe === "client-final"
+              ? "du client final"
+              : "du marchand"}
           </span>
         </p>
 
@@ -280,7 +339,9 @@ function EchelonCascade({ echelon }: { echelon: EchelonTarif }) {
     <li
       className={cn(
         "flex flex-wrap items-center gap-4 rounded-md border px-4 py-3",
-        echelon.applique ? "border-border bg-card" : "border-transparent bg-muted",
+        echelon.applique
+          ? "border-border bg-card"
+          : "border-transparent bg-muted",
       )}
     >
       <span className="w-24 shrink-0 text-etiquette font-medium tracking-wide text-fg-muted uppercase">
@@ -300,7 +361,9 @@ function EchelonCascade({ echelon }: { echelon: EchelonTarif }) {
           echelon.applique ? "text-fg-primary" : "text-fg-muted",
         )}
       >
-        {echelon.taux === undefined ? "non défini" : formatPourcentage(echelon.taux, 2)}
+        {echelon.taux === undefined
+          ? "non défini"
+          : formatPourcentage(echelon.taux, 2)}
       </span>
       {/* L'echelon applique est signale par un mot, pas seulement par un
           fond plus clair. */}
@@ -334,7 +397,9 @@ function SimulateurPrix({
   if (taux === undefined || taux === null) {
     return (
       <Carte avecBordure={false} className="px-6 py-6">
-        <h2 className="text-section font-semibold text-fg-primary">Simuler un prix</h2>
+        <h2 className="text-section font-semibold text-fg-primary">
+          Simuler un prix
+        </h2>
         <p className="mt-2 text-mention leading-relaxed text-fg-secondary">
           Aucun tarif n'est applicable à ce marchand. La simulation reprendra
           quand une règle sera renseignée.
@@ -347,7 +412,9 @@ function SimulateurPrix({
 
   return (
     <Carte avecBordure={false} className="px-6 py-6">
-      <h2 className="text-section font-semibold text-fg-primary">Simuler un prix</h2>
+      <h2 className="text-section font-semibold text-fg-primary">
+        Simuler un prix
+      </h2>
 
       <div className="mt-4">
         <ChampFormulaire etiquette={`Montant de la transaction (${devise})`}>
@@ -458,7 +525,9 @@ export function TableauWebhooks({
       entete: "Événement",
       largeur: "20%",
       squelette: "70%",
-      cellule: (w) => <span className="truncate text-fg-primary">{w.evenement}</span>,
+      cellule: (w) => (
+        <span className="truncate text-fg-primary">{w.evenement}</span>
+      ),
     },
     {
       cle: "adresse",
@@ -466,7 +535,10 @@ export function TableauWebhooks({
       largeur: "28%",
       squelette: "90%",
       cellule: (w) => (
-        <code className="block truncate font-mono text-mention" title={w.adresse}>
+        <code
+          className="block truncate font-mono text-mention"
+          title={w.adresse}
+        >
           {w.adresse}
         </code>
       ),
@@ -480,7 +552,9 @@ export function TableauWebhooks({
         w.dernierEnvoi === null ? (
           <span className="text-fg-muted">
             <span aria-hidden="true">Jamais envoyé</span>
-            <span className="sr-only">Aucune notification envoyée à ce jour</span>
+            <span className="sr-only">
+              Aucune notification envoyée à ce jour
+            </span>
           </span>
         ) : (
           <DateValeur valeur={w.dernierEnvoi} className="text-fg-secondary" />
@@ -506,7 +580,11 @@ export function TableauWebhooks({
             onClick={() => onTester(w)}
             disabled={idEnCours === w.id}
           >
-            <Send className="size-4" strokeWidth={TRAIT_ICONE} aria-hidden="true" />
+            <Send
+              className="size-4"
+              strokeWidth={TRAIT_ICONE}
+              aria-hidden="true"
+            />
             {idEnCours === w.id ? "Envoi..." : "Tester"}
           </Button>
         </span>
@@ -542,9 +620,7 @@ export function TableauWebhooks({
  */
 function SanteWebhook({ taux }: { taux: Incertain<number> }) {
   if (taux === undefined) {
-    return (
-      <PastilleEtat genre="neutre" libelle="Pas assez d'envois" />
-    );
+    return <PastilleEtat genre="neutre" libelle="Pas assez d'envois" />;
   }
   if (taux === null) {
     return <Texte valeur={null} />;

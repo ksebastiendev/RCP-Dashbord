@@ -1,15 +1,10 @@
 /*
  * Police du projet : Plus Jakarta Sans, servie depuis le paquet et non
- * depuis un CDN. Aucune requete vers un tiers, et l'interface reste lisible
- * hors ligne. La fonte est variable : un seul fichier couvre les graisses
- * 200 a 800, et les sous-ensembles non latins ne sont jamais telecharges,
- * leur unicode-range ne correspondant a rien de ce que l'interface affiche.
+ * depuis un CDN. Aucune requete vers un tiers, et l'interface reste
+ * lisible hors ligne. La fonte est variable : un seul fichier couvre les
+ * graisses 200 a 800. Voir styles/police.css pour le choix de la coupe.
  */
-@import "@fontsource-variable/plus-jakarta-sans";
-/* L'italique n'est utilise qu'a un endroit, la mention "Non servi" des
-   portefeuilles, mais un italique synthetise par le navigateur est une
-   simple inclinaison de la fonte droite : la vraie coupe est importee. */
-@import "@fontsource-variable/plus-jakarta-sans/wght-italic.css";
+@import "./styles/police.css";
 
 @import "tailwindcss";
 @import "tw-animate-css";
@@ -138,8 +133,26 @@
     text-rendering: optimizeLegibility;
   }
 
-  /* Tout montant s'affiche en chiffres tabulaires. Applique par lib/format
-     via la classe .tabular, jamais laisse au hasard d'un composant. */
+  /*
+   * Chiffres tabulaires partout ou des nombres s'empilent en colonne.
+   * C'est decisif sur un back-office de paiement : sans cela deux montants
+   * de meme longueur ne se superposent pas au chiffre pres, et l'oeil ne
+   * peut plus comparer une colonne d'un coup.
+   *
+   * Pose sur les cellules elles-memes, et pas seulement sur la classe
+   * .tabular, pour qu'un nombre ecrit directement dans une cellule ne
+   * puisse pas y echapper. Sur du texte sans chiffre, la declaration
+   * n'a aucun effet.
+   */
+  th,
+  td,
+  time {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
+  }
+
+  /* Le meme reglage, disponible en classe pour les nombres hors tableau :
+     tuiles d'indicateur, decomptes de filtre, pieds de liste. */
   .tabular {
     font-variant-numeric: tabular-nums;
     font-feature-settings: "tnum";
