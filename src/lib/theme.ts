@@ -14,11 +14,11 @@ export type ModeTheme = "clair" | "sombre" | "systeme";
 
 export const CLE_THEME = "bcp-theme";
 
-const SOMBRE = "(prefers-color-scheme: dark)";
+export const REQUETE_SOMBRE = "(prefers-color-scheme: dark)";
 
 export function themeEffectif(mode: ModeTheme): "clair" | "sombre" {
   if (mode !== "systeme") return mode;
-  return window.matchMedia(SOMBRE).matches ? "sombre" : "clair";
+  return window.matchMedia(REQUETE_SOMBRE).matches ? "sombre" : "clair";
 }
 
 export function appliquerTheme(mode: ModeTheme) {
@@ -26,16 +26,4 @@ export function appliquerTheme(mode: ModeTheme) {
     "dark",
     themeEffectif(mode) === "sombre",
   );
-}
-
-/**
- * S'abonne aux changements du systeme. Ne fait rien tant que le mode
- * choisi n'est pas "systeme" : un utilisateur qui a demande le clair ne
- * veut pas basculer parce que la nuit tombe.
- */
-export function suivreLeSysteme(mode: ModeTheme, appliquer: () => void) {
-  if (mode !== "systeme") return () => {};
-  const requete = window.matchMedia(SOMBRE);
-  requete.addEventListener("change", appliquer);
-  return () => requete.removeEventListener("change", appliquer);
 }

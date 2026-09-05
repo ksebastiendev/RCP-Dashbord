@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useIsFetching, useQueryClient } from "@tanstack/react-query";
-import { Bell, RefreshCw, Search } from "lucide-react";
+import { Bell, Menu, RefreshCw, Search } from "lucide-react";
 import { Avatar } from "./navigation-laterale";
 import { ChoixTheme } from "./choix-theme";
 import { LIBELLE_ROLE } from "@/lib/libelles";
@@ -15,23 +15,44 @@ import { TRAIT_ICONE } from "@/lib/icones";
  * L'horodatage n'est pas decoratif : il indique la fraicheur reelle des
  * donnees affichees, donc il est derive de TanStack Query et non d'une
  * horloge qui avancerait toute seule.
+ *
+ * Au retrecissement, chaque element cede dans l'ordre de son utilite : la
+ * phrase d'horodatage tombe la premiere, puis le nom et le role, puis la
+ * recherche. Le bouton d'actualisation, les notifications et l'avatar
+ * restent jusqu'au bout, et le bouton de navigation apparait.
  */
 
-export function BarreSuperieure() {
+export function BarreSuperieure({
+  onOuvrirNavigation,
+}: {
+  onOuvrirNavigation?: () => void;
+}) {
   const utilisateur = useSession((e) => e.utilisateur);
 
   return (
-    <header className="flex h-16 shrink-0 items-center gap-6 border-b border-topbar-border bg-topbar-bg px-8">
+    <header className="flex h-16 shrink-0 items-center gap-3 border-b border-topbar-border bg-topbar-bg px-4 sm:gap-5 sm:px-6 lg:px-8">
+      <button
+        type="button"
+        onClick={onOuvrirNavigation}
+        aria-label="Ouvrir la navigation"
+        className="grid size-9 shrink-0 place-items-center rounded-md text-topbar-fg transition-colors hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none lg:hidden"
+      >
+        <Menu className="size-5" strokeWidth={TRAIT_ICONE} aria-hidden="true" />
+      </button>
+
       <RechercheGlobale />
 
-      <div className="ml-auto flex items-center gap-5">
+      <div className="ml-auto flex items-center gap-2 sm:gap-4">
         <Actualisation />
         <ChoixTheme />
         <LienNotifications />
-        <div className="h-8 w-px bg-topbar-border" aria-hidden="true" />
+        <div
+          className="hidden h-8 w-px bg-topbar-border sm:block"
+          aria-hidden="true"
+        />
         {utilisateur && (
           <div className="flex items-center gap-3">
-            <div className="text-right">
+            <div className="hidden text-right md:block">
               <div className="text-mention font-medium text-fg-primary">
                 {utilisateur.nom}
               </div>
@@ -53,7 +74,7 @@ function RechercheGlobale() {
   return (
     <form
       role="search"
-      className="w-[390px]"
+      className="hidden w-full max-w-[390px] sm:block"
       onSubmit={(evenement) => {
         evenement.preventDefault();
         /* La recherche globale n'a pas encore de destination : elle attend
@@ -85,9 +106,8 @@ function RechercheGlobale() {
 function Actualisation() {
   const queryClient = useQueryClient();
   const nombreEnCours = useIsFetching();
-  const [derniereActualisation, setDerniereActualisation] = useState<Date | null>(
-    null,
-  );
+  const [derniereActualisation, setDerniereActualisation] =
+    useState<Date | null>(null);
   const precedent = useRef(nombreEnCours);
 
   /* Horodater la fin d'un chargement, pas son debut : ce que la barre
@@ -116,7 +136,10 @@ function Actualisation() {
           aria-hidden="true"
         />
       </button>
-      <span aria-live="polite">
+      {/* La phrase est le premier element a ceder : sur un ecran etroit,
+          savoir que les donnees sont fraiches compte moins que pouvoir les
+          rafraichir. Le bouton, lui, reste. */}
+      <span aria-live="polite" className="hidden xl:inline">
         {enCours
           ? "Actualisation en cours"
           : derniereActualisation

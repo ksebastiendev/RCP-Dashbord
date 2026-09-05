@@ -1,21 +1,46 @@
 import { useEffect } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import { ChevronDown, ChevronRight, LogOut, PanelLeft } from "lucide-react";
-import { NAVIGATION, sectionDuChemin, type SectionNavigation } from "@/app/navigation";
+import { ChevronDown, ChevronRight, LogOut, PanelLeft, X } from "lucide-react";
+import {
+  NAVIGATION,
+  sectionDuChemin,
+  type SectionNavigation,
+} from "@/app/navigation";
 import { usePreferences } from "@/stores/preferences";
 import { useSession } from "@/stores/session";
 import { cn } from "@/lib/utils";
 import { LIBELLE_ROLE } from "@/lib/libelles";
 import { TRAIT_ICONE } from "@/lib/icones";
+import { useEstBureau } from "@/lib/media";
 
 /*
  * Navigation laterale. Composant partage de la coque, pas element d'ecran :
  * aucun ecran ne la rend lui-meme, elle est montee une fois par la coque.
+ *
+ * Deux comportements, pas deux composants :
+ *   au dela de 1024 px, elle occupe sa colonne et peut se replier en bande
+ *   d'icones de 72 px ;
+ *   en dessous, elle sort du flux, glisse par dessus le contenu sous un
+ *   voile sombre, et s'affiche toujours en entier, libelles compris. Une
+ *   bande d'icones n'aurait aucun sens sur un tiroir qu'on referme.
+ *
+ * Le repli est donc une notion de bureau seulement. Le calculer ici, et non
+ * par des classes, evite de rendre un arbre replie qu'aucune media query ne
+ * pourrait deplier.
  */
 
-export function NavigationLaterale() {
+export function NavigationLaterale({
+  tiroirOuvert = false,
+  onFermerTiroir,
+}: {
+  /** Sous 1024 px seulement : le tiroir est-il ouvert. */
+  tiroirOuvert?: boolean;
+  onFermerTiroir?: () => void;
+}) {
   const { pathname } = useLocation();
-  const repliee = usePreferences((e) => e.navigationRepliee);
+  const estBureau = useEstBureau();
+  const replieePreferee = usePreferences((e) => e.navigationRepliee);
+  const repliee = estBureau && replieePreferee;
   const basculerNavigation = usePreferences((e) => e.basculerNavigation);
   const ouvrirSection = usePreferences((e) => e.ouvrirSection);
 
@@ -27,62 +52,104 @@ export function NavigationLaterale() {
   }, [pathname, ouvrirSection]);
 
   return (
-    <nav
-      aria-label="Navigation principale"
-      className={cn(
-        "flex h-screen shrink-0 flex-col bg-sidebar text-sidebar-foreground",
-        repliee ? "w-[72px]" : "w-[277px]",
+    <>
+      {/* Voile. Un aplat sombre, pas un flou : c'est lui qui desature le
+          fond et designe le tiroir comme le seul endroit actif. */}
+      {!estBureau && tiroirOuvert && (
+        <div
+          onClick={onFermerTiroir}
+          aria-hidden="true"
+          className="fixed inset-0 z-40 bg-black/50 lg:hidden"
+        />
       )}
-    >
-      <div
+
+      <nav
+        aria-label="Navigation principale"
+        aria-hidden={!estBureau && !tiroirOuvert}
         className={cn(
-          "flex h-[72px] items-center gap-3 px-4",
-          repliee && "justify-center px-0",
+          "flex h-full flex-col bg-sidebar text-sidebar-foreground",
+          estBureau
+            ? cn("shrink-0", repliee ? "w-[72px]" : "w-[277px]")
+            : cn(
+                "fixed inset-y-0 left-0 z-50 w-[277px] max-w-[85vw] shadow-xl transition-transform duration-200",
+                tiroirOuvert ? "translate-x-0" : "-translate-x-full",
+              ),
         )}
       >
-        <img
-          src="/marque/Logo-bestcashpay.png"
-          alt=""
-          className="h-8 w-9 shrink-0 object-contain"
-        />
-        {!repliee && (
-          <div className="min-w-0 flex-1">
-            <div className="truncate text-section font-semibold">
-              BestCash Pay
+        <div
+          className={cn(
+            "flex h-[72px] items-center gap-3 px-4",
+            repliee && "justify-center px-0",
+          )}
+        >
+          <img
+            src="/marque/Logo-bestcashpay.png"
+            alt=""
+            className="h-8 w-9 shrink-0 object-contain"
+          />
+          {!repliee && (
+            <div className="min-w-0 flex-1">
+              <div className="truncate text-section font-semibold">
+                BestCash Pay
+              </div>
+              <div className="truncate text-mention text-sidebar-muted-foreground">
+                back-office
+              </div>
             </div>
-            <div className="truncate text-mention text-sidebar-muted-foreground">
-              back-office
-            </div>
+          )}
+          {estBureau ? (
+            !repliee && (
+              <BoutonIcone
+                libelle="Replier la navigation"
+                onClick={basculerNavigation}
+              >
+                <PanelLeft
+                  className="size-5"
+                  strokeWidth={TRAIT_ICONE}
+                  aria-hidden="true"
+                />
+              </BoutonIcone>
+            )
+          ) : (
+            <BoutonIcone
+              libelle="Fermer la navigation"
+              onClick={onFermerTiroir}
+            >
+              <X
+                className="size-5"
+                strokeWidth={TRAIT_ICONE}
+                aria-hidden="true"
+              />
+            </BoutonIcone>
+          )}
+        </div>
+
+        {repliee && (
+          <div className="flex justify-center pb-2">
+            <BoutonIcone
+              libelle="Déplier la navigation"
+              onClick={basculerNavigation}
+            >
+              <PanelLeft
+                className="size-5"
+                strokeWidth={TRAIT_ICONE}
+                aria-hidden="true"
+              />
+            </BoutonIcone>
           </div>
         )}
-        {!repliee && (
-          <BoutonIcone
-            libelle="Replier la navigation"
-            onClick={basculerNavigation}
-          >
-            <PanelLeft className="size-5" strokeWidth={TRAIT_ICONE} aria-hidden="true" />
-          </BoutonIcone>
-        )}
-      </div>
 
-      {repliee && (
-        <div className="flex justify-center pb-2">
-          <BoutonIcone libelle="Déplier la navigation" onClick={basculerNavigation}>
-            <PanelLeft className="size-5" strokeWidth={TRAIT_ICONE} aria-hidden="true" />
-          </BoutonIcone>
-        </div>
-      )}
+        <ul className="flex-1 overflow-y-auto pt-[14px] pb-4">
+          {NAVIGATION.map((section) => (
+            <li key={section.id} className="mb-[14px]">
+              <Section section={section} />
+            </li>
+          ))}
+        </ul>
 
-      <ul className="flex-1 overflow-y-auto pt-[14px] pb-4">
-        {NAVIGATION.map((section) => (
-          <li key={section.id} className="mb-[14px]">
-            <Section section={section} />
-          </li>
-        ))}
-      </ul>
-
-      <BlocUtilisateur />
-    </nav>
+        <BlocUtilisateur repliee={repliee} />
+      </nav>
+    </>
   );
 }
 
@@ -92,7 +159,7 @@ function BoutonIcone({
   children,
 }: {
   libelle: string;
-  onClick: () => void;
+  onClick?: () => void;
   children: React.ReactNode;
 }) {
   return (
@@ -110,7 +177,9 @@ function BoutonIcone({
 
 function Section({ section }: { section: SectionNavigation }) {
   const { pathname } = useLocation();
-  const repliee = usePreferences((e) => e.navigationRepliee);
+  const estBureau = useEstBureau();
+  const replieePreferee = usePreferences((e) => e.navigationRepliee);
+  const repliee = estBureau && replieePreferee;
   const ouvertes = usePreferences((e) => e.sectionsOuvertes);
   const basculerSection = usePreferences((e) => e.basculerSection);
   const basculerNavigation = usePreferences((e) => e.basculerNavigation);
@@ -125,10 +194,18 @@ function Section({ section }: { section: SectionNavigation }) {
         to={section.chemin}
         title={repliee ? section.libelle : undefined}
         className={({ isActive }) =>
-          cn(classesSection, repliee && "justify-center px-0", isActive && classesActif)
+          cn(
+            classesSection,
+            repliee && "justify-center px-0",
+            isActive && classesActif,
+          )
         }
       >
-        <Icone className="size-5 shrink-0" strokeWidth={TRAIT_ICONE} aria-hidden="true" />
+        <Icone
+          className="size-5 shrink-0"
+          strokeWidth={TRAIT_ICONE}
+          aria-hidden="true"
+        />
         {!repliee && <span className="truncate">{section.libelle}</span>}
       </NavLink>
     );
@@ -166,14 +243,26 @@ function Section({ section }: { section: SectionNavigation }) {
           contientLeChemin && !estOuverte && "text-sidebar-foreground",
         )}
       >
-        <Icone className="size-5 shrink-0" strokeWidth={TRAIT_ICONE} aria-hidden="true" />
+        <Icone
+          className="size-5 shrink-0"
+          strokeWidth={TRAIT_ICONE}
+          aria-hidden="true"
+        />
         {!repliee && (
           <>
             <span className="flex-1 truncate text-left">{section.libelle}</span>
             {estOuverte ? (
-              <ChevronDown className="size-4 shrink-0" strokeWidth={TRAIT_ICONE} aria-hidden="true" />
+              <ChevronDown
+                className="size-4 shrink-0"
+                strokeWidth={TRAIT_ICONE}
+                aria-hidden="true"
+              />
             ) : (
-              <ChevronRight className="size-4 shrink-0" strokeWidth={TRAIT_ICONE} aria-hidden="true" />
+              <ChevronRight
+                className="size-4 shrink-0"
+                strokeWidth={TRAIT_ICONE}
+                aria-hidden="true"
+              />
             )}
           </>
         )}
@@ -208,8 +297,7 @@ const classesSection =
 const classesActif =
   "bg-sidebar-primary text-sidebar-primary-foreground font-medium hover:bg-sidebar-primary";
 
-function BlocUtilisateur() {
-  const repliee = usePreferences((e) => e.navigationRepliee);
+function BlocUtilisateur({ repliee }: { repliee: boolean }) {
   const utilisateur = useSession((e) => e.utilisateur);
   const fermerSession = useSession((e) => e.fermerSession);
 
@@ -226,13 +314,19 @@ function BlocUtilisateur() {
       {!repliee && (
         <>
           <div className="min-w-0 flex-1">
-            <div className="truncate text-mention font-medium">{utilisateur.nom}</div>
+            <div className="truncate text-mention font-medium">
+              {utilisateur.nom}
+            </div>
             <div className="truncate text-mention text-sidebar-muted-foreground">
               {LIBELLE_ROLE[utilisateur.role]}
             </div>
           </div>
           <BoutonIcone libelle="Se déconnecter" onClick={fermerSession}>
-            <LogOut className="size-5" strokeWidth={TRAIT_ICONE} aria-hidden="true" />
+            <LogOut
+              className="size-5"
+              strokeWidth={TRAIT_ICONE}
+              aria-hidden="true"
+            />
           </BoutonIcone>
         </>
       )}
@@ -247,7 +341,8 @@ export function Avatar({
   utilisateur: { nom: string; urlAvatar: string | null };
   taille?: "sm" | "md";
 }) {
-  const classes = taille === "sm" ? "size-8 text-mention" : "size-9 text-mention";
+  const classes =
+    taille === "sm" ? "size-8 text-mention" : "size-9 text-mention";
 
   if (utilisateur.urlAvatar) {
     return (

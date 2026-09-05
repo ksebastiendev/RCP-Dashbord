@@ -380,8 +380,8 @@ function OngletChampsExiges() {
   return (
     <EtatVide
       raison="aucune-donnee"
-      titre="Onglet non intégré, faute de maquette"
-      description="Les quatre captures de cet écran sont rognées juste avant le tableau des champs exigés. Ses colonnes ne sont visibles sur aucune maquette, il n'est donc pas intégré."
+      titre="Vue en cours de préparation"
+      description="Les champs qu'une destination exige à la saisie ne se consultent pas encore ici. Les bornes de montant, elles, sont dans l'onglet précédent."
     />
   );
 }

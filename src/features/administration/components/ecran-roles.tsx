@@ -1,6 +1,5 @@
 import { Users } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Bandeau } from "@/components/shared/bandeau";
 import { Carte } from "@/components/shared/carte";
 import { CorpsEcran, EnTeteEcran } from "@/components/shared/coque-application";
 import { EtatErreur } from "@/components/shared/etat-erreur";
@@ -41,12 +40,6 @@ export function EcranRoles() {
             ? `${formatEntier(data.roles.length)} rôles se partagent ${formatEntier(data.droitsElementaires)} droits élémentaires.`
             : DESCRIPTION
         }
-      />
-
-      <Bandeau
-        genre="information"
-        titre="Écran construit sans maquette"
-        description="Aucune capture ne montre cet écran. Il reprend les blocs déjà validés dans Comptes et droits : la pastille de rôle, ce que le rôle permet et son décompte de droits. La mise en page reste à valider."
       />
 
       <div className="grid gap-6 xl:grid-cols-2">

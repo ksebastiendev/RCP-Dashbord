@@ -648,8 +648,8 @@ export function OngletActivite() {
     <Carte avecBordure={false}>
       <EtatVide
         raison="aucune-donnee"
-        titre="Onglet non intégré, faute de maquette"
-        description="L'onglet Activité apparaît dans la barre d'onglets des quatre captures de la fiche marchand, mais aucune ne montre son contenu."
+        titre="Vue en cours de préparation"
+        description="Le journal d'activité de ce marchand ne se consulte pas encore ici. Ses paiements sont visibles dans Exploitation, ses notifications dans l'onglet Webhooks."
       />
     </Carte>
   );

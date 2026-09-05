@@ -95,10 +95,15 @@ export function EcranDossiers() {
             icone={Inbox}
           />
         ) : (
+          /* La seule capture de cet ecran montre la file vide : les
+             colonnes du tableau ne sont visibles nulle part, et deviner un
+             tableau jamais vu serait pire que d'annoncer qu'il manque.
+             L'ecran le dit a l'utilisateur en ses termes, et lui donne le
+             chemin qui existe deja. */
           <EtatVide
             raison="aucune-donnee"
-            titre="Vue non intégrée, faute de maquette"
-            description={`Cette file contient ${nombre} dossier${nombre > 1 ? "s" : ""}, mais la seule capture de cet écran montre la file vide. Les colonnes du tableau ne sont visibles sur aucune maquette, il n'est donc pas intégré.`}
+            titre="Vue en cours de préparation"
+            description={`Cette file contient ${nombre} dossier${nombre > 1 ? "s" : ""}. Le détail ne se consulte pas encore ici : ouvrez la fiche d'un marchand, onglet Dossier, pour voir ses pièces et son historique de conformité.`}
           />
         )}
       </Carte>

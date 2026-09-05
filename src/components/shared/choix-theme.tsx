@@ -1,75 +1,54 @@
 import { useEffect } from "react";
-import { Monitor, Moon, Sun } from "lucide-react";
+import { Moon, Sun } from "lucide-react";
 import { usePreferences } from "@/stores/preferences";
-import { appliquerTheme, suivreLeSysteme, type ModeTheme } from "@/lib/theme";
+import { appliquerTheme, REQUETE_SOMBRE } from "@/lib/theme";
+import { useRequeteMedia } from "@/lib/media";
 import { TRAIT_ICONE } from "@/lib/icones";
-import { cn } from "@/lib/utils";
 
 /*
- * Choix du theme, dans la barre superieure.
+ * Bascule du theme, dans la barre superieure.
  *
- * Trois modes exposes cote a cote plutot qu'un bouton qui les fait defiler :
- * un bouton cyclique oblige a cliquer deux fois pour revenir en arriere, et
- * ne dit jamais quel mode est actif avant d'avoir ete actionne.
+ * Un seul bouton, qui montre ou l'on va et non ou l'on est : la lune en
+ * clair, le soleil en sombre. Une barre superieure de back-office n'est
+ * pas un panneau de reglages, et un troisieme bouton "suivre le systeme"
+ * y demandait de comprendre un mode avant de pouvoir changer de couleur.
  *
- * L'etat actif n'est pas porte par la seule couleur du fond : le bouton
- * actif porte aria-checked, et son libelle accessible dit "actif".
+ * Le mode systeme n'a pas disparu pour autant : c'est le defaut, tant que
+ * personne n'a touche au bouton. Le premier appui le remplace par un choix
+ * explicite, qui tient jusqu'a ce qu'on en change.
  */
-
-const MODES: { valeur: ModeTheme; libelle: string; icone: typeof Sun }[] = [
-  { valeur: "clair", libelle: "Thème clair", icone: Sun },
-  { valeur: "sombre", libelle: "Thème sombre", icone: Moon },
-  { valeur: "systeme", libelle: "Suivre le système", icone: Monitor },
-];
 
 export function ChoixTheme() {
   const theme = usePreferences((e) => e.theme);
   const definirTheme = usePreferences((e) => e.definirTheme);
 
-  /* Le mode "systeme" n'est pas une valeur figee : il suit le poste et doit
-     donc rester a l'ecoute tant qu'il est choisi. */
-  useEffect(
-    () => suivreLeSysteme(theme, () => appliquerTheme(theme)),
-    [theme],
-  );
+  /* Tant que le mode reste "systeme", l'interface suit le poste. Le suivre
+     par une requete de media plutot que par un simple abonnement fait que
+     le bouton change d'icone en meme temps que l'interface change de fond,
+     au lieu de rester sur l'ancienne. */
+  const systemeSombre = useRequeteMedia(REQUETE_SOMBRE);
+  const sombre = theme === "sombre" || (theme === "systeme" && systemeSombre);
 
   /* Le script en ligne de index.html a deja pose la classe avant le premier
-     rendu. Cette ligne rattrape le cas ou le stockage local est indisponible
-     ou a ete vide entre-temps. */
-  useEffect(() => appliquerTheme(theme), [theme]);
+     rendu. Cette ligne rattrape le stockage local indisponible, vide entre
+     temps, ou le reglage du poste qui bouge en cours de session. */
+  useEffect(() => appliquerTheme(theme), [theme, sombre]);
+
+  const libelle = sombre ? "Passer au thème clair" : "Passer au thème sombre";
 
   return (
-    <div
-      role="radiogroup"
-      aria-label="Thème de l'interface"
-      className="flex items-center gap-0.5 rounded-md border border-topbar-border p-0.5"
+    <button
+      type="button"
+      onClick={() => definirTheme(sombre ? "clair" : "sombre")}
+      aria-label={libelle}
+      title={libelle}
+      className="grid size-9 shrink-0 place-items-center rounded-md text-topbar-fg transition-colors hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
     >
-      {MODES.map(({ valeur, libelle, icone: Icone }) => {
-        const actif = theme === valeur;
-        return (
-          <button
-            key={valeur}
-            type="button"
-            role="radio"
-            aria-checked={actif}
-            aria-label={actif ? `${libelle}, actif` : libelle}
-            title={libelle}
-            onClick={() => definirTheme(valeur)}
-            className={cn(
-              "grid size-7 place-items-center rounded-sm transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none",
-              actif
-                ? "bg-primary text-primary-foreground"
-                : "text-topbar-fg hover:bg-muted",
-            )}
-          >
-            <Icone
-              className="size-4"
-              strokeWidth={TRAIT_ICONE}
-              aria-hidden="true"
-            />
-          </button>
-        );
-      })}
-    </div>
+      {sombre ? (
+        <Sun className="size-5" strokeWidth={TRAIT_ICONE} aria-hidden="true" />
+      ) : (
+        <Moon className="size-5" strokeWidth={TRAIT_ICONE} aria-hidden="true" />
+      )}
+    </button>
   );
 }

@@ -76,10 +76,13 @@ export function EcranCouts() {
         ) : couts.isPending ? (
           <SqueletteCarteVide />
         ) : couts.data && couts.data.length > 0 ? (
+          /* Meme cas que la file des dossiers : la seule capture montre la
+             carte vide, les colonnes du tableau ne sont visibles nulle part.
+             Le decompte, lui, est reel et reste affiche. */
           <EtatVide
             raison="aucune-donnee"
-            titre="Vue non intégrée, faute de maquette"
-            description={`${formatEntier(couts.data.length)} coûts sont déclarés, mais la seule capture de cet écran montre la carte vide. Les colonnes du tableau ne sont visibles sur aucune maquette.`}
+            titre="Vue en cours de préparation"
+            description={`${formatEntier(couts.data.length)} coûts fournisseurs sont déclarés et pris en compte dans la marge affichée plus haut. Leur détail ligne à ligne ne se consulte pas encore ici.`}
           />
         ) : (
           <EtatVide

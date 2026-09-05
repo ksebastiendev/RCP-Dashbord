@@ -59,6 +59,12 @@ type ProprietesTableau<T> = {
    * bloc borde plutot que trois blocs empiles.
    */
   outils?: ReactNode;
+  /**
+   * Largeur en dessous de laquelle le tableau defile plutot que de se
+   * comprimer. Par defaut 160 px par colonne, avec un plancher a 640 :
+   * une colonne de moins de 160 px n'affiche plus rien d'utile.
+   */
+  largeurMinimale?: number;
   /** Rendu sous le tableau, typiquement la pagination. */
   pied?: ReactNode;
 };
@@ -76,9 +82,11 @@ export function Tableau<T>({
   lignesSquelette = 8,
   hauteurLigne = "h-14",
   outils,
+  largeurMinimale,
   pied,
 }: ProprietesTableau<T>) {
   const vide = !chargement && !erreur && (lignes?.length ?? 0) === 0;
+  const plancher = largeurMinimale ?? Math.max(640, colonnes.length * 160);
 
   return (
     <Carte avecBordure={false} className="overflow-hidden">
@@ -95,7 +103,9 @@ export function Tableau<T>({
               {/* Le titre porte un decompte. Tant qu'il n'est pas connu, il
                   ne s'invente pas : un squelette, jamais un zero. */}
               <Skeleton className="h-5 w-32" />
-              {sousTitre !== undefined && <Skeleton className="mt-1.5 h-3.5 w-72" />}
+              {sousTitre !== undefined && (
+                <Skeleton className="mt-1.5 h-3.5 w-72" />
+              )}
             </>
           ) : (
             <>
@@ -103,7 +113,9 @@ export function Tableau<T>({
                 {titre}
               </h2>
               {sousTitre && (
-                <p className="mt-0.5 text-mention text-fg-secondary">{sousTitre}</p>
+                <p className="mt-0.5 text-mention text-fg-secondary">
+                  {sousTitre}
+                </p>
               )}
             </>
           )}
@@ -113,8 +125,26 @@ export function Tableau<T>({
       {erreur ? (
         <EtatErreur erreur={erreur} onReessayer={onReessayer} compact />
       ) : (
-        <div className="overflow-x-auto">
-          <table className="w-full table-fixed border-collapse text-left">
+        /*
+         * Le tableau ne se laisse pas ecraser sous sa largeur lisible : en
+         * dessous, il defile horizontalement dans son propre conteneur.
+         * Sans ce plancher, sur un ecran de 390 px, les cinq colonnes se
+         * partageaient la place et il ne restait de chacune que deux
+         * caracteres. La page entiere, elle, ne defile jamais de cote.
+         *
+         * Le conteneur porte tabIndex : une zone qui defile doit pouvoir
+         * etre atteinte et parcourue au clavier, pas seulement au doigt.
+         */
+        <div
+          className="overflow-x-auto"
+          tabIndex={0}
+          role="region"
+          aria-label={titre ? `Tableau : ${titre}` : "Tableau"}
+        >
+          <table
+            className="w-full table-fixed border-collapse text-left"
+            style={{ minWidth: plancher }}
+          >
             <colgroup>
               {colonnes.map((colonne) => (
                 <col key={colonne.cle} style={{ width: colonne.largeur }} />

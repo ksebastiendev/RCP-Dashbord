@@ -137,7 +137,15 @@ export const router = createBrowserRouter([
             path: "/exploitation/paiement/:id",
             element: <EcranFichePaiement />,
           },
-          { path: "*", element: <EcranAVenir titre="Écran introuvable" /> },
+          {
+            path: "*",
+            element: (
+              <EcranAVenir
+                titre="Page introuvable"
+                description="Cette adresse ne correspond à aucun écran. Vérifiez le lien, ou repartez depuis la navigation."
+              />
+            ),
+          },
         ],
       },
     ],
